@@ -19,7 +19,8 @@ export function CartPage() {
   const items = getCartProducts()
 
   const total = items.reduce((sum, { item, product }) => {
-    const store = product.prices.find((p) => p.storeId === item.storeId)!
+    const store = product.prices.find((p) => p.storeId === item.storeId)
+    if (!store) return sum
     return sum + getDisplayPrice(store, currency) * item.quantity
   }, 0)
 
@@ -40,7 +41,8 @@ export function CartPage() {
           <div className="cart-page-layout">
             <div className="cart-list">
               {items.map(({ item, product }) => {
-                const store = product.prices.find((p) => p.storeId === item.storeId)!
+                const store = product.prices.find((p) => p.storeId === item.storeId)
+                if (!store) return null
                 const lineKey = cartLineKeyFromItem(item)
                 return (
                   <article key={lineKey} className="cart-page-item">

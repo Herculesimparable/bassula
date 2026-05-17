@@ -19,7 +19,8 @@ export function CartPanel() {
 
   const items = getCartProducts()
   const total = items.reduce((sum, { item, product }) => {
-    const store = product.prices.find((p) => p.storeId === item.storeId)!
+    const store = product.prices.find((p) => p.storeId === item.storeId)
+    if (!store) return sum
     return sum + getDisplayPrice(store, currency) * item.quantity
   }, 0)
 
@@ -41,7 +42,8 @@ export function CartPanel() {
           </div>
         ) : (
           items.map(({ item, product }) => {
-            const store = product.prices.find((p) => p.storeId === item.storeId)!
+            const store = product.prices.find((p) => p.storeId === item.storeId)
+            if (!store) return null
             const lineKey = cartLineKeyFromItem(item)
             return (
               <div key={lineKey} className="cart-item">

@@ -176,7 +176,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return cart
       .map((item) => {
         const product = getProductById(item.productId)
-        return product ? { item, product } : null
+        if (!product) return null
+        const hasStore = product.prices.some((p) => p.storeId === item.storeId)
+        if (!hasStore) return null
+        return { item, product }
       })
       .filter((x): x is { item: CartItem; product: Product } => x !== null)
   }, [cart])
