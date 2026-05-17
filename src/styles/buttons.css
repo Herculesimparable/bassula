@@ -1,0 +1,148 @@
+/* Botões compactos, adaptativos e consistentes */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.18s var(--ease-out, ease),
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  padding: clamp(0.45rem, 1.8vw, 0.65rem) clamp(0.9rem, 3.5vw, 1.35rem);
+  font-size: clamp(0.78rem, 2.2vw, 0.9rem);
+  min-height: 2.25rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-light, #e8334f) 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(196, 30, 58, 0.28);
+}
+
+.btn-outline {
+  padding: clamp(0.4rem, 1.6vw, 0.58rem) clamp(0.85rem, 3vw, 1.2rem);
+  font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+  min-height: 2.15rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  background: transparent;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  min-height: 1.85rem;
+  border-radius: 8px;
+}
+
+.btn-xs {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.68rem;
+  min-height: 1.6rem;
+  border-radius: 6px;
+}
+
+.btn-icon {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.btn-add,
+.btn-add-grid {
+  width: 100%;
+  padding: clamp(0.4rem, 1.5vw, 0.55rem) 0.65rem;
+  font-size: clamp(0.72rem, 2vw, 0.8rem);
+  font-weight: 700;
+  min-height: 2rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #fff;
+}
+
+.btn-add:hover,
+.btn-add-grid:hover {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-light, #e8334f) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(196, 30, 58, 0.3);
+}
+
+.btn-ver-mais {
+  min-width: min(100%, 11rem);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.compare-stores {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--red);
+  background: rgba(196, 30, 58, 0.06);
+  border: 1px solid rgba(196, 30, 58, 0.15);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.compare-stores:hover {
+  background: rgba(196, 30, 58, 0.12);
+}
+
+.qty-row {
+  border-radius: 8px;
+}
+
+.qty-row button {
+  width: clamp(1.75rem, 8vw, 2rem);
+  height: clamp(1.75rem, 8vw, 2rem);
+}
+
+.filter-mobile-btn {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+  .product-card .btn-add,
+  .grid-card .btn-add-grid {
+    font-size: 0.7rem;
+    min-height: 1.85rem;
+  }
+}

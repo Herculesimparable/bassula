@@ -1,0 +1,12 @@
+{
+  "projeto": "Bassula",
+  "autorizacao": "O titular autoriza pesquisa, descarga e utilização de imagens (incl. resultados de motores de pesquisa / Google) para o website.",
+  "data": "2026-05-17",
+  "fontes": [
+    "Wikimedia Commons (licenças abertas)",
+    "Open Food Facts",
+    "LoremFlickr (fallback)"
+  ],
+  "ficheiros_locais": "public/images/products/{id}.jpg",
+  "regenerar": "npm run images:fetch"
+}

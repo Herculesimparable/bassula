@@ -1,0 +1,31 @@
+{
+  "name": "bassula",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "homepage": "https://herculesimparable.github.io/bassula/",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:pages": "tsc -b && cross-env VITE_GITHUB_PAGES=true vite build",
+    "preview": "vite preview",
+    "preview:pages": "npm run build:pages && vite preview --base /bassula/",
+    "images:fetch": "node scripts/download-product-images.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.100.10",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.15.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "cross-env": "^7.0.3",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
+}

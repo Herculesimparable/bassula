@@ -1,0 +1,47 @@
+/**
+ * Bassula — paleta Angola (fria, vibrante, alto contraste)
+ */
+:root {
+  --red: #e11d48;
+  --red-dark: #9f1239;
+  --red-light: #fb7185;
+
+  --gold: #f59e0b;
+  --gold-dark: #d97706;
+  --gold-light: #fde68a;
+
+  --teal: #0891b2;
+  --teal-light: #22d3ee;
+  --teal-dark: #0e7490;
+
+  --navy: #1e3a5f;
+  --navy-dark: #0f2744;
+
+  --beige: #f1f5f9;
+  --beige-dark: #e2e8f0;
+  --surface: #ffffff;
+  --surface-warm: #f8fafc;
+  --surface-muted: #f1f5f9;
+
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-soft: #64748b;
+
+  --white: #ffffff;
+  --border: #cbd5e1;
+  --border-strong: #94a3b8;
+
+  --shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.12);
+  --shadow-red: 0 8px 28px rgba(225, 29, 72, 0.22);
+  --shadow-gold: 0 8px 24px rgba(245, 158, 11, 0.2);
+
+  --gradient-brand: linear-gradient(135deg, var(--navy-dark) 0%, var(--red-dark) 45%, var(--red) 100%);
+  --gradient-header: linear-gradient(90deg, #0f2744 0%, #9f1239 42%, #e11d48 100%);
+  --gradient-hero: linear-gradient(135deg, #eff6ff 0%, #ffffff 45%, #fff7ed 100%);
+  --gradient-gold: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+
+  --glow-red: 0 0 32px rgba(225, 29, 72, 0.28);
+  --glass: #ffffff;
+  --glass-border: var(--border);
+}
