@@ -4,9 +4,21 @@ Plataforma web responsiva para comparar preços de supermercados em **Angola** (
 
 ## Site público (qualquer rede / dispositivo)
 
-**https://herculesimparable.github.io/bassula/**
+| Alojamento | URL | Notas |
+|------------|-----|--------|
+| **Vercel** (recomendado) | https://bassula.vercel.app | URLs limpas (`/ofertas`, `/alimentos`); acesso global HTTPS |
+| GitHub Pages | https://herculesimparable.github.io/bassula/ | Backup automático em cada push |
 
-Funciona sem Cursor: site estático alojado no GitHub Pages. Cada push na branch `main` actualiza o site automaticamente.
+Funciona **sem Cursor** e **sem o seu PC ligado**: o código está no GitHub; Vercel e GitHub Pages compilam e servem o site na nuvem.
+
+### Ligar Vercel ao GitHub (uma vez)
+
+1. Entrar em [vercel.com](https://vercel.com) com a conta GitHub `Herculesimparable`
+2. **Add New Project** → importar `Herculesimparable/bassula`
+3. Deixar as definições por defeito (lê `vercel.json` automaticamente)
+4. **Deploy** — cada `git push` na `main` actualiza o site
+
+O ficheiro `vercel.json` na raiz do projeto configura o build Vite e as rotas da SPA (React Router).
 
 ## Desenvolvimento local
 
