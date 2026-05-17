@@ -2,6 +2,8 @@ import { X } from 'lucide-react'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
+import type { AuthErrorKey } from '../utils/auth'
 import {
   clearSession,
   getSessionUser,
@@ -20,6 +22,7 @@ export function AccountPanel() {
     showToast,
     wishlist,
   } = useApp()
+  const { t } = useTranslation()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -30,6 +33,8 @@ export function AccountPanel() {
 
   if (!accountOpen) return null
 
+  const authError = (key: AuthErrorKey) => t(`auth.${key}`)
+
   const refreshSession = () => {
     const u = getSessionUser()
     setLoggedIn(isLoggedIn())
@@ -39,17 +44,17 @@ export function AccountPanel() {
   const onRegister = (e: FormEvent) => {
     e.preventDefault()
     if (password !== confirm) {
-      showToast('As palavras-passe não coincidem', 'error')
+      showToast(t('account.passwordMismatch'), 'error')
       return
     }
     const result = registerUser(name, email, password)
     if (!result.ok) {
-      showToast(result.error ?? 'Erro ao criar conta', 'error')
+      showToast(authError(result.error), 'error')
       return
     }
     setSession(email.trim().toLowerCase())
     refreshSession()
-    showToast(`Conta criada! Bem-vindo, ${name.split(' ')[0]}!`)
+    showToast(t('account.welcomeNew', { name: name.split(' ')[0] }))
     setPassword('')
     setConfirm('')
   }
@@ -58,19 +63,19 @@ export function AccountPanel() {
     e.preventDefault()
     const result = loginUser(email, password)
     if (!result.ok) {
-      showToast(result.error ?? 'Erro ao entrar', 'error')
+      showToast(authError(result.error), 'error')
       return
     }
-    setSession(result.user!.email)
+    setSession(result.user.email)
     refreshSession()
-    showToast(`Bem-vindo, ${result.user!.name.split(' ')[0]}!`)
+    showToast(t('account.welcomeBack', { name: result.user.name.split(' ')[0] }))
   }
 
   const onLogout = () => {
     clearSession()
     setLoggedIn(false)
     setUserName('')
-    showToast('Sessão terminada')
+    showToast(t('account.sessionEnded'))
     setAccountOpen(false)
   }
 
@@ -82,11 +87,22 @@ export function AccountPanel() {
     borderRadius: 8,
   } as const
 
+  const panelTitle = loggedIn
+    ? t('account.myAccount')
+    : accountMode === 'register'
+      ? t('account.createAccount')
+      : t('account.signIn')
+
   return (
-    <aside className="side-panel account-panel" role="dialog" aria-label="Conta">
+    <aside className="side-panel account-panel" role="dialog" aria-label={t('account.dialog')}>
       <div className="panel-header">
-        <h2>{loggedIn ? 'A minha conta' : accountMode === 'register' ? 'Criar conta' : 'Entrar'}</h2>
-        <button type="button" className="icon-btn" onClick={() => setAccountOpen(false)} aria-label="Fechar">
+        <h2>{panelTitle}</h2>
+        <button
+          type="button"
+          className="icon-btn"
+          onClick={() => setAccountOpen(false)}
+          aria-label={t('account.close')}
+        >
           <X size={22} />
         </button>
       </div>
@@ -94,16 +110,16 @@ export function AccountPanel() {
         {loggedIn ? (
           <div>
             <p style={{ marginBottom: 8 }}>
-              Olá, <strong>{userName}</strong>
+              {t('account.helloPrefix')} <strong>{userName}</strong>
             </p>
             <p style={{ marginBottom: 16, color: 'var(--text-muted)', fontSize: '0.9rem' }}>
               {localStorage.getItem('bassula-user')}
             </p>
             <p style={{ marginBottom: 16, color: 'var(--text-muted)' }}>
-              Favoritos: {wishlist.length}
+              {t('account.favoritesCount', { count: wishlist.length })}
             </p>
             <button type="button" className="btn-outline btn-full" onClick={onLogout}>
-              Terminar sessão
+              {t('account.signOut')}
             </button>
           </div>
         ) : (
@@ -114,31 +130,31 @@ export function AccountPanel() {
                 className={accountMode === 'login' ? 'active' : ''}
                 onClick={() => setAccountMode('login')}
               >
-                Entrar
+                {t('account.signIn')}
               </button>
               <button
                 type="button"
                 className={accountMode === 'register' ? 'active' : ''}
                 onClick={() => setAccountMode('register')}
               >
-                Criar conta
+                {t('account.createAccount')}
               </button>
             </div>
 
             {accountMode === 'register' ? (
               <form onSubmit={onRegister}>
                 <label style={{ display: 'block', marginBottom: 14 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Nome completo</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{t('account.fullName')}</span>
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     style={inputStyle}
                     required
-                    placeholder="O seu nome"
+                    placeholder={t('account.namePlaceholder')}
                   />
                 </label>
                 <label style={{ display: 'block', marginBottom: 14 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Email</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{t('account.email')}</span>
                   <input
                     type="email"
                     value={email}
@@ -149,7 +165,7 @@ export function AccountPanel() {
                   />
                 </label>
                 <label style={{ display: 'block', marginBottom: 14 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Palavra-passe</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{t('account.password')}</span>
                   <input
                     type="password"
                     value={password}
@@ -157,11 +173,11 @@ export function AccountPanel() {
                     style={inputStyle}
                     required
                     minLength={6}
-                    placeholder="Mín. 6 caracteres"
+                    placeholder={t('account.passwordPlaceholder')}
                   />
                 </label>
                 <label style={{ display: 'block', marginBottom: 20 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Confirmar palavra-passe</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{t('account.confirmPassword')}</span>
                   <input
                     type="password"
                     value={confirm}
@@ -172,13 +188,13 @@ export function AccountPanel() {
                   />
                 </label>
                 <button type="submit" className="btn-primary btn-full">
-                  Criar conta
+                  {t('account.createAccount')}
                 </button>
               </form>
             ) : (
               <form onSubmit={onLogin}>
                 <label style={{ display: 'block', marginBottom: 14 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Email</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{t('account.email')}</span>
                   <input
                     type="email"
                     value={email}
@@ -188,7 +204,7 @@ export function AccountPanel() {
                   />
                 </label>
                 <label style={{ display: 'block', marginBottom: 20 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Palavra-passe</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{t('account.password')}</span>
                   <input
                     type="password"
                     value={password}
@@ -199,7 +215,7 @@ export function AccountPanel() {
                   />
                 </label>
                 <button type="submit" className="btn-primary btn-full">
-                  Entrar
+                  {t('account.signIn')}
                 </button>
               </form>
             )}

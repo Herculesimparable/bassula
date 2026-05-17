@@ -21,7 +21,7 @@ export function Newsletter() {
   }
 
   return (
-    <section className="newsletter" aria-label="Newsletter">
+    <section className="newsletter" aria-label={t('aria.newsletter')}>
       <div className="newsletter-bg" />
       <div className="container">
         <h2>{t('newsletter.title')}</h2>

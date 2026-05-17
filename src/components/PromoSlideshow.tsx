@@ -77,7 +77,7 @@ export function PromoSlideshow() {
   return (
     <section
       className="promo-slideshow-section"
-      aria-label="Promoções Bassula"
+      aria-label={t('aria.promosBassula')}
       aria-roledescription="carrossel"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}

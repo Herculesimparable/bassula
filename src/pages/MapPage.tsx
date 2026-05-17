@@ -1,23 +1,23 @@
 import { ExternalLink, MapPin, Phone } from 'lucide-react'
 import { BackButton } from '../components/BackButton'
+import { useTranslation } from '../context/LocaleContext'
 import { storeLocations } from '../data/stores-locations'
 
 export function MapPage() {
+  const { t } = useTranslation()
   const center = storeLocations[0]
 
   return (
     <main className="page-map">
       <div className="container">
         <BackButton />
-        <h1 className="page-title">Lojas e mapa</h1>
-        <p className="page-subtitle">
-          Encontre supermercados parceiros em Angola. Compare preços e escolha a loja mais próxima.
-        </p>
+        <h1 className="page-title">{t('map.pageTitle')}</h1>
+        <p className="page-subtitle">{t('map.pageSubtitle')}</p>
 
         <div className="map-layout">
           <div className="map-embed">
             <iframe
-              title="Mapa de lojas Bassula"
+              title={t('map.iframeTitle')}
               src={`https://www.openstreetmap.org/export/embed.html?bbox=${center.lng - 0.15}%2C${center.lat - 0.1}%2C${center.lng + 0.15}%2C${center.lat + 0.1}&layer=mapnik&marker=${center.lat}%2C${center.lng}`}
               loading="lazy"
             />
@@ -30,7 +30,9 @@ export function MapPage() {
                   {store.name}
                 </h3>
                 <p>{store.address}</p>
-                <p>{store.city} · {store.hours}</p>
+                <p>
+                  {store.city} · {store.hours}
+                </p>
                 <a href={`tel:${store.phone}`} className="store-phone">
                   <Phone size={16} />
                   {store.phone}
@@ -42,7 +44,7 @@ export function MapPage() {
                   className="btn-outline btn-sm"
                 >
                   <ExternalLink size={16} />
-                  Abrir no Google Maps
+                  {t('map.googleMaps')}
                 </a>
               </article>
             ))}

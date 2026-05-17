@@ -30,7 +30,7 @@ export function CategoryGrid() {
               to={homeCategoryHref(cat.slug)}
               className="category-card"
               onClick={() => handleCategoryClick(cat.slug)}
-              aria-label={`Ver produtos: ${cat.name}`}
+              aria-label={t('aria.categoryProducts', { name: cat.name })}
             >
               <div className="category-card__media">
                 <ProductImage

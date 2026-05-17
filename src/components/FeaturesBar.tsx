@@ -8,7 +8,7 @@ export function FeaturesBar() {
   const { t } = useTranslation()
 
   return (
-    <section className="features-bar" aria-label="Vantagens">
+    <section className="features-bar" aria-label={t('aria.features')}>
       <div className="container">
         <div className="features-grid">
           {featureItems.map((f) => {

@@ -33,13 +33,14 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   const { t } = useTranslation()
   const pageTitle = title ?? t(GROUP_TITLE_KEYS[group])
   const location = useLocation()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
     searchQuery,
     activeCategory,
     setActiveCategory,
     setSearchQuery,
     priceMax,
+    setPriceMax,
     setFilterDrawerOpen,
     filterDrawerOpen,
   } = useApp()
@@ -50,9 +51,11 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   useEffect(() => {
     const cat = searchParams.get('cat')
     const q = searchParams.get('q')
+    const price = searchParams.get('price')
     setActiveCategory(cat ?? 'todos')
     setSearchQuery(q ?? '')
-  }, [location.pathname, searchParams, setActiveCategory, setSearchQuery])
+    setPriceMax(price ? Number(price) : null)
+  }, [location.pathname, searchParams, setActiveCategory, setSearchQuery, setPriceMax])
 
   useEffect(() => {
     setVisible(PAGE_SIZE)
@@ -64,6 +67,18 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   )
 
   const shown = filtered.slice(0, visible)
+
+  const applyFilters = () => {
+    const next = new URLSearchParams(searchParams)
+    if (activeCategory === 'todos') next.delete('cat')
+    else next.set('cat', activeCategory)
+    if (searchQuery.trim()) next.set('q', searchQuery.trim())
+    else next.delete('q')
+    if (priceMax != null) next.set('price', String(priceMax))
+    else next.delete('price')
+    setSearchParams(next, { replace: true })
+    setFilterDrawerOpen(false)
+  }
 
   if (isLoading) return <PageLoader />
 
@@ -99,7 +114,7 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
           {t('catalog.filter')} ({filtered.length})
         </button>
         <div className="catalog-layout">
-          <CatalogSidebar />
+          <CatalogSidebar group={group} />
           <div className="catalog-main">
             {isError ? (
               <div className="empty-state">
@@ -131,7 +146,7 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
                       className="btn btn-primary btn-ver-mais"
                       onClick={() => setVisible((v) => v + PAGE_SIZE)}
                     >
-                      Ver mais
+                      {t('catalog.loadMore')}
                     </button>
                   </div>
                 )}
@@ -145,14 +160,14 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
         <>
           <div className="overlay" onClick={() => setFilterDrawerOpen(false)} />
           <aside className="filter-drawer">
-            <CatalogSidebar />
+            <CatalogSidebar group={group} />
             <button
               type="button"
               className="btn btn-primary btn-full"
               style={{ marginTop: 20 }}
-              onClick={() => setFilterDrawerOpen(false)}
+              onClick={applyFilters}
             >
-              Aplicar filtros
+              {t('catalog.applyFilters')}
             </button>
           </aside>
         </>

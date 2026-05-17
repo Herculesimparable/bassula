@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react'
-import { BrowserRouter, HashRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles/theme.css'
 import './App.css'
 import './styles/buttons.css'
@@ -22,7 +22,8 @@ const FavoritesPage = lazy(() => import('./pages/FavoritesPage').then((m) => ({ 
 const ProductDetailPage = lazy(() =>
   import('./pages/ProductDetailPage').then((m) => ({ default: m.ProductDetailPage })),
 )
-const StaticPage = lazy(() => import('./pages/StaticPage').then((m) => ({ default: m.StaticPage })))
+const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })))
+const HelpPage = lazy(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })))
 const ImageCreditsPage = lazy(() =>
   import('./pages/ImageCreditsPage').then((m) => ({ default: m.ImageCreditsPage })),
 )
@@ -53,7 +54,7 @@ export default function App() {
                 path="ofertas"
                 element={
                   <Lazy>
-                    <CatalogPage group="ofertas" title="Ofertas" defaultBadge="Oferta" />
+                    <CatalogPage group="ofertas" defaultBadge="Oferta" />
                   </Lazy>
                 }
               />
@@ -61,7 +62,7 @@ export default function App() {
                 path="alimentos"
                 element={
                   <Lazy>
-                    <CatalogPage group="alimentos" title="Alimentos" />
+                    <CatalogPage group="alimentos" />
                   </Lazy>
                 }
               />
@@ -69,7 +70,7 @@ export default function App() {
                 path="bebidas"
                 element={
                   <Lazy>
-                    <CatalogPage group="bebidas" title="Bebidas" />
+                    <CatalogPage group="bebidas" />
                   </Lazy>
                 }
               />
@@ -77,7 +78,7 @@ export default function App() {
                 path="higiene"
                 element={
                   <Lazy>
-                    <CatalogPage group="higiene" title="Higiene e cosméticos" />
+                    <CatalogPage group="higiene" />
                   </Lazy>
                 }
               />
@@ -85,7 +86,7 @@ export default function App() {
                 path="pets"
                 element={
                   <Lazy>
-                    <CatalogPage group="pets" title="Produtos para pets" />
+                    <CatalogPage group="pets" />
                   </Lazy>
                 }
               />
@@ -93,7 +94,7 @@ export default function App() {
                 path="electrodomesticos"
                 element={
                   <Lazy>
-                    <CatalogPage group="electrodomesticos" title="Electrodomésticos" />
+                    <CatalogPage group="electrodomesticos" />
                   </Lazy>
                 }
               />
@@ -101,7 +102,7 @@ export default function App() {
                 path="mais-vendidos"
                 element={
                   <Lazy>
-                    <CatalogPage group="vendidos" title="Mais vendidos" defaultBadge="Mais vendido" />
+                    <CatalogPage group="vendidos" defaultBadge="Mais vendido" />
                   </Lazy>
                 }
               />
@@ -151,18 +152,7 @@ export default function App() {
                 path="sobre"
                 element={
                   <Lazy>
-                    <StaticPage title="Sobre nós">
-                      <p>
-                        A Bassula é a plataforma líder em comparação de preços de supermercados em Angola e no
-                        mundo. Ajudamos famílias a poupar em cada compra, mostrando onde cada produto está mais
-                        barato.
-                      </p>
-                      <p>Trabalhamos com Kero, Candando, Shoprite, Alimenta Angola e redes internacionais.</p>
-                      <p>
-                        Consulte também a página de{' '}
-                        <Link to="/creditos-imagens">créditos e autorização de imagens</Link> do site.
-                      </p>
-                    </StaticPage>
+                    <AboutPage />
                   </Lazy>
                 }
               />
@@ -178,14 +168,7 @@ export default function App() {
                 path="ajuda"
                 element={
                   <Lazy>
-                    <StaticPage title="Centro de ajuda">
-                      <h3>Envios</h3>
-                      <p>Entregas em Luanda em 24–48h. Outras províncias: 3–5 dias úteis.</p>
-                      <h3>Devoluções</h3>
-                      <p>Devolução gratuita até 7 dias após a entrega em produtos não perecíveis.</p>
-                      <h3>Pagamentos</h3>
-                      <p>Multicaixa, Visa, Mastercard, transferência e dinheiro na entrega.</p>
-                    </StaticPage>
+                    <HelpPage />
                   </Lazy>
                 }
               />

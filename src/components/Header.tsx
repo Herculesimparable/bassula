@@ -127,7 +127,7 @@ export function Header() {
         onMouseEnter={handleNavBlockEnter}
         onMouseLeave={handleNavBlockLeave}
       >
-        <nav className="nav-white" aria-label="Menu principal">
+        <nav className="nav-white" aria-label={t('aria.mainNav')}>
           <div className="container nav-white-inner">
             <button
               type="button"

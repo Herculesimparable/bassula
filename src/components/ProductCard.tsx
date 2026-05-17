@@ -47,7 +47,7 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
             e.preventDefault()
             toggleWishlist(product.id)
           }}
-          aria-label="Adicionar aos favoritos"
+          aria-label={t('productGrid.addFavorite')}
         >
           <Heart size={16} fill={wishlist.includes(product.id) ? 'currentColor' : 'none'} />
         </button>

@@ -6,7 +6,7 @@ export function PromoBanners() {
   const { t } = useTranslation()
 
   return (
-    <section className="section promo-section" aria-label="Promoções">
+    <section className="section promo-section" aria-label={t('aria.promos')}>
       <div className="container">
         <div className="promo-bassula-strip">
           <BassulaButton variant="card" to="/ofertas" className="promo-bassula-strip__img" />

@@ -5,6 +5,14 @@ export interface UserAccount {
   createdAt: string
 }
 
+export type AuthErrorKey =
+  | 'nameRequired'
+  | 'invalidEmail'
+  | 'passwordMin'
+  | 'emailRegistered'
+  | 'accountNotFound'
+  | 'wrongPassword'
+
 const USERS_KEY = 'bassula-users'
 
 function loadUsers(): UserAccount[] {
@@ -19,15 +27,19 @@ function saveUsers(users: UserAccount[]) {
   localStorage.setItem(USERS_KEY, JSON.stringify(users))
 }
 
-export function registerUser(name: string, email: string, password: string): { ok: boolean; error?: string } {
+export function registerUser(
+  name: string,
+  email: string,
+  password: string,
+): { ok: true } | { ok: false; error: AuthErrorKey } {
   const normalized = email.trim().toLowerCase()
-  if (!name.trim()) return { ok: false, error: 'Indique o seu nome' }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) return { ok: false, error: 'Email inválido' }
-  if (password.length < 6) return { ok: false, error: 'Palavra-passe: mínimo 6 caracteres' }
+  if (!name.trim()) return { ok: false, error: 'nameRequired' }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) return { ok: false, error: 'invalidEmail' }
+  if (password.length < 6) return { ok: false, error: 'passwordMin' }
 
   const users = loadUsers()
   if (users.some((u) => u.email === normalized)) {
-    return { ok: false, error: 'Este email já está registado' }
+    return { ok: false, error: 'emailRegistered' }
   }
 
   users.push({
@@ -40,11 +52,14 @@ export function registerUser(name: string, email: string, password: string): { o
   return { ok: true }
 }
 
-export function loginUser(email: string, password: string): { ok: boolean; user?: UserAccount; error?: string } {
+export function loginUser(
+  email: string,
+  password: string,
+): { ok: true; user: UserAccount } | { ok: false; error: AuthErrorKey } {
   const normalized = email.trim().toLowerCase()
   const user = loadUsers().find((u) => u.email === normalized)
-  if (!user) return { ok: false, error: 'Conta não encontrada. Crie uma conta.' }
-  if (user.password !== password) return { ok: false, error: 'Palavra-passe incorrecta' }
+  if (!user) return { ok: false, error: 'accountNotFound' }
+  if (user.password !== password) return { ok: false, error: 'wrongPassword' }
   return { ok: true, user }
 }
 

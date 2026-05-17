@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ProductImage } from './ProductImage'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 import type { Product } from '../types'
+import { badgeI18nKey } from '../utils/badge'
 import { formatPrice, getBestPrice, getDisplayPrice } from '../utils/price'
 
 interface Props {
@@ -15,12 +17,15 @@ interface Props {
 
 export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props) {
   const { currency, addToCart, wishlist, toggleWishlist } = useApp()
+  const { t } = useTranslation()
   const [qty, setQty] = useState(1)
   const best = getBestPrice(product.prices)
   const current = getDisplayPrice(best, currency)
   const original = best.promo ? getDisplayPrice({ ...best, promo: undefined }, currency) : null
   const isWishlisted = wishlist.includes(product.id)
-  const badge = badgeLabel ?? product.badge
+  const rawBadge = badgeLabel ?? product.badge
+  const badgeKey = badgeI18nKey(rawBadge)
+  const badge = badgeKey ? t(badgeKey) : rawBadge
   const badgeClass = topSeller ? 'grid-card-badge grid-card-badge--top' : 'grid-card-badge'
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -48,7 +53,7 @@ export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props)
             e.stopPropagation()
             toggleWishlist(product.id)
           }}
-          aria-label="Adicionar aos favoritos"
+          aria-label={t('productGrid.addFavorite')}
         >
           <Heart size={16} fill={isWishlisted ? 'currentColor' : 'none'} />
         </button>
@@ -69,19 +74,31 @@ export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props)
           )}
           <span className="price-current">{formatPrice(current, currency)}</span>
         </div>
-        <p className="grid-store">Melhor: {best.storeName} · comparar lojas</p>
+        <p className="grid-store">
+          {t('product.best', { store: best.storeName })} · {t('productGrid.compareHint')}
+        </p>
       </Link>
       <div className="qty-row" onClick={(e) => e.stopPropagation()}>
-        <button type="button" className="btn btn-icon" aria-label="Menos" onClick={() => setQty((q) => Math.max(1, q - 1))}>
+        <button
+          type="button"
+          className="btn btn-icon"
+          aria-label={t('productGrid.less')}
+          onClick={() => setQty((q) => Math.max(1, q - 1))}
+        >
           <Minus size={14} />
         </button>
         <span>{qty}</span>
-        <button type="button" className="btn btn-icon" aria-label="Mais" onClick={() => setQty((q) => q + 1)}>
+        <button
+          type="button"
+          className="btn btn-icon"
+          aria-label={t('productGrid.more')}
+          onClick={() => setQty((q) => q + 1)}
+        >
           <Plus size={14} />
         </button>
       </div>
       <button type="button" className="btn btn-add-grid" onClick={handleAdd}>
-        Adicionar
+        {t('product.add')}
       </button>
     </article>
   )

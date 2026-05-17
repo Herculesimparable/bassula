@@ -8,7 +8,7 @@ export function AppPromo() {
   const { showToast } = useApp()
 
   return (
-    <section className="app-promo" aria-label="Aplicação móvel">
+    <section className="app-promo" aria-label={t('aria.mobileApp')}>
       <div className="app-promo-bg" />
       <div className="container app-promo-grid">
         <div className="phone-mockup">

@@ -91,7 +91,7 @@ export function CartPage() {
                         type="button"
                         className="btn-remove"
                         onClick={() => removeFromCart(item.productId, item.storeId)}
-                        aria-label="Remover"
+                        aria-label={t('cart.remove')}
                       >
                         <Trash2 size={18} />
                       </button>

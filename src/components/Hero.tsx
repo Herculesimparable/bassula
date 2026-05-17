@@ -9,7 +9,7 @@ export function Hero() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="hero hero--bassula hero--text-only" aria-label="Destaque principal">
+    <section className="hero hero--bassula hero--text-only" aria-label={t('aria.hero')}>
       <motion.div
         className="container hero-content hero-content--solo"
         initial={reduceMotion ? false : { opacity: 0, y: 16 }}

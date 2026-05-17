@@ -1,13 +1,23 @@
 import { ChevronDown } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { getAllProductCategories } from '../utils/categories'
+import { getAllProductCategories, getCategoriesForGroup } from '../utils/categories'
 import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
+import type { NavGroup } from '../types'
 
-export function CatalogSidebar() {
+interface CatalogSidebarProps {
+  group?: NavGroup
+}
+
+export function CatalogSidebar({ group }: CatalogSidebarProps) {
   const { t } = useTranslation()
   const { activeCategory, setActiveCategory, priceMax, setPriceMax } = useApp()
   const [priceOpen, setPriceOpen] = useState(true)
+
+  const categories = useMemo(
+    () => (group ? getCategoriesForGroup(group) : getAllProductCategories()),
+    [group],
+  )
 
   const priceOptions = useMemo(
     () => [
@@ -33,7 +43,7 @@ export function CatalogSidebar() {
         >
           {t('catalog.allCategories')}
         </button>
-        {getAllProductCategories().map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat}
             type="button"

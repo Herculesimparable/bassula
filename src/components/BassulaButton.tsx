@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { BASSULA_CAMPAIGN_IMAGE, BASSULA_TAGLINE } from '../data/brand'
+import { BASSULA_CAMPAIGN_IMAGE } from '../data/brand'
+import { useTranslation } from '../context/LocaleContext'
 
 type Variant = 'icon' | 'pill' | 'card' | 'hero'
 
@@ -16,23 +17,24 @@ export function BassulaButton({
   className = '',
   showTagline = false,
 }: Props) {
+  const { t } = useTranslation()
+  const tagline = t('brand.tagline')
+
   return (
     <Link
       to={to}
       className={`bassula-btn bassula-btn--${variant} ${className}`.trim()}
-      aria-label={`Bassula nos preços — ${BASSULA_TAGLINE}`}
-      title={BASSULA_TAGLINE}
+      aria-label={t('logo.aria', { tagline })}
+      title={tagline}
     >
       <img
         src={BASSULA_CAMPAIGN_IMAGE}
-        alt="Bassula nos Preços — quem faz Bassula derruba preços"
+        alt={t('logo.bassulaAlt')}
         className="bassula-btn__img"
         loading={variant === 'hero' ? 'eager' : 'lazy'}
         decoding="async"
       />
-      {showTagline && variant !== 'icon' && (
-        <span className="bassula-btn__tagline">{BASSULA_TAGLINE}</span>
-      )}
+      {showTagline && variant !== 'icon' && <span className="bassula-btn__tagline">{tagline}</span>}
     </Link>
   )
 }

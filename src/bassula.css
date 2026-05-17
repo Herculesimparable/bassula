@@ -819,8 +819,13 @@
     grid-template-columns: 1fr;
   }
 
-  .catalog-sidebar {
+  .catalog-layout > .catalog-sidebar {
     display: none;
+  }
+
+  .filter-drawer .catalog-sidebar {
+    display: block;
+    position: static;
   }
 
   .filter-mobile-btn {

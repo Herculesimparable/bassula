@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { BASSULA_CAMPAIGN_IMAGE } from '../data/brand'
+import { useTranslation } from '../context/LocaleContext'
 
 interface Props {
   variant?: 'light' | 'dark'
@@ -7,8 +8,10 @@ interface Props {
 }
 
 export function Logo({ variant = 'dark', className = '' }: Props) {
+  const { t } = useTranslation()
+
   return (
-    <Link to="/" className={`logo-brand ${variant} ${className}`} aria-label="Bassula início">
+    <Link to="/" className={`logo-brand ${variant} ${className}`} aria-label={t('logo.home')}>
       <span className="logo-icon-wrap">
         <img
           src={BASSULA_CAMPAIGN_IMAGE}
@@ -21,7 +24,7 @@ export function Logo({ variant = 'dark', className = '' }: Props) {
       </span>
       <span className="logo-text">
         Bassula
-        <small className="logo-sub">nos preços</small>
+        <small className="logo-sub">{t('logo.sub')}</small>
       </span>
     </Link>
   )

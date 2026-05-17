@@ -91,7 +91,7 @@ export function ProductCarousel({
         <div
           className={`carousel-wrap ${isTop ? 'carousel-wrap--top' : ''} ${centered ? 'carousel-wrap--centered' : ''}`}
           role="region"
-          aria-label={`Produtos: ${title}`}
+          aria-label={t('aria.productsCarousel', { title })}
         >
           <button
             type="button"
@@ -102,7 +102,7 @@ export function ProductCarousel({
               scroll('left')
             }}
             disabled={!canPrev}
-            aria-label="Ver produtos anteriores"
+            aria-label={t('aria.carouselPrev')}
           >
             <ChevronLeft size={20} strokeWidth={2.5} />
           </button>
@@ -125,7 +125,7 @@ export function ProductCarousel({
               scroll('right')
             }}
             disabled={!canNext}
-            aria-label="Ver mais produtos"
+            aria-label={t('aria.carouselNext')}
           >
             <ChevronRight size={20} strokeWidth={2.5} />
           </button>
