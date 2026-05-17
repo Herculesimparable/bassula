@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-AO">
   <head>
+    <script>
+      (function () {
+        var list =
+          navigator.languages && navigator.languages.length
+            ? navigator.languages
+            : [navigator.language || 'pt'];
+        var pt = false;
+        var en = false;
+        for (var i = 0; i < list.length; i++) {
+          var code = (list[i] || '').split('-')[0].toLowerCase();
+          if (code === 'pt') pt = true;
+          if (code === 'en') en = true;
+        }
+        var locale = pt ? 'pt-AO' : en ? 'en' : 'en';
+        document.documentElement.lang = locale;
+      })();
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="%BASE_URL%bassula-campaign.png" />

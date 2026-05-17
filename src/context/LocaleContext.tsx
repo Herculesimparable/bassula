@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react'
 import {
+  documentLangTag,
   resolveLocale,
   translate,
   type Locale,
@@ -42,24 +43,25 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     syncI18nRuntime(preference)
-    const resolved = resolveLocale(preference)
-    setLocale(resolved)
-    document.documentElement.lang = resolved === 'pt' ? 'pt-AO' : 'en'
-    document.title = translate(resolved, 'meta.title')
-    const meta = document.querySelector('meta[name="description"]')
-    if (meta) meta.setAttribute('content', translate(resolved, 'meta.description'))
+    setLocale(resolveLocale(preference))
   }, [preference])
 
   useEffect(() => {
-    refreshAutoLocale()
+    document.documentElement.lang = documentLangTag(locale)
+    document.title = translate(locale, 'meta.title')
+    const meta = document.querySelector('meta[name="description"]')
+    if (meta) meta.setAttribute('content', translate(locale, 'meta.description'))
+  }, [locale])
+
+  useEffect(() => {
     if (preference !== 'auto') return
-    const onChange = () => {
-      const next = resolveLocale('auto')
-      syncI18nRuntime('auto')
-      setLocale(next)
+    const syncFromDevice = () => {
+      refreshAutoLocale()
+      setLocale(resolveLocale('auto'))
     }
-    window.addEventListener('languagechange', onChange)
-    return () => window.removeEventListener('languagechange', onChange)
+    syncFromDevice()
+    window.addEventListener('languagechange', syncFromDevice)
+    return () => window.removeEventListener('languagechange', syncFromDevice)
   }, [preference])
 
   const setPreference = useCallback((pref: LocalePreference) => {
