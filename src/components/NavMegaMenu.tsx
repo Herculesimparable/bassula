@@ -2,17 +2,20 @@ import { ChevronDown } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { mainNav } from '../data/navigation'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 import type { NavGroup } from '../types'
 
 function NavItem({
   path,
-  label,
+  navKey,
   group,
 }: {
   path: string
-  label: string
+  navKey: string
   group: NavGroup | null
 }) {
+  const { t } = useTranslation()
+  const label = t(navKey)
   const location = useLocation()
   const { setActiveCategory, openMegaNav, setOpenMegaNav } = useApp()
   const isSectionActive = location.pathname === path
@@ -20,7 +23,7 @@ function NavItem({
   const isActive = isSectionActive || isOpen
 
   const openPanel = () => {
-    if (group) setOpenMegaNav({ path, label, group })
+    if (group) setOpenMegaNav({ path, navKey, group })
   }
 
   const goToSection = () => {
@@ -57,7 +60,7 @@ function NavItem({
         type="button"
         className="nav-mega-toggle"
         aria-expanded={isOpen}
-        aria-label={`${isOpen ? 'Fechar' : 'Abrir'} categorias de ${label}`}
+        aria-label={t('nav.categoriasDe', { name: label })}
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
@@ -75,9 +78,8 @@ export function NavMegaMenu() {
   return (
     <>
       {mainNav.map((item) => (
-        <NavItem key={item.path} path={item.path} label={item.label} group={item.group} />
+        <NavItem key={item.path} path={item.path} navKey={item.navKey} group={item.group} />
       ))}
     </>
   )
 }
-

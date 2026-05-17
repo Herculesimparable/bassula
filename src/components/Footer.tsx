@@ -2,45 +2,26 @@ import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Logo } from './Logo'
 import { CALL_CENTER, CALL_CENTER_DISPLAY, SUPPORT_EMAIL } from '../data/navigation'
-import { footerLinks } from '../data/products'
-
-const menuRoutes: Record<string, string> = {
-  Ofertas: '/ofertas',
-  Alimentos: '/alimentos',
-  Bebidas: '/bebidas',
-  Electrodomésticos: '/electrodomesticos',
-  'Mais vendidos': '/mais-vendidos',
-  Favoritos: '/favoritos',
-}
-
-const infoRoutes: Record<string, string> = {
-  FAQ: '/ajuda',
-  Devoluções: '/ajuda',
-  Atendimento: '/contacto',
-  Lojas: '/mapa',
-  Envios: '/ajuda',
-  Termos: '/sobre',
-  Pagamentos: '/ajuda',
-  Cookies: '/sobre',
-  'Créditos de imagens': '/creditos-imagens',
-}
-
-const contaRoutes: Record<string, string> = {
-  Favoritos: '/favoritos',
-  Carrinho: '/carrinho',
-  'Os meus pedidos': '/carrinho',
-  Definições: '/sobre',
-}
+import {
+  footerAccountLinks,
+  footerCategoryLinks,
+  footerInfoLinks,
+  footerMenuLinks,
+} from '../data/products'
+import { useTranslation } from '../context/LocaleContext'
 
 export function Footer() {
+  const { t } = useTranslation()
+  const year = new Date().getFullYear()
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
           <Logo variant="light" className="footer-logo" />
-          <h4>Precisa de ajuda?</h4>
+          <h4>{t('footer.help')}</h4>
           <p>
-            <Link to="/contacto">Atendimento ao cliente</Link>
+            <Link to="/contacto">{t('footer.customerCare')}</Link>
           </p>
           <a href={`tel:${CALL_CENTER}`} className="footer-phone">
             {CALL_CENTER_DISPLAY}
@@ -64,42 +45,42 @@ export function Footer() {
           </div>
         </div>
         <div className="footer-col">
-          <h4>Menu</h4>
-          {footerLinks.menu.map((label) => (
-            <Link key={label} to={menuRoutes[label] ?? '/'}>
-              {label}
+          <h4>{t('footer.menu')}</h4>
+          {footerMenuLinks.map((link) => (
+            <Link key={link.key} to={link.path}>
+              {t(link.key)}
             </Link>
           ))}
         </div>
         <div className="footer-col">
-          <h4>Categorias</h4>
-          {footerLinks.categorias.map((label) => (
-            <Link key={label} to="/alimentos">
-              {label}
+          <h4>{t('footer.categories')}</h4>
+          {footerCategoryLinks.map((link) => (
+            <Link key={link.key} to={link.path}>
+              {t(link.key)}
             </Link>
           ))}
         </div>
         <div className="footer-col">
-          <h4>Info</h4>
-          {footerLinks.info.map((label) => (
-            <Link key={label} to={infoRoutes[label] ?? '/ajuda'}>
-              {label}
+          <h4>{t('footer.info')}</h4>
+          {footerInfoLinks.map((link) => (
+            <Link key={link.key} to={link.path}>
+              {t(link.key)}
             </Link>
           ))}
         </div>
         <div className="footer-col">
-          <h4>Minha escolha</h4>
-          {footerLinks.conta.map((label) => (
-            <Link key={label} to={contaRoutes[label] ?? '/carrinho'}>
-              {label}
+          <h4>{t('footer.account')}</h4>
+          {footerAccountLinks.map((link) => (
+            <Link key={link.key} to={link.path}>
+              {t(link.key)}
             </Link>
           ))}
         </div>
       </div>
       <div className="footer-bar">
         <div className="container footer-bar-inner">
-          <span>© {new Date().getFullYear()} Bassula — Comparação de preços em Angola</span>
-          <span>Rua Rainha Ginga, Luanda · contacto@bassula.ao</span>
+          <span>{t('footer.copyright', { year })}</span>
+          <span>{t('footer.address')}</span>
           <div className="payment-icons">
             <span>VISA</span>
             <span>Mastercard</span>

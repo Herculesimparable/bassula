@@ -1,10 +1,11 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { BASSULA_TAGLINE } from '../data/brand'
+import { useTranslation } from '../context/LocaleContext'
 
 /** Hero só com texto — imagem Bassula fica no carrossel promocional */
 export function Hero() {
+  const { t } = useTranslation()
   const reduceMotion = useReducedMotion()
 
   return (
@@ -15,19 +16,16 @@ export function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span className="hero-tag hero-tag--bassula">Bassula nos Preços</span>
-        <h1>Quem faz Bassula derruba preços</h1>
-        <p className="hero-lead">{BASSULA_TAGLINE}</p>
-        <p>
-          Compare Kero, Candando, Shoprite e mais. Arroz, óleo, feijão e tudo o que precisa — o mais
-          barato em cada loja.
-        </p>
+        <span className="hero-tag hero-tag--bassula">{t('hero.tag')}</span>
+        <h1>{t('hero.title')}</h1>
+        <p className="hero-lead">{t('brand.tagline')}</p>
+        <p>{t('hero.body')}</p>
         <div className="hero-actions">
           <Link to="/ofertas" className="btn btn-primary btn-bassula-cta">
-            Ver preços em queda <ArrowRight size={18} />
+            {t('hero.ctaOffers')} <ArrowRight size={18} />
           </Link>
           <Link to="/mais-vendidos" className="btn btn-outline hero-btn-outline">
-            Mais vendidos
+            {t('hero.ctaTop')}
           </Link>
         </div>
       </motion.div>

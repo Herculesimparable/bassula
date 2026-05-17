@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 
 export function Newsletter() {
+  const { t } = useTranslation()
   const { subscribe, subscribed } = useApp()
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
@@ -11,7 +13,7 @@ export function Newsletter() {
     e.preventDefault()
     if (subscribed) return
     if (!subscribe(email)) {
-      setError('Introduza um email válido')
+      setError(t('newsletter.invalidEmail'))
       return
     }
     setError('')
@@ -22,15 +24,15 @@ export function Newsletter() {
     <section className="newsletter" aria-label="Newsletter">
       <div className="newsletter-bg" />
       <div className="container">
-        <h2>20% de desconto na sua primeira compra</h2>
-        <p>Subscreva a newsletter e receba alertas das melhores promoções em Angola.</p>
+        <h2>{t('newsletter.title')}</h2>
+        <p>{t('newsletter.desc')}</p>
         {subscribed ? (
-          <p style={{ fontWeight: 600 }}>✓ Já está subscrito. Obrigado!</p>
+          <p style={{ fontWeight: 600 }}>{t('newsletter.subscribed')}</p>
         ) : (
           <form className="newsletter-form" onSubmit={onSubmit}>
             <input
               type="email"
-              placeholder="O seu email"
+              placeholder={t('newsletter.placeholder')}
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
@@ -39,7 +41,7 @@ export function Newsletter() {
               aria-label="Email"
               required
             />
-            <button type="submit">Subscrever</button>
+            <button type="submit">{t('newsletter.subscribe')}</button>
           </form>
         )}
         {error && <p style={{ color: '#ffb4b4', marginTop: 8 }}>{error}</p>}

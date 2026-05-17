@@ -1,24 +1,29 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 import { categoryFilterHref, getCategoriesForGroup } from '../utils/categories'
 
 export function NavMegaPanel() {
+  const { t } = useTranslation()
   const { openMegaNav, setOpenMegaNav, setActiveCategory } = useApp()
 
   if (!openMegaNav) return null
 
   const categories = getCategoriesForGroup(openMegaNav.group)
-  const { path, label } = openMegaNav
+  const { path, navKey } = openMegaNav
+  const label = t(navKey)
 
   const close = () => setOpenMegaNav(null)
 
   return (
-    <div className="nav-mega-panel" role="region" aria-label={`Categorias de ${label}`}>
+    <div className="nav-mega-panel" role="region" aria-label={t('nav.categoriasDe', { name: label })}>
       <div className="container nav-mega-panel-inner">
         <header className="nav-mega-panel-head">
           <div>
-            <h2 className="nav-mega-panel-title">Categorias em {label}</h2>
+            <h2 className="nav-mega-panel-title">
+              {t('nav.categoriasDe', { name: label })}
+            </h2>
           </div>
           <span className="nav-mega-panel-count" aria-hidden>
             {categories.length}
@@ -51,8 +56,8 @@ export function NavMegaPanel() {
               close()
             }}
           >
-            Ver toda a secção {label}
-            <ArrowRight size={18} aria-hidden />
+            {t('nav.verSecao', { name: label })}
+            <ArrowRight size={16} />
           </Link>
         </footer>
       </div>

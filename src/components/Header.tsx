@@ -9,8 +9,11 @@ import { Logo } from './Logo'
 import { NavMegaMenu } from './NavMegaMenu'
 import { NavMegaPanel } from './NavMegaPanel'
 import { categoryFilterHref, getCategoriesForGroup } from '../utils/categories'
+import { useTranslation } from '../context/LocaleContext'
+import { LanguageSelect } from './LanguageSelect'
 
 export function Header() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const {
@@ -61,23 +64,24 @@ export function Header() {
         <div className="container utility-inner">
           {utilityLinks.map((l) => (
             <Link key={l.path} to={l.path}>
-              {l.label}
+              {t(l.navKey)}
             </Link>
           ))}
-          <span className="utility-promo">Bassula nos Preços — a queda é nos preços!</span>
+          <span className="utility-promo">{t('brand.promo')}</span>
           <button type="button" className="utility-login" onClick={() => openAccount('login')}>
             <LogIn size={16} />
-            Entrar
+            {t('header.login')}
           </button>
           <button type="button" className="utility-register" onClick={() => openAccount('register')}>
             <UserPlus size={16} />
-            Criar conta
+            {t('header.register')}
           </button>
+          <LanguageSelect />
           <label className="currency-select">
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
-              aria-label="Moeda"
+              aria-label={t('header.currency')}
             >
               <option value="AOA">AOA</option>
               <option value="USD">USD</option>
@@ -93,24 +97,24 @@ export function Header() {
           <form className="search-form search-light" onSubmit={onSearch} role="search">
             <input
               type="search"
-              placeholder="Pesquisar produtos..."
+              placeholder={t('header.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              aria-label="Pesquisar"
+              aria-label={t('header.search')}
             />
-            <button type="submit" aria-label="Pesquisar">
+            <button type="submit" aria-label={t('header.search')}>
               <Search size={20} />
             </button>
           </form>
           <div className="header-actions header-actions-light">
-            <Link to="/mapa" className="icon-btn icon-light" aria-label="Ver mapa" title="Mapa">
+            <Link to="/mapa" className="icon-btn icon-light" aria-label={t('header.map')} title={t('header.map')}>
               <MapPin size={22} />
             </Link>
-            <Link to="/favoritos" className="icon-btn icon-light" aria-label="Favoritos">
+            <Link to="/favoritos" className="icon-btn icon-light" aria-label={t('header.favorites')}>
               <Heart size={22} />
               {wishlist.length > 0 && <span className="badge-count">{wishlist.length}</span>}
             </Link>
-            <Link to="/carrinho" className="icon-btn icon-light" aria-label="Carrinho">
+            <Link to="/carrinho" className="icon-btn icon-light" aria-label={t('header.cart')}>
               <ShoppingCart size={22} />
               {cartCount > 0 && <span className="badge-count">{cartCount}</span>}
             </Link>
@@ -129,7 +133,7 @@ export function Header() {
               type="button"
               className="nav-hamburger"
               onClick={() => setMenuOpen(true)}
-              aria-label="Menu"
+              aria-label={t('header.menu')}
             >
               <Menu size={22} />
             </button>
@@ -145,11 +149,11 @@ export function Header() {
         <>
           <div className="overlay" onClick={() => setMenuOpen(false)} />
           <aside className="mobile-drawer">
-            <button type="button" className="icon-btn" onClick={() => setMenuOpen(false)} aria-label="Fechar">
+            <button type="button" className="icon-btn" onClick={() => setMenuOpen(false)} aria-label={t('header.close')}>
               <X size={22} />
             </button>
             <Link to="/" onClick={() => setMenuOpen(false)} className="drawer-link">
-              Início
+              {t('nav.home')}
             </Link>
             {mainNav.map((item) => {
               const cats = item.group ? getCategoriesForGroup(item.group) : []
@@ -166,14 +170,14 @@ export function Header() {
                         setMenuOpen(false)
                       }}
                     >
-                      {item.label}
+                      {t(item.navKey)}
                     </Link>
                     {cats.length > 0 && (
                       <button
                         type="button"
                         className="drawer-expand-btn"
                         aria-expanded={expanded}
-                        aria-label={`Categorias de ${item.label}`}
+                        aria-label={t('nav.categoriasDe', { name: t(item.navKey) })}
                         onClick={() => setExpandedMobile(expanded ? null : item.path)}
                       >
                         <ChevronDown size={18} style={{ transform: expanded ? 'rotate(180deg)' : undefined }} />
@@ -205,7 +209,7 @@ export function Header() {
                             setMenuOpen(false)
                           }}
                         >
-                          Ver toda a secção {item.label} →
+                          {t('nav.verSecao', { name: t(item.navKey) })}
                         </Link>
                       </li>
                     </ul>
@@ -214,10 +218,10 @@ export function Header() {
               )
             })}
             <Link to="/mapa" onClick={() => setMenuOpen(false)} className="drawer-link">
-              Mapa de lojas
+              {t('nav.mapa')}
             </Link>
             <Link to="/contacto" onClick={() => setMenuOpen(false)} className="drawer-link">
-              Call center
+              {t('nav.contacto')}
             </Link>
           </aside>
         </>

@@ -4,8 +4,10 @@ import { categories } from '../data/products'
 import { categoryImageAlt, categoryImageFallbacks } from '../data/images'
 import { useApp } from '../context/AppContext'
 import { applyHomeCategoryTarget, homeCategoryHref } from '../utils/categories'
+import { useTranslation } from '../context/LocaleContext'
 
 export function CategoryGrid() {
+  const { t } = useTranslation()
   const { setActiveCategory, setSearchQuery } = useApp()
 
   const handleCategoryClick = (slug: string) => {
@@ -17,8 +19,8 @@ export function CategoryGrid() {
       <div className="container">
         <div className="section-header section-header--categories">
           <div>
-            <h2 id="categories-title">Categorias mais vendidas</h2>
-            <p className="section-subtitle">Explore os corredores mais procurados em Luanda</p>
+            <h2 id="categories-title">{t('home.categories')}</h2>
+            <p className="section-subtitle">{t('home.categoriesDesc')}</p>
           </div>
         </div>
         <div className="categories-grid">

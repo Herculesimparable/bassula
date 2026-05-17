@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import { ProductImage } from './ProductImage'
 import { useApp } from '../context/AppContext'
 import { cartLineKeyFromItem } from '../utils/cart'
+import { useTranslation } from '../context/LocaleContext'
 import { formatPrice, getDisplayPrice } from '../utils/price'
 
 export function CartPanel() {
+  const { t } = useTranslation()
   const {
     getCartProducts,
     cartOpen,
@@ -25,19 +27,19 @@ export function CartPanel() {
   }, 0)
 
   return (
-    <aside className="side-panel" role="dialog" aria-label="Carrinho rápido">
+    <aside className="side-panel" role="dialog" aria-label={t('cart.title')}>
       <div className="panel-header">
-        <h2>Carrinho ({items.length})</h2>
-        <button type="button" className="icon-btn" onClick={() => setCartOpen(false)} aria-label="Fechar">
+        <h2>{t('cart.panelTitle', { count: items.length })}</h2>
+        <button type="button" className="icon-btn" onClick={() => setCartOpen(false)} aria-label={t('header.close')}>
           <X size={22} />
         </button>
       </div>
       <div className="panel-body">
         {items.length === 0 ? (
           <div className="empty-state">
-            <p>O seu carrinho está vazio.</p>
+            <p>{t('cart.panelEmpty')}</p>
             <Link to="/ofertas" className="btn-primary" onClick={() => setCartOpen(false)}>
-              Ver ofertas
+              {t('cart.seeOffers')}
             </Link>
           </div>
         ) : (
@@ -81,7 +83,7 @@ export function CartPanel() {
                       type="button"
                       onClick={() => removeFromCart(item.productId, item.storeId)}
                       style={{ marginLeft: 'auto', color: 'var(--red)' }}
-                      aria-label="Remover"
+                      aria-label={t('cart.remove')}
                     >
                       <Trash2 size={16} />
                     </button>
@@ -95,11 +97,11 @@ export function CartPanel() {
       {items.length > 0 && (
         <div className="panel-footer">
           <div className="cart-total">
-            <span>Total</span>
+            <span>{t('cart.total')}</span>
             <span>{formatPrice(total, currency)}</span>
           </div>
           <Link to="/carrinho" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={() => setCartOpen(false)}>
-            Ir para o carrinho
+            {t('cart.goToCart')}
           </Link>
         </div>
       )}

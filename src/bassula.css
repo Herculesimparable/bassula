@@ -36,13 +36,21 @@
   font-weight: 600;
 }
 
-.currency-select select {
+.currency-select select,
+.language-select select {
   background: transparent;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 4px;
   padding: 2px 6px;
   font-size: 0.75rem;
+  max-width: 11rem;
+  cursor: pointer;
+}
+
+.language-select select option {
+  color: var(--text);
+  background: var(--white);
 }
 
 .header-red {

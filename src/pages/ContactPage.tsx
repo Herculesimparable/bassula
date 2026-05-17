@@ -4,8 +4,11 @@ import { useState } from 'react'
 import { BackButton } from '../components/BackButton'
 import { CALL_CENTER, CALL_CENTER_DISPLAY, SUPPORT_EMAIL } from '../data/navigation'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
+import { tr } from '../i18n/runtime'
 
 export function ContactPage() {
+  const { t } = useTranslation()
   const { showToast } = useApp()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -14,10 +17,10 @@ export function ContactPage() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (!name.trim() || !email.trim() || !message.trim()) {
-      showToast('Preencha todos os campos', 'error')
+      showToast(tr('toast.fillFields'), 'error')
       return
     }
-    showToast('Mensagem enviada! Responderemos em breve.')
+    showToast(tr('toast.messageSent'))
     setName('')
     setEmail('')
     setMessage('')
@@ -27,54 +30,54 @@ export function ContactPage() {
     <main className="page-contact">
       <div className="container">
         <BackButton />
-        <h1 className="page-title">Call center</h1>
-        <p className="page-subtitle">Estamos disponíveis 24 horas para o ajudar em Angola e no estrangeiro.</p>
+        <h1 className="page-title">{t('contact.title')}</h1>
+        <p className="page-subtitle">{t('contact.subtitle')}</p>
 
         <div className="contact-grid">
           <div className="contact-cards">
             <a href={`tel:${CALL_CENTER}`} className="contact-card contact-card-primary">
               <Phone size={32} />
-              <h3>Ligar agora</h3>
+              <h3>{t('contact.callNow')}</h3>
               <p>{CALL_CENTER_DISPLAY}</p>
-              <span className="contact-cta">Toque para ligar</span>
+              <span className="contact-cta">{t('contact.tapToCall')}</span>
             </a>
             <a href={`mailto:${SUPPORT_EMAIL}`} className="contact-card">
               <Mail size={28} />
-              <h3>Email</h3>
+              <h3>{t('contact.email')}</h3>
               <p>{SUPPORT_EMAIL}</p>
             </a>
             <div className="contact-card">
               <Clock size={28} />
-              <h3>Horário</h3>
-              <p>Segunda a Domingo · 24/7</p>
+              <h3>{t('contact.hours')}</h3>
+              <p>{t('contact.hoursValue')}</p>
             </div>
             <button
               type="button"
               className="contact-card"
-              onClick={() => showToast('Chat ao vivo — um agente irá atendê-lo em instantes.', 'info')}
+              onClick={() => showToast(tr('toast.liveChatSoon'), 'info')}
             >
               <MessageCircle size={28} />
-              <h3>Chat ao vivo</h3>
-              <p>Resposta média: 2 minutos</p>
+              <h3>{t('contact.liveChat')}</h3>
+              <p>{t('contact.chatResponse')}</p>
             </button>
           </div>
 
           <form className="contact-form card-form" onSubmit={onSubmit}>
-            <h2>Enviar mensagem</h2>
+            <h2>{t('contact.sendMessage')}</h2>
             <label>
-              Nome
+              {t('contact.name')}
               <input value={name} onChange={(e) => setName(e.target.value)} required />
             </label>
             <label>
-              Email
+              {t('contact.email')}
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </label>
             <label>
-              Mensagem
+              {t('contact.message')}
               <textarea rows={5} value={message} onChange={(e) => setMessage(e.target.value)} required />
             </label>
             <button type="submit" className="btn-primary btn-full">
-              Enviar
+              {t('contact.send')}
             </button>
           </form>
         </div>

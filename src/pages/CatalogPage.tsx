@@ -7,17 +7,31 @@ import { PageLoader } from '../components/PageLoader'
 import { useApp } from '../context/AppContext'
 import { useProducts } from '../hooks/useProducts'
 import { filterProducts } from '../utils/price'
+import { useTranslation } from '../context/LocaleContext'
 import type { NavGroup } from '../types'
+
+const GROUP_TITLE_KEYS: Record<NavGroup, string> = {
+  ofertas: 'nav.ofertas',
+  alimentos: 'nav.alimentos',
+  bebidas: 'nav.bebidas',
+  higiene: 'nav.higiene',
+  pets: 'nav.pets',
+  electrodomesticos: 'nav.electrodomesticos',
+  vendidos: 'nav.maisVendidos',
+  novos: 'nav.ofertas',
+}
 
 interface Props {
   group: NavGroup
-  title: string
+  title?: string
   defaultBadge?: string
 }
 
 const PAGE_SIZE = 12
 
 export function CatalogPage({ group, title, defaultBadge }: Props) {
+  const { t } = useTranslation()
+  const pageTitle = title ?? t(GROUP_TITLE_KEYS[group])
   const location = useLocation()
   const [searchParams] = useSearchParams()
   const {
@@ -62,21 +76,18 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
               <Flame size={28} />
             </div>
             <div>
-              <h1>{title}</h1>
-              <p>
-                Ranking dos produtos mais comprados — compare Kero, Candando, Shoprite e mais antes de
-                decidir.
-              </p>
+              <h1>{pageTitle}</h1>
+              <p>{t('catalog.topHero')}</p>
             </div>
           </header>
         ) : (
-          <h1 className="page-title">{title}</h1>
+          <h1 className="page-title">{pageTitle}</h1>
         )}
         {activeCategory !== 'todos' && (
           <p className="catalog-filter-hint">
-            A filtrar: <strong>{activeCategory}</strong>
+            {t('catalog.filtering')}: <strong>{activeCategory}</strong>
             <button type="button" className="link-reset" onClick={() => setActiveCategory('todos')}>
-              Limpar
+              {t('catalog.clear')}
             </button>
           </p>
         )}
@@ -85,20 +96,20 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
           className="filter-mobile-btn"
           onClick={() => setFilterDrawerOpen(true)}
         >
-          Filtrar ({filtered.length})
+          {t('catalog.filter')} ({filtered.length})
         </button>
         <div className="catalog-layout">
           <CatalogSidebar />
           <div className="catalog-main">
             {isError ? (
               <div className="empty-state">
-                <p>Erro ao carregar produtos.</p>
-                <p>Recarregue a página ou tente mais tarde.</p>
+                <p>{t('catalog.loadError')}</p>
+                <p>{t('catalog.reload')}</p>
               </div>
             ) : filtered.length === 0 ? (
               <div className="empty-state">
-                <p>Nenhum produto encontrado.</p>
-                <p>Tente outro filtro ou pesquisa.</p>
+                <p>{t('catalog.noProducts')}</p>
+                <p>{t('catalog.tryOther')}</p>
               </div>
             ) : (
               <>

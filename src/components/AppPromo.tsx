@@ -1,7 +1,10 @@
 import { useApp } from '../context/AppContext'
 import { HERO_IMAGE } from '../data/images'
+import { useTranslation } from '../context/LocaleContext'
+import { tr } from '../i18n/runtime'
 
 export function AppPromo() {
+  const { t } = useTranslation()
   const { showToast } = useApp()
 
   return (
@@ -9,29 +12,25 @@ export function AppPromo() {
       <div className="app-promo-bg" />
       <div className="container app-promo-grid">
         <div className="phone-mockup">
-          <img
-            src={HERO_IMAGE}
-            alt="Aplicação Bassula no telemóvel"
-            loading="lazy"
-          />
+          <img src={HERO_IMAGE} alt={t('appPromo.phoneAlt')} loading="lazy" />
         </div>
         <div>
-          <h2>Compre onde estiver</h2>
-          <p>Baixe a nossa aplicação e compare preços em tempo real, em Angola e no estrangeiro.</p>
+          <h2>{t('appPromo.title')}</h2>
+          <p>{t('appPromo.desc')}</p>
           <div className="app-badges">
             <button
               type="button"
               className="app-badge"
-              onClick={() => showToast('App Store — em breve disponível', 'info')}
+              onClick={() => showToast(tr('toast.appStoreSoon'), 'info')}
             >
-              App Store
+              {t('appPromo.appStore')}
             </button>
             <button
               type="button"
               className="app-badge"
-              onClick={() => showToast('Google Play — em breve disponível', 'info')}
+              onClick={() => showToast(tr('toast.googlePlaySoon'), 'info')}
             >
-              Google Play
+              {t('appPromo.googlePlay')}
             </button>
           </div>
         </div>
@@ -39,3 +38,4 @@ export function AppPromo() {
     </section>
   )
 }
+

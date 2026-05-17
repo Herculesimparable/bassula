@@ -9,10 +9,12 @@ import { CategoryGrid } from '../components/CategoryGrid'
 import { AppPromo } from '../components/AppPromo'
 import { Newsletter } from '../components/Newsletter'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 import { getProductsByGroup, products } from '../data/products'
 import { filterProducts } from '../utils/price'
 
 export function HomePage() {
+  const { t } = useTranslation()
   const { searchQuery, activeCategory } = useApp()
   const filtered = filterProducts(products, searchQuery, activeCategory)
   const bySection = (section: string) => filtered.filter((p) => p.section === section)
@@ -26,30 +28,34 @@ export function HomePage() {
       {searchQuery && (
         <div className="search-results-banner">
           <div className="container">
-            {filtered.length} resultado(s) para &quot;{searchQuery}&quot; —{' '}
-            <Link to="/ofertas">Ver todos</Link>
+            {t('home.searchResults', { count: filtered.length, query: searchQuery })} —{' '}
+            <Link to="/ofertas">{t('home.searchSeeAll')}</Link>
           </div>
         </div>
       )}
       <BassulaCampaignBanner />
-      <ProductCarousel id="ofertas" title="Melhores ofertas" products={bySection('ofertas')} />
+      <ProductCarousel
+        id="ofertas"
+        title={t('home.bestOffers')}
+        products={bySection('ofertas')}
+      />
       <PromoBanners />
       <ProductCarousel
-        title="Encha o seu carrinho"
+        title={t('home.fillCart')}
         products={bySection('carrinho')}
         centered
         moreLink="/alimentos"
-        moreLabel="Ver mais alimentos"
+        moreLabel={t('home.seeMoreFood')}
       />
       <ProductCarousel
         id="mais-vendidos"
-        title="Mais vendidos"
+        title={t('home.topSellers')}
         products={topSellers}
         variant="top-sellers"
         moreLink="/mais-vendidos"
-        moreLabel="Ver ranking completo"
+        moreLabel={t('home.rankingMore')}
       />
-      <ProductCarousel title="Ofertas frescas" products={bySection('frescos')} />
+      <ProductCarousel title={t('home.freshOffers')} products={bySection('frescos')} />
       <CategoryGrid />
       <AppPromo />
       <Newsletter />

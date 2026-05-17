@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Product } from '../types'
 import { ProductCard } from './ProductCard'
+import { useTranslation } from '../context/LocaleContext'
 
 interface Props {
   title: string
@@ -20,9 +21,11 @@ export function ProductCarousel({
   id,
   variant = 'default',
   moreLink = '/ofertas',
-  moreLabel = 'Ver mais ofertas',
+  moreLabel,
   centered = false,
 }: Props) {
+  const { t } = useTranslation()
+  const resolvedMoreLabel = moreLabel ?? t('home.seeMoreOffers')
   const trackRef = useRef<HTMLDivElement>(null)
   const [canPrev, setCanPrev] = useState(false)
   const [canNext, setCanNext] = useState(false)
@@ -77,11 +80,11 @@ export function ProductCarousel({
             {title}
           </h2>
           {isTop && (
-            <p>Os produtos mais procurados em Luanda — compare preços antes de comprar.</p>
+            <p>{t('home.topSellersDesc')}</p>
           )}
           {isTop && (
             <Link to={moreLink} className="btn btn-outline btn-sm">
-              Ver todos
+              {t('home.seeAll')}
             </Link>
           )}
         </div>
@@ -130,7 +133,7 @@ export function ProductCarousel({
         {!isTop && (
           <div className={`section-footer ${centered ? 'section-footer--centered' : ''}`}>
             <Link to={moreLink} className="btn btn-primary">
-              {moreLabel}
+              {resolvedMoreLabel}
             </Link>
           </div>
         )}

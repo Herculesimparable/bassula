@@ -1,34 +1,37 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { BassulaButton } from './BassulaButton'
+import { useTranslation } from '../context/LocaleContext'
 
 export function PromoBanners() {
+  const { t } = useTranslation()
+
   return (
     <section className="section promo-section" aria-label="Promoções">
       <div className="container">
         <div className="promo-bassula-strip">
           <BassulaButton variant="card" to="/ofertas" className="promo-bassula-strip__img" />
           <div className="promo-bassula-strip__text">
-            <strong>Bassula nos Preços</strong>
-            <span>Arroz, óleo, feijão e açúcar — clique na imagem para ver ofertas</span>
+            <strong>{t('promo.stripTitle')}</strong>
+            <span>{t('promo.stripDesc')}</span>
             <Link to="/ofertas" className="promo-bassula-strip__link">
-              Ver preços em queda →
+              {t('promo.stripLink')}
             </Link>
           </div>
         </div>
         <div className="promo-row">
           <article className="promo-banner wine">
-            <h3>Seleção de vinhos</h3>
-            <p>Compare preços em todas as lojas</p>
+            <h3>{t('promo.wines')}</h3>
+            <p>{t('promo.winesDesc')}</p>
             <Link to="/bebidas" className="btn btn-primary btn-sm">
-              Ver ofertas
+              {t('promo.seeOffers')}
             </Link>
           </article>
           <article className="promo-banner cheese">
             <p className="promo-discount">40%</p>
-            <h3>de desconto</h3>
-            <p>Em lacticínios selecionados</p>
+            <h3>{t('promo.discount')}</h3>
+            <p>{t('promo.dairy')}</p>
             <Link to="/ofertas" className="btn btn-primary btn-sm">
-              Aproveitar
+              {t('promo.enjoy')}
             </Link>
           </article>
         </div>

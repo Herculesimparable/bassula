@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ProductImage } from './ProductImage'
 import { useApp } from '../context/AppContext'
 import type { Product } from '../types'
+import { useTranslation } from '../context/LocaleContext'
 import { formatPrice, getBestPrice, getDisplayPrice } from '../utils/price'
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 
 export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { currency, addToCart, wishlist, toggleWishlist } = useApp()
   const best = getBestPrice(product.prices)
   const price = getDisplayPrice(best, currency)
@@ -35,7 +37,7 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
         )}
         {badge && rank && badgeVariant === 'top' && (
           <span className={badgeClass} style={{ top: '2.5rem' }}>
-            Top
+            {t('product.top')}
           </span>
         )}
         <button
@@ -63,20 +65,20 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
       </Link>
       <p className="product-unit">{product.unit}</p>
       <p className="product-price">{formatPrice(price, currency)}</p>
-      <p className="product-store">Melhor: {best.storeName}</p>
+      <p className="product-store">{t('product.best', { store: best.storeName })}</p>
       <button
         type="button"
         className="compare-stores"
         onClick={() => navigate(`/produto/${product.id}`)}
       >
-        Comparar {product.prices.length} lojas
+        {t('product.compareStores', { count: product.prices.length })}
       </button>
       <button
         type="button"
         className="btn btn-add"
         onClick={() => addToCart(product, 1, best.storeId)}
       >
-        Adicionar
+        {t('product.add')}
       </button>
     </article>
   )

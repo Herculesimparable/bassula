@@ -4,9 +4,11 @@ import { BackButton } from '../components/BackButton'
 import { ProductImage } from '../components/ProductImage'
 import { useApp } from '../context/AppContext'
 import { cartLineKeyFromItem } from '../utils/cart'
+import { useTranslation } from '../context/LocaleContext'
 import { formatPrice, getDisplayPrice } from '../utils/price'
 
 export function CartPage() {
+  const { t } = useTranslation()
   const {
     getCartProducts,
     updateQuantity,
@@ -28,13 +30,13 @@ export function CartPage() {
     <main className="page-cart">
       <div className="container">
         <BackButton />
-        <h1 className="page-title">O meu carrinho</h1>
+        <h1 className="page-title">{t('cart.title')}</h1>
 
         {items.length === 0 ? (
           <div className="empty-state card-empty">
-            <p>O carrinho está vazio.</p>
+            <p>{t('cart.empty')}</p>
             <Link to="/ofertas" className="btn-primary">
-              Ver ofertas
+              {t('cart.seeOffers')}
             </Link>
           </div>
         ) : (
@@ -53,7 +55,7 @@ export function CartPage() {
                       category={product.category}
                     />
                     <div className="cart-page-info">
-                      <span className="cart-store-badge" title="Loja de origem">
+                      <span className="cart-store-badge" title={t('cart.storeOrigin')}>
                         {store.storeName}
                       </span>
                       <h3>{product.name}</h3>
@@ -99,31 +101,31 @@ export function CartPage() {
               })}
             </div>
             <aside className="cart-summary">
-              <h2>Resumo</h2>
+              <h2>{t('cart.summary')}</h2>
               <div className="summary-row">
-                <span>Subtotal</span>
+                <span>{t('cart.subtotal')}</span>
                 <span>{formatPrice(total, currency)}</span>
               </div>
               <div className="summary-row">
-                <span>Entrega</span>
-                <span>Grátis acima de 15.000 Kz</span>
+                <span>{t('cart.delivery')}</span>
+                <span>{t('cart.deliveryFree')}</span>
               </div>
               <div className="summary-total">
-                <span>Total</span>
+                <span>{t('cart.total')}</span>
                 <span>{formatPrice(total, currency)}</span>
               </div>
               <button
                 type="button"
                 className="btn-primary btn-full"
-                onClick={() => showToast('Pedido confirmado! Obrigado por comprar na Bassula.')}
+                onClick={() => showToast(t('toast.orderConfirmed'))}
               >
-                Finalizar compra
+                {t('cart.checkout')}
               </button>
               <button type="button" className="btn-outline btn-full" onClick={clearCart}>
-                Limpar carrinho
+                {t('cart.clear')}
               </button>
               <Link to="/ofertas" className="link-continue">
-                Continuar a comprar
+                {t('cart.continue')}
               </Link>
             </aside>
           </div>

@@ -4,10 +4,12 @@ import { Link, useParams } from 'react-router-dom'
 import { BackButton } from '../components/BackButton'
 import { ProductImage } from '../components/ProductImage'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 import { getProductById } from '../data/products'
 import { formatPrice, getDisplayPrice } from '../utils/price'
 
 export function ProductDetailPage() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const { currency, addToCart } = useApp()
   const [qty, setQty] = useState(1)
@@ -20,9 +22,9 @@ export function ProductDetailPage() {
         <div className="container">
           <BackButton />
           <div className="empty-state card-empty">
-            <p>Produto não encontrado.</p>
+            <p>{t('detail.notFound')}</p>
             <Link to="/ofertas" className="btn-primary">
-              Ver ofertas
+              {t('cart.seeOffers')}
             </Link>
           </div>
         </div>
@@ -57,7 +59,7 @@ export function ProductDetailPage() {
             <p className="product-detail-category">{product.category}</p>
 
             <div className="product-detail-best">
-              <span className="best-label">Melhor preço</span>
+              <span className="best-label">{t('detail.bestPrice')}</span>
               <span className="best-price">{formatPrice(getDisplayPrice(best, currency), currency)}</span>
               <span className="best-store">
                 <MapPin size={16} />
@@ -77,15 +79,15 @@ export function ProductDetailPage() {
               onClick={() => addToCart(product, qty, best.storeId)}
             >
               <ShoppingCart size={20} />
-              Adicionar ao carrinho
+              {t('detail.addToCart')}
             </button>
           </div>
         </div>
 
         <section className="stores-compare" aria-labelledby="compare-title">
-          <h2 id="compare-title">Comparar preços em todas as lojas</h2>
+          <h2 id="compare-title">{t('detail.compareTitle')}</h2>
           <p className="stores-compare-desc">
-            {sorted.length} loja(s) vendem este produto. O mais barato está destacado.
+            {t('detail.compareDesc', { count: sorted.length })}
           </p>
           <ul className="stores-compare-list">
             {sorted.map((store, i) => {
@@ -100,7 +102,7 @@ export function ProductDetailPage() {
                     {isBest && (
                       <span className="store-best-badge">
                         <Check size={14} />
-                        Mais barato
+                        {t('detail.cheapest')}
                       </span>
                     )}
                     <strong>{store.storeName}</strong>
@@ -114,7 +116,7 @@ export function ProductDetailPage() {
                     className={isBest ? 'btn-primary btn-sm' : 'btn-outline btn-sm'}
                     onClick={() => addToCart(product, qty, store.storeId)}
                   >
-                    Adicionar
+                    {t('product.add')}
                   </button>
                 </li>
               )

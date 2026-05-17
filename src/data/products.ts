@@ -231,18 +231,47 @@ export const products: Product[] = [
 ]
 
 export const featureItems = [
-  { icon: 'truck', title: 'Entrega rápida', desc: 'Em Luanda e principais cidades' },
-  { icon: 'shield', title: 'Qualidade garantida', desc: 'Produtos verificados diariamente' },
-  { icon: 'scale', title: 'Comparação justa', desc: 'Preços actualizados em tempo real' },
-  { icon: 'headphones', title: 'Suporte 24/7', desc: 'Apoio em português e inglês' },
+  { icon: 'truck', titleKey: 'features.fast.title', descKey: 'features.fast.desc' },
+  { icon: 'shield', titleKey: 'features.quality.title', descKey: 'features.quality.desc' },
+  { icon: 'scale', titleKey: 'features.fair.title', descKey: 'features.fair.desc' },
+  { icon: 'headphones', titleKey: 'features.support.title', descKey: 'features.support.desc' },
 ]
 
-export const footerLinks = {
-  menu: ['Ofertas', 'Alimentos', 'Bebidas', 'Electrodomésticos', 'Mais vendidos', 'Favoritos'],
-  categorias: ['Frutas', 'Padaria', 'Carnes', 'Peixaria', 'Bebidas', 'Higiene'],
-  info: ['FAQ', 'Devoluções', 'Atendimento', 'Lojas', 'Envios', 'Termos', 'Pagamentos', 'Cookies'],
-  conta: ['Favoritos', 'Carrinho', 'Os meus pedidos', 'Definições'],
-}
+export const footerMenuLinks = [
+  { key: 'nav.ofertas', path: '/ofertas' },
+  { key: 'nav.alimentos', path: '/alimentos' },
+  { key: 'nav.bebidas', path: '/bebidas' },
+  { key: 'nav.electrodomesticos', path: '/electrodomesticos' },
+  { key: 'nav.maisVendidos', path: '/mais-vendidos' },
+  { key: 'nav.favoritos', path: '/favoritos' },
+]
+
+export const footerCategoryLinks = [
+  { key: 'footer.frutas', path: '/alimentos' },
+  { key: 'footer.padaria', path: '/alimentos' },
+  { key: 'footer.carnes', path: '/alimentos' },
+  { key: 'footer.peixaria', path: '/alimentos' },
+  { key: 'nav.bebidas', path: '/bebidas' },
+  { key: 'nav.higiene', path: '/higiene' },
+]
+
+export const footerInfoLinks = [
+  { key: 'footer.faq', path: '/ajuda' },
+  { key: 'footer.returns', path: '/ajuda' },
+  { key: 'footer.support', path: '/contacto' },
+  { key: 'footer.stores', path: '/mapa' },
+  { key: 'footer.shipping', path: '/ajuda' },
+  { key: 'footer.terms', path: '/sobre' },
+  { key: 'footer.payments', path: '/ajuda' },
+  { key: 'footer.cookies', path: '/sobre' },
+]
+
+export const footerAccountLinks = [
+  { key: 'nav.favoritos', path: '/favoritos' },
+  { key: 'cart.title', path: '/carrinho' },
+  { key: 'footer.myOrders', path: '/carrinho' },
+  { key: 'footer.settings', path: '/sobre' },
+]
 
 export function getProductById(id: string): Product | undefined {
   return products.find((x) => x.id === id)

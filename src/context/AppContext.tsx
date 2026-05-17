@@ -9,11 +9,12 @@ import {
 } from 'react'
 import { getProductById, products } from '../data/products'
 import type { CartItem, Currency, NavGroup, Product } from '../types'
+import { tr } from '../i18n/runtime'
 import { cartLineKey } from '../utils/cart'
 
 export interface MegaNavState {
   path: string
-  label: string
+  navKey: string
   group: NavGroup
 }
 
@@ -139,7 +140,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }
         return [...prev, { productId: product.id, storeId: sid, quantity: qty }]
       })
-      showToast(`${qty}x ${product.name} — ${store.storeName}`)
+      showToast(
+        tr('toast.addedToCart', { qty, name: product.name, store: store.storeName }),
+      )
     },
     [showToast],
   )
@@ -150,7 +153,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setCart((prev) =>
         prev.filter((i) => cartLineKey(i.productId, i.storeId) !== lineKey),
       )
-      showToast('Produto removido do carrinho', 'info')
+      showToast(tr('toast.removedFromCart'), 'info')
     },
     [showToast],
   )
@@ -188,7 +191,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     (productId: string) => {
       setWishlist((prev) => {
         const has = prev.includes(productId)
-        showToast(has ? 'Removido dos favoritos' : 'Adicionado aos favoritos')
+        showToast(has ? tr('toast.removedFavorite') : tr('toast.addedFavorite'))
         return has ? prev.filter((id) => id !== productId) : [...prev, productId]
       })
     },
@@ -201,7 +204,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('bassula-subscribed', 'true')
       localStorage.setItem('bassula-email', email)
       setSubscribed(true)
-      showToast('Subscrição confirmada! Receberá 20% na primeira compra.')
+      showToast(tr('toast.subscribed'))
       return true
     },
     [showToast],

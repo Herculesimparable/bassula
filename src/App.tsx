@@ -7,6 +7,7 @@ import './styles/top-sellers.css'
 import './bassula.css'
 import './futuristic.css'
 import { AppProvider } from './context/AppContext'
+import { LocaleProvider } from './context/LocaleContext'
 import { AppProviders } from './providers/AppProviders'
 import { Layout } from './components/Layout'
 import { PageLoader } from './components/PageLoader'
@@ -35,8 +36,9 @@ const AppRouter = import.meta.env.VITE_GITHUB_PAGES === 'true' ? HashRouter : Br
 export default function App() {
   return (
     <AppProviders>
-      <AppRouter>
-        <AppProvider>
+      <LocaleProvider>
+        <AppRouter>
+          <AppProvider>
           <Routes>
             <Route element={<Layout />}>
               <Route
@@ -190,8 +192,9 @@ export default function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>
-        </AppProvider>
-      </AppRouter>
+          </AppProvider>
+        </AppRouter>
+      </LocaleProvider>
     </AppProviders>
   )
 }

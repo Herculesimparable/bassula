@@ -1,32 +1,37 @@
 import { ChevronDown } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { getAllProductCategories } from '../utils/categories'
 import { useApp } from '../context/AppContext'
+import { useTranslation } from '../context/LocaleContext'
 
 export function CatalogSidebar() {
+  const { t } = useTranslation()
   const { activeCategory, setActiveCategory, priceMax, setPriceMax } = useApp()
   const [priceOpen, setPriceOpen] = useState(true)
 
-  const priceOptions = [
-    { label: 'Todos os preços', value: null },
-    { label: 'Até 1.000 Kz', value: 1000 },
-    { label: 'Até 2.500 Kz', value: 2500 },
-    { label: 'Até 5.000 Kz', value: 5000 },
-    { label: 'Até 10.000 Kz', value: 10000 },
-    { label: 'Até 50.000 Kz', value: 50000 },
-    { label: 'Até 200.000 Kz', value: 200000 },
-  ]
+  const priceOptions = useMemo(
+    () => [
+      { label: t('catalog.allPrices'), value: null as number | null },
+      { label: t('catalog.upTo', { amount: '1.000' }), value: 1000 },
+      { label: t('catalog.upTo', { amount: '2.500' }), value: 2500 },
+      { label: t('catalog.upTo', { amount: '5.000' }), value: 5000 },
+      { label: t('catalog.upTo', { amount: '10.000' }), value: 10000 },
+      { label: t('catalog.upTo', { amount: '50.000' }), value: 50000 },
+      { label: t('catalog.upTo', { amount: '200.000' }), value: 200000 },
+    ],
+    [t],
+  )
 
   return (
-    <aside className="catalog-sidebar" aria-label="Filtros">
-      <h2>Filtrar</h2>
+    <aside className="catalog-sidebar" aria-label={t('catalog.filter')}>
+      <h2>{t('catalog.filter')}</h2>
       <nav>
         <button
           type="button"
           className={`filter-link ${activeCategory === 'todos' ? 'active' : ''}`}
           onClick={() => setActiveCategory('todos')}
         >
-          Todas as categorias
+          {t('catalog.allCategories')}
         </button>
         {getAllProductCategories().map((cat) => (
           <button
@@ -45,14 +50,14 @@ export function CatalogSidebar() {
           className="price-filter-toggle"
           onClick={() => setPriceOpen(!priceOpen)}
         >
-          Preço
+          {t('catalog.price')}
           <ChevronDown size={18} style={{ transform: priceOpen ? 'rotate(180deg)' : undefined }} />
         </button>
         {priceOpen && (
           <div className="price-options">
             {priceOptions.map((opt) => (
               <button
-                key={opt.label}
+                key={opt.value ?? 'all'}
                 type="button"
                 className={`filter-link ${priceMax === opt.value ? 'active' : ''}`}
                 onClick={() => setPriceMax(opt.value)}

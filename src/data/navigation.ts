@@ -2,23 +2,23 @@ import type { NavGroup } from '../types'
 import { getAllProductCategories } from '../utils/categories'
 
 export const utilityLinks = [
-  { path: '/sobre', label: 'Sobre nós' },
-  { path: '/ajuda', label: 'Atendimento ao Cliente' },
+  { path: '/sobre', navKey: 'nav.about' },
+  { path: '/ajuda', navKey: 'nav.help' },
 ]
 
 export const mainNav = [
-  { path: '/ofertas', label: 'Ofertas', group: 'ofertas' as NavGroup },
-  { path: '/alimentos', label: 'Alimentos', group: 'alimentos' as NavGroup },
-  { path: '/bebidas', label: 'Bebidas', group: 'bebidas' as NavGroup },
-  { path: '/higiene', label: 'Higiene e cosméticos', group: 'higiene' as NavGroup },
-  { path: '/pets', label: 'Produtos para pets', group: 'pets' as NavGroup },
+  { path: '/ofertas', navKey: 'nav.ofertas', group: 'ofertas' as NavGroup },
+  { path: '/alimentos', navKey: 'nav.alimentos', group: 'alimentos' as NavGroup },
+  { path: '/bebidas', navKey: 'nav.bebidas', group: 'bebidas' as NavGroup },
+  { path: '/higiene', navKey: 'nav.higiene', group: 'higiene' as NavGroup },
+  { path: '/pets', navKey: 'nav.pets', group: 'pets' as NavGroup },
   {
     path: '/electrodomesticos',
-    label: 'Electrodomésticos',
+    navKey: 'nav.electrodomesticos',
     group: 'electrodomesticos' as NavGroup,
   },
-  { path: '/mais-vendidos', label: 'Mais vendidos', group: 'vendidos' as NavGroup },
-  { path: '/favoritos', label: 'Favoritos', group: null },
+  { path: '/mais-vendidos', navKey: 'nav.maisVendidos', group: 'vendidos' as NavGroup },
+  { path: '/favoritos', navKey: 'nav.favoritos', group: null },
 ]
 
 /** Sincronizado com `products.ts` via getAllProductCategories(). */

@@ -1,62 +1,78 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from '../context/LocaleContext'
 import { publicAsset } from '../utils/publicAsset'
 
 const INTERVAL_MS = 3_000
 
-const SLIDES = [
+const SLIDE_CONFIG = [
   {
     id: 'frutas',
     image: publicAsset('promo/promo-frutas.jpg?v=1'),
     bgPosition: 'center center',
-    headline: 'Alimentos',
-    subline: 'Frutas frescas — compare preços em todas as lojas',
+    headlineKey: 'promo.frutas.headline',
+    sublineKey: 'promo.frutas.subline',
+    altKey: 'promo.frutas.subline',
     href: '/alimentos',
-    alt: 'Frutas frescas variadas',
     variant: 'frutas',
   },
   {
     id: 'padaria',
     image: publicAsset('promo/promo-padaria.jpg?v=1'),
     bgPosition: 'center 45%',
-    headline: 'Padaria',
-    subline: 'Pão, bolos e muito mais — o melhor preço perto de si',
+    headlineKey: 'promo.padaria.headline',
+    sublineKey: 'promo.padaria.subline',
+    altKey: 'promo.padaria.subline',
     href: '/alimentos?cat=Padaria',
-    alt: 'Pão fresco e padaria',
     variant: 'padaria',
   },
   {
     id: 'electro',
     image: publicAsset('promo/promo-electro.jpg?v=1'),
     bgPosition: 'center 35%',
-    headline: 'Electrodomésticos',
-    subline: 'Cozinha e lar — compare Kero, Candando, Shoprite',
+    headlineKey: 'promo.electro.headline',
+    sublineKey: 'promo.electro.subline',
+    altKey: 'promo.electro.subline',
     href: '/electrodomesticos',
-    alt: 'Electrodomésticos para casa',
     variant: 'electro',
   },
 ] as const
 
 export function PromoSlideshow() {
+  const { t } = useTranslation()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const reduceMotion = useReducedMotion()
 
-  const goTo = useCallback((next: number) => {
-    setIndex(((next % SLIDES.length) + SLIDES.length) % SLIDES.length)
-  }, [])
+  const slides = useMemo(
+    () =>
+      SLIDE_CONFIG.map((s) => ({
+        ...s,
+        headline: t(s.headlineKey),
+        subline: t(s.sublineKey),
+        alt: t(s.altKey),
+      })),
+    [t],
+  )
+
+  const goTo = useCallback(
+    (next: number) => {
+      setIndex(((next % slides.length) + slides.length) % slides.length)
+    },
+    [slides.length],
+  )
 
   useEffect(() => {
     if (paused || reduceMotion) return
     const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % SLIDES.length)
+      setIndex((i) => (i + 1) % slides.length)
     }, INTERVAL_MS)
     return () => window.clearInterval(id)
-  }, [paused, reduceMotion])
+  }, [paused, reduceMotion, slides.length])
 
-  const slide = SLIDES[index]
+  const slide = slides[index]
 
   return (
     <section
@@ -103,10 +119,10 @@ export function PromoSlideshow() {
                 />
                 <span className="promo-slideshow__overlay" aria-hidden />
                 <span className="promo-slideshow__copy">
-                  <span className="promo-slideshow__eyebrow">Bassula</span>
+                  <span className="promo-slideshow__eyebrow">{t('promo.eyebrow')}</span>
                   <span className="promo-slideshow__headline">{slide.headline}</span>
                   <span className="promo-slideshow__subline">{slide.subline}</span>
-                  <span className="promo-slideshow__cta">Ver agora →</span>
+                  <span className="promo-slideshow__cta">{t('promo.cta')}</span>
                 </span>
               </Link>
             </motion.div>
@@ -117,7 +133,7 @@ export function PromoSlideshow() {
           type="button"
           className="promo-slideshow__nav promo-slideshow__nav--prev"
           onClick={() => goTo(index - 1)}
-          aria-label="Promoção anterior"
+          aria-label={t('promo.prev')}
         >
           <ChevronLeft size={22} aria-hidden />
         </button>
@@ -125,27 +141,35 @@ export function PromoSlideshow() {
           type="button"
           className="promo-slideshow__nav promo-slideshow__nav--next"
           onClick={() => goTo(index + 1)}
-          aria-label="Promoção seguinte"
+          aria-label={t('promo.next')}
         >
           <ChevronRight size={22} aria-hidden />
         </button>
 
-        <div className="promo-slideshow__dots" role="tablist" aria-label="Selecionar promoção">
-          {SLIDES.map((s, i) => (
+        <div className="promo-slideshow__dots" role="tablist" aria-label={t('promo.select')}>
+          {slides.map((s, i) => (
             <button
               key={s.id}
               type="button"
               role="tab"
               className={`promo-slideshow__dot${i === index ? ' is-active' : ''}`}
               aria-selected={i === index}
-              aria-label={`${s.headline}, promoção ${i + 1} de ${SLIDES.length}`}
+              aria-label={t('promo.slideOf', {
+                current: i + 1,
+                total: slides.length,
+                alt: s.headline,
+              })}
               onClick={() => goTo(i)}
             />
           ))}
         </div>
 
         <span className="sr-only" aria-live="polite">
-          Promoção {index + 1} de {SLIDES.length}: {slide.alt}
+          {t('promo.slideOf', {
+            current: index + 1,
+            total: slides.length,
+            alt: slide.alt,
+          })}
         </span>
       </motion.div>
     </section>
