@@ -1,6 +1,8 @@
 export const pt = {
   lang: {
     label: 'Idioma',
+    button: 'Idioma',
+    shortAuto: 'Auto',
     auto: 'Automático (idioma do dispositivo)',
     pt: 'Português',
     en: 'English',

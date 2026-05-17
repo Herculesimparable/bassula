@@ -76,7 +76,7 @@ export function Header() {
             <UserPlus size={16} />
             {t('header.register')}
           </button>
-          <LanguageSelect />
+          <LanguageSelect variant="utility" />
           <label className="currency-select">
             <select
               value={currency}
@@ -107,6 +107,7 @@ export function Header() {
             </button>
           </form>
           <div className="header-actions header-actions-light">
+            <LanguageSelect variant="header" />
             <Link to="/mapa" className="icon-btn icon-light" aria-label={t('header.map')} title={t('header.map')}>
               <MapPin size={22} />
             </Link>
@@ -223,6 +224,9 @@ export function Header() {
             <Link to="/contacto" onClick={() => setMenuOpen(false)} className="drawer-link">
               {t('nav.contacto')}
             </Link>
+            <div className="drawer-lang">
+              <LanguageSelect variant="drawer" />
+            </div>
           </aside>
         </>
       )}

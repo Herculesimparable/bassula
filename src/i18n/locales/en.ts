@@ -1,6 +1,8 @@
 export const en = {
   lang: {
     label: 'Language',
+    button: 'Language',
+    shortAuto: 'Auto',
     auto: 'Automatic (device language)',
     pt: 'Português',
     en: 'English',
