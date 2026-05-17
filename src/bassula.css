@@ -498,6 +498,41 @@
   border-radius: var(--radius-sm);
 }
 
+.cart-store-badge {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 10px;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--navy-dark);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+  border-radius: 999px;
+  border: 1px solid rgba(15, 39, 68, 0.12);
+}
+
+.cart-store-badge--sm {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  margin: 4px 0 6px;
+}
+
+.cart-page-unit {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+
+.cart-item-price {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--red-dark);
+  margin: 0 0 8px;
+}
+
 .cart-summary {
   background: var(--beige);
   padding: 24px;

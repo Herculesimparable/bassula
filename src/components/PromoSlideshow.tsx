@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { publicAsset } from '../utils/publicAsset'
 
-const INTERVAL_MS = 15_000
+const INTERVAL_MS = 3_000
 
 const SLIDES = [
   {

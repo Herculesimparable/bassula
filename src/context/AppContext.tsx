@@ -9,6 +9,7 @@ import {
 } from 'react'
 import { getProductById, products } from '../data/products'
 import type { CartItem, Currency, NavGroup, Product } from '../types'
+import { cartLineKey } from '../utils/cart'
 
 export interface MegaNavState {
   path: string
@@ -34,8 +35,8 @@ interface AppState {
   cart: CartItem[]
   cartCount: number
   addToCart: (product: Product, quantity?: number, storeId?: string, navigateToCart?: boolean) => void
-  removeFromCart: (productId: string) => void
-  updateQuantity: (productId: string, qty: number) => void
+  removeFromCart: (productId: string, storeId: string) => void
+  updateQuantity: (productId: string, storeId: string, qty: number) => void
   clearCart: () => void
   getCartProducts: () => { item: CartItem; product: Product }[]
   wishlist: string[]
@@ -121,35 +122,51 @@ export function AppProvider({ children }: { children: ReactNode }) {
         (a.promo ?? a.price) < (b.promo ?? b.price) ? a : b,
       )
       const sid = storeId ?? best.storeId
+      const store =
+        product.prices.find((p) => p.storeId === sid) ?? best
       const qty = Math.max(1, quantity)
+      const lineKey = cartLineKey(product.id, sid)
       setCart((prev) => {
-        const existing = prev.find((i) => i.productId === product.id)
+        const existing = prev.find(
+          (i) => cartLineKey(i.productId, i.storeId) === lineKey,
+        )
         if (existing) {
           return prev.map((i) =>
-            i.productId === product.id
-              ? { ...i, quantity: i.quantity + qty, storeId: sid }
+            cartLineKey(i.productId, i.storeId) === lineKey
+              ? { ...i, quantity: i.quantity + qty }
               : i,
           )
         }
         return [...prev, { productId: product.id, storeId: sid, quantity: qty }]
       })
-      showToast(`${qty}x ${product.name} adicionado ao carrinho`)
+      showToast(`${qty}x ${product.name} — ${store.storeName}`)
     },
     [showToast],
   )
 
-  const removeFromCart = useCallback((productId: string) => {
-    setCart((prev) => prev.filter((i) => i.productId !== productId))
-    showToast('Produto removido do carrinho', 'info')
-  }, [showToast])
+  const removeFromCart = useCallback(
+    (productId: string, storeId: string) => {
+      const lineKey = cartLineKey(productId, storeId)
+      setCart((prev) =>
+        prev.filter((i) => cartLineKey(i.productId, i.storeId) !== lineKey),
+      )
+      showToast('Produto removido do carrinho', 'info')
+    },
+    [showToast],
+  )
 
-  const updateQuantity = useCallback((productId: string, qty: number) => {
+  const updateQuantity = useCallback((productId: string, storeId: string, qty: number) => {
+    const lineKey = cartLineKey(productId, storeId)
     if (qty < 1) {
-      setCart((prev) => prev.filter((i) => i.productId !== productId))
+      setCart((prev) =>
+        prev.filter((i) => cartLineKey(i.productId, i.storeId) !== lineKey),
+      )
       return
     }
     setCart((prev) =>
-      prev.map((i) => (i.productId === productId ? { ...i, quantity: qty } : i)),
+      prev.map((i) =>
+        cartLineKey(i.productId, i.storeId) === lineKey ? { ...i, quantity: qty } : i,
+      ),
     )
   }, [])
 

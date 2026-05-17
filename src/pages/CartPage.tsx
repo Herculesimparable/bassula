@@ -3,6 +3,7 @@ import { Trash2 } from 'lucide-react'
 import { BackButton } from '../components/BackButton'
 import { ProductImage } from '../components/ProductImage'
 import { useApp } from '../context/AppContext'
+import { cartLineKeyFromItem } from '../utils/cart'
 import { formatPrice, getDisplayPrice } from '../utils/price'
 
 export function CartPage() {
@@ -40,8 +41,9 @@ export function CartPage() {
             <div className="cart-list">
               {items.map(({ item, product }) => {
                 const store = product.prices.find((p) => p.storeId === item.storeId)!
+                const lineKey = cartLineKeyFromItem(item)
                 return (
-                  <article key={item.productId} className="cart-page-item">
+                  <article key={lineKey} className="cart-page-item">
                     <ProductImage
                       src={product.image}
                       alt={product.name}
@@ -49,15 +51,32 @@ export function CartPage() {
                       category={product.category}
                     />
                     <div className="cart-page-info">
+                      <span className="cart-store-badge" title="Loja de origem">
+                        {store.storeName}
+                      </span>
                       <h3>{product.name}</h3>
-                      <p>{store.storeName} · {product.unit}</p>
+                      <p className="cart-page-unit">{product.unit}</p>
                       <p className="price-current">
                         {formatPrice(getDisplayPrice(store, currency), currency)}
                       </p>
                       <div className="qty-controls">
-                        <button type="button" onClick={() => updateQuantity(item.productId, item.quantity - 1)}>−</button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateQuantity(item.productId, item.storeId, item.quantity - 1)
+                          }
+                        >
+                          −
+                        </button>
                         <span>{item.quantity}</span>
-                        <button type="button" onClick={() => updateQuantity(item.productId, item.quantity + 1)}>+</button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateQuantity(item.productId, item.storeId, item.quantity + 1)
+                          }
+                        >
+                          +
+                        </button>
                       </div>
                     </div>
                     <div className="cart-page-actions">
@@ -67,7 +86,7 @@ export function CartPage() {
                       <button
                         type="button"
                         className="btn-remove"
-                        onClick={() => removeFromCart(item.productId)}
+                        onClick={() => removeFromCart(item.productId, item.storeId)}
                         aria-label="Remover"
                       >
                         <Trash2 size={18} />

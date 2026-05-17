@@ -17,3 +17,5 @@ tsconfig.tsbuildinfo
 /pes.jpg
 /CategoryGrid.tsx
 /istockphoto-*.jpg
+
+.vercel

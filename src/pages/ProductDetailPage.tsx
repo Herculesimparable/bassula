@@ -9,7 +9,7 @@ import { formatPrice, getDisplayPrice } from '../utils/price'
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { currency, addToCart, showToast } = useApp()
+  const { currency, addToCart } = useApp()
   const [qty, setQty] = useState(1)
 
   const product = id ? getProductById(id) : undefined
@@ -112,10 +112,7 @@ export function ProductDetailPage() {
                   <button
                     type="button"
                     className={isBest ? 'btn-primary btn-sm' : 'btn-outline btn-sm'}
-                    onClick={() => {
-                      addToCart(product, qty, store.storeId)
-                      showToast(`Adicionado de ${store.storeName}`)
-                    }}
+                    onClick={() => addToCart(product, qty, store.storeId)}
                   >
                     Adicionar
                   </button>
