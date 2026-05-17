@@ -3,6 +3,18 @@
   <head>
     <script>
       (function () {
+        try {
+          var manual = localStorage.getItem('bassula-locale-manual') === '1';
+          var pref = localStorage.getItem('bassula-locale');
+          if (manual && pref === 'pt') {
+            document.documentElement.lang = 'pt-AO';
+            return;
+          }
+          if (manual && pref === 'en') {
+            document.documentElement.lang = 'en';
+            return;
+          }
+        } catch (e) {}
         var list =
           navigator.languages && navigator.languages.length
             ? navigator.languages
@@ -14,8 +26,7 @@
           if (code === 'pt') pt = true;
           if (code === 'en') en = true;
         }
-        var locale = pt ? 'pt-AO' : en ? 'en' : 'en';
-        document.documentElement.lang = locale;
+        document.documentElement.lang = pt ? 'pt-AO' : en ? 'en' : 'en';
       })();
     </script>
     <meta charset="UTF-8" />

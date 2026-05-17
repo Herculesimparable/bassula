@@ -14,9 +14,8 @@ import {
   type Locale,
   type LocalePreference,
 } from '../i18n/translate'
+import { loadLocalePreference, saveLocalePreference } from '../i18n/localeStorage'
 import { refreshAutoLocale, syncI18nRuntime } from '../i18n/runtime'
-
-const STORAGE_KEY = 'bassula-locale'
 
 interface LocaleState {
   preference: LocalePreference
@@ -27,19 +26,9 @@ interface LocaleState {
 
 const LocaleContext = createContext<LocaleState | null>(null)
 
-function loadPreference(): LocalePreference {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved === 'auto' || saved === 'pt' || saved === 'en') return saved
-  } catch {
-    /* ignore */
-  }
-  return 'auto'
-}
-
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [preference, setPreferenceState] = useState<LocalePreference>(loadPreference)
-  const [locale, setLocale] = useState<Locale>(() => resolveLocale(loadPreference()))
+  const [preference, setPreferenceState] = useState<LocalePreference>(loadLocalePreference)
+  const [locale, setLocale] = useState<Locale>(() => resolveLocale(loadLocalePreference()))
 
   useEffect(() => {
     syncI18nRuntime(preference)
@@ -60,13 +49,24 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       setLocale(resolveLocale('auto'))
     }
     syncFromDevice()
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') syncFromDevice()
+    }
     window.addEventListener('languagechange', syncFromDevice)
-    return () => window.removeEventListener('languagechange', syncFromDevice)
+    window.addEventListener('focus', syncFromDevice)
+    window.addEventListener('pageshow', syncFromDevice)
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      window.removeEventListener('languagechange', syncFromDevice)
+      window.removeEventListener('focus', syncFromDevice)
+      window.removeEventListener('pageshow', syncFromDevice)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
   }, [preference])
 
   const setPreference = useCallback((pref: LocalePreference) => {
     setPreferenceState(pref)
-    localStorage.setItem(STORAGE_KEY, pref)
+    saveLocalePreference(pref)
   }, [])
 
   const t = useCallback(
