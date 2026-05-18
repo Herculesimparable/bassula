@@ -2,23 +2,21 @@
 
 Plataforma web responsiva para comparar preços de supermercados em **Angola** (Kero, Candando, Shoprite, Alimenta) e internacionalmente.
 
-## Site público (qualquer rede / dispositivo)
+## Site público (principal)
 
-| Alojamento | URL | Notas |
-|------------|-----|--------|
-| **Vercel** (recomendado) | https://bassula.vercel.app | URLs limpas (`/ofertas`, `/alimentos`); acesso global HTTPS |
-| GitHub Pages | https://herculesimparable.github.io/bassula/ | Backup automático em cada push |
+| Alojamento | URL |
+|------------|-----|
+| **GitHub Pages** (principal) | **https://herculesimparable.github.io/bassula/** |
+| Vercel (espelho opcional) | https://bassula.vercel.app |
 
-Funciona **sem Cursor** e **sem o seu PC ligado**: o código está no GitHub; Vercel e GitHub Pages compilam e servem o site na nuvem.
+Cada `git push` na branch `main` actualiza automaticamente o site no GitHub Pages.
 
-### Ligar Vercel ao GitHub (uma vez)
+### URLs do site
 
-1. Entrar em [vercel.com](https://vercel.com) com a conta GitHub `Herculesimparable`
-2. **Add New Project** → importar `Herculesimparable/bassula`
-3. Deixar as definições por defeito (lê `vercel.json` automaticamente)
-4. **Deploy** — cada `git push` na `main` actualiza o site
-
-O ficheiro `vercel.json` na raiz do projeto configura o build Vite e as rotas da SPA (React Router).
+- Início: https://herculesimparable.github.io/bassula/
+- Ofertas: https://herculesimparable.github.io/bassula/ofertas
+- Pesquisa: https://herculesimparable.github.io/bassula/pesquisa?q=agua
+- Carrinho: https://herculesimparable.github.io/bassula/carrinho
 
 ## Desenvolvimento local
 
@@ -32,15 +30,12 @@ Abra http://localhost:5173
 ## Build
 
 ```bash
-npm run build          # local / preview
-npm run build:pages    # igual ao deploy GitHub Pages
+npm run build          # preview local (base /)
+npm run build:pages    # igual ao deploy GitHub Pages (base /bassula/)
 npm run preview:pages  # testar com base /bassula/
+npm run release        # imagens + verify + build completo
 ```
 
 ## Repositório
 
 https://github.com/Herculesimparable/bassula
-
-## Apoio
-
-Telefone: **+244 923 000 000** · Email: apoio@bassula.ao

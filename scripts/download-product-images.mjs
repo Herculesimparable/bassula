@@ -91,7 +91,7 @@ const PROMOS = {
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
-const UA = 'BassulaImageBot/1.0 (https://bassula.vercel.app; product-images)'
+const UA = 'BassulaImageBot/1.0 (https://herculesimparable.github.io/bassula/; product-images)'
 
 function resolveUrl(base, loc) {
   if (!loc) return null

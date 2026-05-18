@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react'
-import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles/theme.css'
 import './App.css'
 import './styles/top-sellers.css'
@@ -33,13 +33,17 @@ function Lazy({ children }: { children: ReactNode }) {
   return <Suspense fallback={<PageLoader />}>{children}</Suspense>
 }
 
-const AppRouter = import.meta.env.VITE_GITHUB_PAGES === 'true' ? HashRouter : BrowserRouter
+function routerBasename(): string | undefined {
+  const base = import.meta.env.BASE_URL
+  if (!base || base === '/') return undefined
+  return base.replace(/\/$/, '')
+}
 
 export default function App() {
   return (
     <AppProviders>
       <LocaleProvider>
-        <AppRouter>
+        <BrowserRouter basename={routerBasename()}>
           <AppProvider>
           <Routes>
             <Route element={<Layout />}>
@@ -185,7 +189,7 @@ export default function App() {
             </Route>
           </Routes>
           </AppProvider>
-        </AppRouter>
+        </BrowserRouter>
       </LocaleProvider>
     </AppProviders>
   )
