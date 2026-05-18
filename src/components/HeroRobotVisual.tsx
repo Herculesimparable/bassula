@@ -22,9 +22,10 @@ export function HeroRobotVisual({ className = '' }: Props) {
   const reduceMotion = useReducedMotion()
   const stageRef = useRef<HTMLDivElement>(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState(false)
 
   function updatePointer(clientX: number, clientY: number) {
-    if (!stageRef.current) return
+    if (isDragging || !stageRef.current) return
     const rect = stageRef.current.getBoundingClientRect()
     const x = ((clientX - rect.left) / rect.width - 0.5) * 28
     const y = ((clientY - rect.top) / rect.height - 0.5) * -20
@@ -36,12 +37,13 @@ export function HeroRobotVisual({ className = '' }: Props) {
   }
 
   function onTouchMove(e: TouchEvent<HTMLDivElement>) {
+    if (isDragging) return
     const touch = e.touches[0]
     if (touch) updatePointer(touch.clientX, touch.clientY)
   }
 
   function resetPointer() {
-    setTilt({ x: 0, y: 0 })
+    if (!isDragging) setTilt({ x: 0, y: 0 })
   }
 
   const tiltStyle = {
@@ -56,7 +58,7 @@ export function HeroRobotVisual({ className = '' }: Props) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <motion.div
+      <div
         ref={stageRef}
         className="hero-robot__stage"
         onMouseMove={onPointerMove}
@@ -65,43 +67,59 @@ export function HeroRobotVisual({ className = '' }: Props) {
         onTouchEnd={resetPointer}
       >
         <div className="hero-robot__aura" aria-hidden />
-        <motion.div className="hero-robot__grid" aria-hidden />
+        <div className="hero-robot__grid" aria-hidden />
 
-        {DISCOUNTS.map((tag) => (
-          <span
-            key={tag.label}
-            className={`hero-robot__badge hero-robot__badge--${tag.tone} hero-robot__badge--glass hero-robot__badge--float`}
-            style={
-              {
-                top: tag.top,
-                left: tag.left,
-                animationDelay: `${tag.delay}s`,
-              } as CSSProperties
-            }
-          >
-            {tag.label}
-          </span>
-        ))}
+        <motion.div
+          className="hero-robot__mover"
+          drag
+          dragConstraints={stageRef}
+          dragElastic={0.22}
+          dragMomentum
+          whileDrag={{ scale: 1.05, zIndex: 10 }}
+          whileHover={{ scale: 1.02 }}
+          onDragStart={() => {
+            setIsDragging(true)
+            setTilt({ x: 0, y: 0 })
+          }}
+          onDragEnd={() => setIsDragging(false)}
+          transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+        >
+          {DISCOUNTS.map((tag) => (
+            <span
+              key={tag.label}
+              className={`hero-robot__badge hero-robot__badge--${tag.tone} hero-robot__badge--glass hero-robot__badge--float`}
+              style={
+                {
+                  top: tag.top,
+                  left: tag.left,
+                  animationDelay: `${tag.delay}s`,
+                } as CSSProperties
+              }
+            >
+              {tag.label}
+            </span>
+          ))}
 
-        <div className="hero-robot__walker">
-          <div className="hero-robot__shadow" aria-hidden />
-          <div className="hero-robot__card-3d" style={tiltStyle}>
-            <div className="hero-robot__scan" aria-hidden />
-            <img
-              src={HERO_ROBOT_IMAGE}
-              alt={t('hero.robotAlt')}
-              className="hero-robot__img"
-              width={640}
-              height={640}
-              loading="eager"
-              decoding="async"
-              draggable={false}
-            />
+          <div className="hero-robot__walker">
+            <div className="hero-robot__shadow" aria-hidden />
+            <div className="hero-robot__card-3d" style={tiltStyle}>
+              <div className="hero-robot__scan" aria-hidden />
+              <img
+                src={HERO_ROBOT_IMAGE}
+                alt={t('hero.robotAlt')}
+                className="hero-robot__img"
+                width={640}
+                height={640}
+                loading="eager"
+                decoding="async"
+                draggable={false}
+              />
+            </div>
           </div>
-        </div>
+        </motion.div>
 
         <p className="hero-robot__caption">{t('hero.robotCaption')}</p>
-      </motion.div>
+      </div>
     </motion.div>
   )
 }

@@ -1764,6 +1764,25 @@
   position: relative;
   padding: 8px 4px 0;
   transform-style: preserve-3d;
+  min-height: 340px;
+  overflow: visible;
+}
+
+.hero-robot__mover {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 280px;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.hero-robot__mover:active {
+  cursor: grabbing;
 }
 
 .hero-robot__walker {

@@ -51,7 +51,7 @@ export const en = {
     ctaOffers: 'See falling prices',
     ctaTop: 'Best sellers',
     robotAlt: 'Futuristic 3D robot pushing a shopping cart with discount badges',
-    robotCaption: 'Real-time discounts',
+    robotCaption: 'Drag the robot — real-time discounts',
   },
   product: {
     best: 'Best: {{store}}',
