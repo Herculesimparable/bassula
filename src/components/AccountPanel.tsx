@@ -42,13 +42,13 @@ export function AccountPanel() {
     setUserName(u?.name ?? '')
   }
 
-  const onRegister = (e: FormEvent) => {
+  const onRegister = async (e: FormEvent) => {
     e.preventDefault()
     if (password !== confirm) {
       showToast(t('account.passwordMismatch'), 'error')
       return
     }
-    const result = registerUser(name, email, password)
+    const result = await registerUser(name, email, password)
     if (!result.ok) {
       showToast(authError(result.error), 'error')
       return
@@ -60,9 +60,9 @@ export function AccountPanel() {
     setConfirm('')
   }
 
-  const onLogin = (e: FormEvent) => {
+  const onLogin = async (e: FormEvent) => {
     e.preventDefault()
-    const result = loginUser(email, password)
+    const result = await loginUser(email, password)
     if (!result.ok) {
       showToast(authError(result.error), 'error')
       return

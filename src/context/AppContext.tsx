@@ -11,6 +11,7 @@ import { getProductById, products } from '../data/products'
 import type { CartItem, Currency, NavGroup, Product } from '../types'
 import { tr } from '../i18n/runtime'
 import { cartLineKey } from '../utils/cart'
+import { sanitizeEmail, sanitizeSearchQuery } from '../utils/sanitize'
 
 export interface MegaNavState {
   path: string
@@ -97,6 +98,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setActiveCategories((prev) =>
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat],
     )
+  }, [])
+
+  const setSearchQuerySafe = useCallback((q: string) => {
+    setSearchQuery(sanitizeSearchQuery(q))
   }, [])
 
   const clearCatalogFilters = useCallback(() => {
@@ -225,9 +230,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const subscribe = useCallback(
     (email: string) => {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false
+      const normalized = sanitizeEmail(email)
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) return false
       localStorage.setItem('bassula-subscribed', 'true')
-      localStorage.setItem('bassula-email', email)
+      localStorage.setItem('bassula-email', normalized)
       setSubscribed(true)
       showToast(tr('toast.subscribed'))
       return true
@@ -242,7 +248,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       currency,
       setCurrency,
       searchQuery,
-      setSearchQuery,
+      setSearchQuery: setSearchQuerySafe,
       activeCategories,
       setActiveCategories,
       toggleCategory,
@@ -285,6 +291,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       toggleCategory,
       setActiveCategory,
       clearCatalogFilters,
+      setSearchQuerySafe,
       cart,
       cartCount,
       wishlist,

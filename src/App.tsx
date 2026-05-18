@@ -28,6 +28,9 @@ const HelpPage = lazy(() => import('./pages/HelpPage').then((m) => ({ default: m
 const ImageCreditsPage = lazy(() =>
   import('./pages/ImageCreditsPage').then((m) => ({ default: m.ImageCreditsPage })),
 )
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })))
+const SecurityPage = lazy(() => import('./pages/SecurityPage').then((m) => ({ default: m.SecurityPage })))
+const TermsPage = lazy(() => import('./pages/TermsPage').then((m) => ({ default: m.TermsPage })))
 
 function Lazy({ children }: { children: ReactNode }) {
   return <Suspense fallback={<PageLoader />}>{children}</Suspense>
@@ -182,6 +185,30 @@ export default function App() {
                 element={
                   <Lazy>
                     <HelpPage />
+                  </Lazy>
+                }
+              />
+              <Route
+                path="privacidade"
+                element={
+                  <Lazy>
+                    <PrivacyPage />
+                  </Lazy>
+                }
+              />
+              <Route
+                path="seguranca"
+                element={
+                  <Lazy>
+                    <SecurityPage />
+                  </Lazy>
+                }
+              />
+              <Route
+                path="termos"
+                element={
+                  <Lazy>
+                    <TermsPage />
                   </Lazy>
                 }
               />

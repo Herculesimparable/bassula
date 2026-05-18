@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
 
@@ -47,6 +48,10 @@ export function Newsletter() {
           </form>
         )}
         {error && <p style={{ color: '#ffb4b4', marginTop: 8 }}>{error}</p>}
+        <p className="newsletter-privacy">
+          {t('newsletter.privacyNote')}{' '}
+          <Link to="/privacidade">{t('legal.privacy.link')}</Link>.
+        </p>
       </div>
     </section>
   )

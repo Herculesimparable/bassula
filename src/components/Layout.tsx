@@ -7,6 +7,7 @@ import { AccountPanel } from './AccountPanel'
 import { Toasts } from './Toasts'
 import { PageTransition } from './PageTransition'
 import { BassulaFab } from './BassulaFab'
+import { CookieConsent } from './CookieConsent'
 
 export function Layout() {
   const { cartOpen, setCartOpen, accountOpen, setAccountOpen } = useApp()
@@ -32,6 +33,7 @@ export function Layout() {
       <AccountPanel />
       <Toasts />
       <BassulaFab />
+      <CookieConsent />
     </div>
   )
 }

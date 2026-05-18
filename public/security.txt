@@ -1,0 +1,7 @@
+Contact: mailto:contacto@bassula.ao
+Preferred-Languages: pt, en
+Policy: https://herculesimparable.github.io/bassula/seguranca
+Privacy: https://herculesimparable.github.io/bassula/privacidade
+
+# Bassula — site de titularidade exclusiva do projecto Bassula.
+# Reporte vulnerabilidades por email. Não inclua dados sensíveis no relatório.

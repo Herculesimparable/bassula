@@ -1,3 +1,5 @@
+import { sanitizeSearchQuery } from './sanitize'
+
 export interface CatalogUrlState {
   q: string
   categories: string[]
@@ -10,7 +12,7 @@ export function parseCatalogSearchParams(params: URLSearchParams): CatalogUrlSta
     return { q: '', categories: [], priceMax: null, reset: true }
   }
 
-  const q = params.get('q') ?? ''
+  const q = sanitizeSearchQuery(params.get('q') ?? '')
   const rawCats = params.getAll('cat')
   const categories =
     rawCats.length > 0

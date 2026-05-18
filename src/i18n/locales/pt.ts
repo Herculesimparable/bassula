@@ -171,6 +171,8 @@ export const pt = {
     stores: 'Lojas',
     shipping: 'Envios',
     terms: 'Termos',
+    privacy: 'Privacidade',
+    security: 'Segurança',
     payments: 'Pagamentos',
     cookies: 'Cookies',
     imageCredits: 'Créditos de imagens',
@@ -245,6 +247,7 @@ export const pt = {
     subscribe: 'Subscrever',
     subscribed: '✓ Já está subscrito. Obrigado!',
     invalidEmail: 'Introduza um email válido',
+    privacyNote: 'Ao subscrever, aceita a nossa',
   },
   map: {
     title: 'Lojas parceiras',
@@ -277,7 +280,7 @@ export const pt = {
     email: 'Email',
     password: 'Palavra-passe',
     confirmPassword: 'Confirmar palavra-passe',
-    passwordPlaceholder: 'Mín. 6 caracteres',
+    passwordPlaceholder: 'Mín. 8 caracteres, letras e números',
     passwordMismatch: 'As palavras-passe não coincidem',
     registerError: 'Erro ao criar conta',
     loginError: 'Erro ao entrar',
@@ -288,10 +291,94 @@ export const pt = {
   auth: {
     nameRequired: 'Indique o seu nome',
     invalidEmail: 'Email inválido',
-    passwordMin: 'Palavra-passe: mínimo 6 caracteres',
+    passwordMin: 'Palavra-passe: mínimo 8 caracteres',
+    passwordWeak: 'Use letras e números na palavra-passe',
     emailRegistered: 'Este email já está registado',
     accountNotFound: 'Conta não encontrada. Crie uma conta.',
     wrongPassword: 'Palavra-passe incorrecta',
+  },
+  cookies: {
+    title: 'Privacidade e cookies',
+    body: 'Utilizamos apenas armazenamento local no seu dispositivo (carrinho, idioma, sessão). Não vendemos dados. Sem publicidade de terceiros.',
+    accept: 'Aceitar',
+    reject: 'Apenas essenciais',
+    more: 'Política de privacidade',
+  },
+  legal: {
+    relatedTitle: 'Documentos relacionados',
+    privacy: {
+      link: 'Política de privacidade',
+      title: 'Política de privacidade',
+      updated: 'Última actualização: maio de 2026',
+      intro:
+        'Esta política aplica-se ao site Bassula. O projecto é de titularidade exclusiva do responsável Bassula, publicado em herculesimparable.github.io/bassula.',
+      s1Title: '1. Titular e propriedade',
+      s1p1:
+        'O website Bassula, o código-fonte, a marca e os conteúdos editoriais são propriedade do titular do projecto Bassula. Não são revendidos nem cedidos a terceiros.',
+      s1p2:
+        'Não recolhemos dados para venda nem perfil publicitário. A comparação de preços é informativa.',
+      s2Title: '2. Dados que podem ser guardados no seu dispositivo',
+      s2i1: 'Carrinho de compras e lista de favoritos (localStorage)',
+      s2i2: 'Preferência de idioma e moeda',
+      s2i3: 'Conta local (nome, email, palavra-passe encriptada) — apenas no seu browser',
+      s2i4: 'Newsletter: indicação local de subscrição (sem envio automático a servidores Bassula)',
+      s2i5: 'Mensagens de contacto: processadas apenas no ecrã; não são armazenadas em servidor',
+      s3Title: '3. Partilha com terceiros',
+      s3p1:
+        'Não vendemos nem alugamos dados pessoais. Imagens de produtos podem ser carregadas de fontes públicas (Open Food Facts, etc.) conforme créditos. Ligações externas (redes sociais, lojas) têm políticas próprias.',
+      s4Title: '4. Cookies e armazenamento local',
+      s4p1:
+        'Usamos armazenamento local essencial para o funcionamento do site. Não usamos cookies de rastreio publicitário.',
+      s4p2: 'Pode apagar dados no browser (limpar site / localStorage) a qualquer momento.',
+      s5Title: '5. Os seus direitos',
+      s5i1: 'Aceder e apagar dados locais limpando o armazenamento do site',
+      s5i2: 'Deixar de usar o site',
+      s5i3: 'Contactar-nos para questões de privacidade',
+      s6Title: '6. Contacto',
+      s6p1: 'Questões sobre privacidade:',
+    },
+    security: {
+      link: 'Segurança',
+      title: 'Política de segurança',
+      updated: 'Última actualização: maio de 2026',
+      intro:
+        'A Bassula adopta medidas para reduzir riscos. Nenhum site na Internet é 100% invulnerável; descrevemos o que fazemos e o que pode fazer.',
+      s1Title: '1. Medidas técnicas',
+      s1i1: 'Palavras-passe encriptadas com PBKDF2 (nunca em texto simples)',
+      s1i2: 'Ligação HTTPS no site publicado (GitHub Pages)',
+      s1i3: 'Sem backend de pagamentos — menos superfície de ataque',
+      s1i4: 'Entrada de pesquisa limitada e sanitizada contra scripts',
+      s2Title: '2. Conta e dispositivo',
+      s2p1:
+        'As contas existem apenas no seu browser. Use palavra-passe forte e não partilhe o dispositivo. Em computador público, não crie sessão ou limpe dados ao sair.',
+      s3Title: '3. O que deve fazer',
+      s3i1: 'Mantenha o browser actualizado',
+      s3i2: 'Não instale extensões suspeitas',
+      s3i3: 'Verifique o URL oficial: herculesimparable.github.io/bassula',
+      s4Title: '4. Reportar vulnerabilidades',
+      s4p1: 'Se encontrar um problema de segurança, contacte:',
+      s5Title: '5. Mais informação',
+    },
+    terms: {
+      link: 'Termos de utilização',
+      title: 'Termos de utilização',
+      updated: 'Última actualização: maio de 2026',
+      intro:
+        'Ao usar o site Bassula, aceita estes termos. Se não concordar, não utilize o site.',
+      s1Title: '1. Serviço',
+      s1p1:
+        'A Bassula compara preços indicativos de lojas. Os preços podem variar na loja física. Não somos uma loja nem processamos pagamentos online.',
+      s2Title: '2. Propriedade intelectual',
+      s2p1:
+        'Conteúdos, design e código do projecto Bassula são do titular. É proibida cópia comercial não autorizada.',
+      s3Title: '3. Contas e uso aceitável',
+      s3p1:
+        'Não use o site para actividades ilegais, ataques, spam ou tentativas de aceder a dados de outros utilizadores (inexistentes no servidor).',
+      s4Title: '4. Privacidade',
+      s4p1: 'Consulte a',
+      s5Title: '5. Alterações',
+      s5p1: 'Podemos actualizar estes termos. A data no topo indica a versão em vigor.',
+    },
   },
   static: {
     about: {

@@ -268,9 +268,11 @@ export const footerInfoLinks = [
   { key: 'footer.support', path: '/contacto' },
   { key: 'footer.stores', path: '/mapa' },
   { key: 'footer.shipping', path: '/ajuda' },
-  { key: 'footer.terms', path: '/sobre' },
+  { key: 'footer.privacy', path: '/privacidade' },
+  { key: 'footer.security', path: '/seguranca' },
+  { key: 'footer.terms', path: '/termos' },
   { key: 'footer.payments', path: '/ajuda' },
-  { key: 'footer.cookies', path: '/sobre' },
+  { key: 'footer.cookies', path: '/privacidade#cookies' },
 ]
 
 export const footerAccountLinks = [
