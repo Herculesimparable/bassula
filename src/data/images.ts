@@ -11,22 +11,32 @@ const cat = (slug: string) => publicAsset(`images/categories/${slug}.jpg?v=${V}`
 
 /** Promoções já alinhadas com categorias da home (fallback se falhar o JPG local) */
 const CATEGORY_PROMO: Partial<Record<string, string>> = {
-  frutas: publicAsset('promo/promo-frutas.jpg?v=1'),
-  padaria: publicAsset('promo/promo-padaria.jpg?v=1'),
-  electrodomesticos: publicAsset('promo/promo-electro.jpg?v=1'),
+  frutas: publicAsset('promo/promo-frutas.jpg?v=2'),
+  padaria: publicAsset('promo/promo-padaria.jpg?v=2'),
+  electrodomesticos: publicAsset('promo/promo-electro.jpg?v=2'),
+  vinhos: publicAsset('promo/promo-wine.jpg?v=2'),
+  verdura: publicAsset('promo/promo-frutas.jpg?v=2'),
+  brinquedos: publicAsset('promo/promo-frutas.jpg?v=2'),
+  sanitarios: publicAsset('promo/promo-higiene.jpg?v=2'),
 }
+
+export const PROMO_WINE_IMAGE = publicAsset('promo/promo-wine.jpg?v=2')
+export const PROMO_DISCOUNT_IMAGE = publicAsset('promo/promo-discount.jpg?v=2')
 
 /** Textos alt em pt-AO para cartões de categoria */
 export const CATEGORY_IMAGE_ALT: Record<string, string> = {
   frutas: 'Frutas frescas variadas',
   padaria: 'Pão fresco e produtos de padaria',
-  vinhos: 'Garrafa de vinho tinto',
+  vinhos: 'Vinho tinto com rodelas de queijo',
   peixaria: 'Filetes de salmão',
   carnes: 'Carnes e aves frescas',
   bebidas: 'Cerveja e bebidas',
   higiene: 'Produtos de higiene e cuidados pessoais',
   mercearia: 'Arroz e mercearia',
   electrodomesticos: 'Electrodomésticos para cozinha e lar',
+  verdura: 'Verduras e legumes frescos',
+  brinquedos: 'Brinquedos para crianças',
+  sanitarios: 'Produtos sanitários e de limpeza',
 }
 
 /** Nome do produto por ID (legenda ↔ imagem) */

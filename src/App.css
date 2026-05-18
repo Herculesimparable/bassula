@@ -592,14 +592,43 @@
   opacity: 0.9;
 }
 
+.promo-banner--image {
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  min-height: 220px;
+}
+
+.promo-banner--image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, rgba(15, 39, 68, 0.82) 0%, rgba(15, 39, 68, 0.35) 55%, transparent 100%);
+  pointer-events: none;
+}
+
+.promo-banner__content {
+  position: relative;
+  z-index: 1;
+  max-width: 240px;
+}
+
+.promo-banner--image h3,
+.promo-banner--image p {
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
 .promo-banner.wine {
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-  color: var(--navy);
+  background-color: #1a3a5c;
 }
 
 .promo-banner.cheese {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-  color: #78350f;
+  background-color: #78350f;
+}
+
+.promo-banner.cheese .promo-discount {
+  color: #fde68a;
 }
 
 .promo-banner.pasta {

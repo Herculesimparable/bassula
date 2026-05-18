@@ -1,7 +1,7 @@
 import { ChevronDown, Heart, LogIn, MapPin, Menu, Search, ShoppingCart, UserPlus, X } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useRef, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { utilityLinks, mainNav } from '../data/navigation'
 import { useApp } from '../context/AppContext'
 import type { Currency } from '../types'
@@ -15,7 +15,6 @@ import { LanguageSelect } from './LanguageSelect'
 export function Header() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const location = useLocation()
   const {
     searchQuery,
     setSearchQuery,
@@ -28,7 +27,9 @@ export function Header() {
     setOpenMegaNav,
     currency,
     setCurrency,
+    setActiveCategories,
     setActiveCategory,
+    setPriceMax,
   } = useApp()
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null)
   const navCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -49,8 +50,13 @@ export function Header() {
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault()
-    const path = location.pathname.startsWith('/ofertas') ? location.pathname : '/ofertas'
-    navigate(path)
+    const q = searchQuery.trim()
+    const params = new URLSearchParams()
+    if (q) params.set('q', q)
+    setActiveCategories([])
+    setPriceMax(null)
+    const qs = params.toString()
+    navigate(qs ? `/ofertas?${qs}` : '/ofertas?reset=1')
   }
 
   const openAccount = (mode: 'login' | 'register') => {

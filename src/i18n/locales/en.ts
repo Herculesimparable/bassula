@@ -99,10 +99,31 @@ export const en = {
     seeOffers: 'See deals',
   },
   features: {
-    fast: { title: 'Fast delivery', desc: 'In Luanda and major cities' },
-    quality: { title: 'Quality guaranteed', desc: 'Products checked daily' },
-    fair: { title: 'Fair comparison', desc: 'Prices updated in real time' },
-    support: { title: '24/7 support', desc: 'Help in Portuguese and English' },
+    learnMore: 'Learn more',
+    fast: {
+      title: 'Fast delivery',
+      desc: 'In Luanda and major cities',
+      detail:
+        'Delivery in Luanda within 24–48 business hours. Other provinces: 3–5 days. Track your order in your account or by SMS.',
+    },
+    quality: {
+      title: 'Quality guaranteed',
+      desc: 'Products checked daily',
+      detail:
+        'We only work with certified partner stores. Prices and availability are updated every day.',
+    },
+    fair: {
+      title: 'Fair comparison',
+      desc: 'Prices updated in real time',
+      detail:
+        'Compare Kero, Candando, Shoprite, Alimenta Angola and more on one screen. The lowest price is always highlighted.',
+    },
+    support: {
+      title: '24/7 support',
+      desc: 'Help in Portuguese and English',
+      detail:
+        'Call center available 24/7: +244 923 000 000. Chat, email and help page for shipping, returns and payments.',
+    },
   },
   cart: {
     title: 'My cart',
@@ -155,7 +176,10 @@ export const en = {
     noProducts: 'No products found.',
     tryOther: 'Try another filter or search.',
     filtering: 'Filtering',
+    searching: 'Search',
     clear: 'Clear',
+    clearAll: 'Clear all filters',
+    removeFilter: 'Remove filter {{name}}',
     topHero:
       'Ranking of the most purchased products — compare Kero, Candando, Shoprite and more before you decide.',
     loadError: 'Error loading products.',

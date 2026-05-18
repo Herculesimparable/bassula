@@ -71,13 +71,25 @@ const PRODUCTS = {
 const CATEGORIES = {
   frutas: { lf: 'fresh,fruit,market' },
   padaria: { lf: 'bakery,bread,loaf' },
-  vinhos: { lf: 'wine,bottle,red' },
+  vinhos: { lf: 'wine,bottle,red,cheese,board' },
   peixaria: { lf: 'fresh,fish,seafood' },
   carnes: { lf: 'raw,meat,butcher' },
   bebidas: { lf: 'beverages,drinks' },
   higiene: { lf: 'shampoo,toiletries' },
   mercearia: { lf: 'grocery,shelves' },
   electrodomesticos: { lf: 'kitchen,appliances' },
+  verdura: { lf: 'vegetables,greens,fresh' },
+  brinquedos: { lf: 'toys,children,colorful' },
+  sanitarios: { lf: 'cleaning,toilet,paper' },
+}
+
+const PROMOS = {
+  'promo-frutas': 'fresh,fruit,market',
+  'promo-padaria': 'bakery,bread,loaf',
+  'promo-electro': 'kitchen,appliances',
+  'promo-wine': 'wine,bottle,cheese,board',
+  'promo-discount': 'cheese,slices,plate',
+  'promo-higiene': 'shampoo,toiletries,cleaning',
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -196,6 +208,21 @@ async function main() {
       ok++
     } catch (e) {
       console.error(`FAIL categoria ${slug}:`, e.message)
+      fail++
+    }
+    await sleep(500)
+  }
+
+  const promoDir = path.join(__dirname, '../public/promo')
+  fs.mkdirSync(promoDir, { recursive: true })
+  for (const [name, tags] of Object.entries(PROMOS)) {
+    const dest = path.join(promoDir, `${name}.jpg`)
+    try {
+      await download(loremFlickr(tags, `promo-${name}`), dest)
+      console.log(`OK promo ${name}`)
+      ok++
+    } catch (e) {
+      console.error(`FAIL promo ${name}:`, e.message)
       fail++
     }
     await sleep(500)

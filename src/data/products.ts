@@ -16,6 +16,9 @@ export const categories: Category[] = [
     slug: 'electrodomesticos',
     image: categoryImage('electrodomesticos'),
   },
+  { id: '10', name: 'Verdura', slug: 'verdura', image: categoryImage('verdura') },
+  { id: '11', name: 'Brinquedos', slug: 'brinquedos', image: categoryImage('brinquedos') },
+  { id: '12', name: 'Sanitários', slug: 'sanitarios', image: categoryImage('sanitarios') },
 ]
 
 function p(

@@ -29,8 +29,12 @@ interface AppState {
   setCurrency: (c: Currency) => void
   searchQuery: string
   setSearchQuery: (q: string) => void
-  activeCategory: string
+  activeCategories: string[]
+  setActiveCategories: (cats: string[]) => void
+  toggleCategory: (cat: string) => void
+  /** Uma categoria ou "todos" (limpa filtros de categoria). */
   setActiveCategory: (c: string) => void
+  clearCatalogFilters: () => void
   priceMax: number | null
   setPriceMax: (v: number | null) => void
   cart: CartItem[]
@@ -77,8 +81,29 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return (saved as Currency) || 'AOA'
   })
   const [searchQuery, setSearchQuery] = useState('')
-  const [activeCategory, setActiveCategory] = useState('todos')
+  const [activeCategories, setActiveCategories] = useState<string[]>([])
   const [priceMax, setPriceMax] = useState<number | null>(null)
+
+  const setActiveCategory = useCallback((c: string) => {
+    if (c === 'todos') setActiveCategories([])
+    else setActiveCategories([c])
+  }, [])
+
+  const toggleCategory = useCallback((cat: string) => {
+    if (cat === 'todos') {
+      setActiveCategories([])
+      return
+    }
+    setActiveCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat],
+    )
+  }, [])
+
+  const clearCatalogFilters = useCallback(() => {
+    setActiveCategories([])
+    setSearchQuery('')
+    setPriceMax(null)
+  }, [])
   const [cart, setCart] = useState<CartItem[]>(loadCart)
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
@@ -218,8 +243,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setCurrency,
       searchQuery,
       setSearchQuery,
-      activeCategory,
+      activeCategories,
+      setActiveCategories,
+      toggleCategory,
       setActiveCategory,
+      clearCatalogFilters,
       priceMax,
       setPriceMax,
       cart,
@@ -251,8 +279,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [
       currency,
       searchQuery,
-      activeCategory,
+      activeCategories,
       priceMax,
+      setActiveCategories,
+      toggleCategory,
+      setActiveCategory,
+      clearCatalogFilters,
       cart,
       cartCount,
       wishlist,

@@ -15,10 +15,10 @@ import { filterProducts } from '../utils/price'
 
 export function HomePage() {
   const { t } = useTranslation()
-  const { searchQuery, activeCategory } = useApp()
-  const filtered = filterProducts(products, searchQuery, activeCategory)
+  const { searchQuery, activeCategories } = useApp()
+  const filtered = filterProducts(products, searchQuery, activeCategories)
   const bySection = (section: string) => filtered.filter((p) => p.section === section)
-  const topSellers = filterProducts(getProductsByGroup('vendidos'), searchQuery, activeCategory)
+  const topSellers = filterProducts(getProductsByGroup('vendidos'), searchQuery, activeCategories)
 
   return (
     <main>
@@ -29,7 +29,9 @@ export function HomePage() {
         <div className="search-results-banner">
           <div className="container">
             {t('home.searchResults', { count: filtered.length, query: searchQuery })} —{' '}
-            <Link to="/ofertas">{t('home.searchSeeAll')}</Link>
+            <Link to={`/ofertas?q=${encodeURIComponent(searchQuery.trim())}`}>
+              {t('home.searchSeeAll')}
+            </Link>
           </div>
         </div>
       )}
@@ -40,13 +42,6 @@ export function HomePage() {
         products={bySection('ofertas')}
       />
       <PromoBanners />
-      <ProductCarousel
-        title={t('home.fillCart')}
-        products={bySection('carrinho')}
-        centered
-        moreLink="/alimentos"
-        moreLabel={t('home.seeMoreFood')}
-      />
       <ProductCarousel
         id="mais-vendidos"
         title={t('home.topSellers')}

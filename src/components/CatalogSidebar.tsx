@@ -1,17 +1,27 @@
 import { ChevronDown } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { getAllProductCategories, getCategoriesForGroup } from '../utils/categories'
-import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
 import type { NavGroup } from '../types'
 
 interface CatalogSidebarProps {
   group?: NavGroup
+  activeCategories: string[]
+  priceMax: number | null
+  onToggleCategory: (cat: string) => void
+  onPriceChange: (value: number | null) => void
+  onClearAll: () => void
 }
 
-export function CatalogSidebar({ group }: CatalogSidebarProps) {
+export function CatalogSidebar({
+  group,
+  activeCategories,
+  priceMax,
+  onToggleCategory,
+  onPriceChange,
+  onClearAll,
+}: CatalogSidebarProps) {
   const { t } = useTranslation()
-  const { activeCategory, setActiveCategory, priceMax, setPriceMax } = useApp()
   const [priceOpen, setPriceOpen] = useState(true)
 
   const categories = useMemo(
@@ -32,14 +42,23 @@ export function CatalogSidebar({ group }: CatalogSidebarProps) {
     [t],
   )
 
+  const allSelected = activeCategories.length === 0
+
   return (
     <aside className="catalog-sidebar" aria-label={t('catalog.filter')}>
-      <h2>{t('catalog.filter')}</h2>
+      <div className="catalog-sidebar__head">
+        <h2>{t('catalog.filter')}</h2>
+        {!allSelected && (
+          <button type="button" className="link-reset catalog-sidebar__clear" onClick={onClearAll}>
+            {t('catalog.clearAll')}
+          </button>
+        )}
+      </div>
       <nav>
         <button
           type="button"
-          className={`filter-link ${activeCategory === 'todos' ? 'active' : ''}`}
-          onClick={() => setActiveCategory('todos')}
+          className={`filter-link ${allSelected ? 'active' : ''}`}
+          onClick={() => onToggleCategory('todos')}
         >
           {t('catalog.allCategories')}
         </button>
@@ -47,8 +66,9 @@ export function CatalogSidebar({ group }: CatalogSidebarProps) {
           <button
             key={cat}
             type="button"
-            className={`filter-link ${activeCategory === cat ? 'active' : ''}`}
-            onClick={() => setActiveCategory(cat)}
+            className={`filter-link ${activeCategories.includes(cat) ? 'active' : ''}`}
+            onClick={() => onToggleCategory(cat)}
+            aria-pressed={activeCategories.includes(cat)}
           >
             {cat}
           </button>
@@ -70,7 +90,7 @@ export function CatalogSidebar({ group }: CatalogSidebarProps) {
                 key={opt.value ?? 'all'}
                 type="button"
                 className={`filter-link ${priceMax === opt.value ? 'active' : ''}`}
-                onClick={() => setPriceMax(opt.value)}
+                onClick={() => onPriceChange(opt.value)}
               >
                 {opt.label}
               </button>

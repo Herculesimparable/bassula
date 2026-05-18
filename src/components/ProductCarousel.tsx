@@ -20,7 +20,7 @@ export function ProductCarousel({
   products,
   id,
   variant = 'default',
-  moreLink = '/ofertas',
+  moreLink = '/ofertas?reset=1',
   moreLabel,
   centered = false,
 }: Props) {

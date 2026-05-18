@@ -1,4 +1,5 @@
 import type { Currency, NavGroup, Product, StorePrice } from '../types'
+import { normalizeSearchText, searchTerms } from './search'
 
 const rates: Record<Currency, number> = {
   AOA: 1,
@@ -42,25 +43,40 @@ export function getDisplayPrice(price: StorePrice, currency: Currency): number {
   return val * rates[currency]
 }
 
+function resolveCategoryList(categories?: string[] | string): string[] {
+  if (Array.isArray(categories)) {
+    return categories.filter((c) => c && c !== 'todos')
+  }
+  if (!categories || categories === 'todos') return []
+  return [categories]
+}
+
 export function filterProducts(
   list: Product[],
   query: string,
-  category?: string,
+  categories?: string[] | string,
   priceMax?: number | null,
 ): Product[] {
-  const q = query.trim().toLowerCase()
+  const terms = searchTerms(query)
+  const catList = resolveCategoryList(categories).map(normalizeSearchText)
+
   return list.filter((p) => {
     const lowest = getLowestValue(p.prices)
+    const name = normalizeSearchText(p.name)
+    const category = normalizeSearchText(p.category)
     const matchQuery =
-      !q ||
-      p.name.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q) ||
-      p.prices.some((s) => s.storeName.toLowerCase().includes(q))
+      !terms.length ||
+      terms.every(
+        (term) =>
+          name.includes(term) ||
+          category.includes(term) ||
+          p.prices.some((s) => normalizeSearchText(s.storeName).includes(term)),
+      )
     const matchCat =
-      !category ||
-      category === 'todos' ||
-      p.category.toLowerCase() === category.toLowerCase() ||
-      p.category.toLowerCase().includes(category.toLowerCase())
+      !catList.length ||
+      catList.some(
+        (c) => category === c || category.includes(c) || c.includes(category),
+      )
     const matchPrice = priceMax == null || lowest <= priceMax
     return matchQuery && matchCat && matchPrice
   })
