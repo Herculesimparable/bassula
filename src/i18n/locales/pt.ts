@@ -50,6 +50,8 @@ export const pt = {
     body: 'Compare Kero, Candando, Shoprite e mais. Arroz, óleo, feijão e tudo o que precisa — o mais barato em cada loja.',
     ctaOffers: 'Ver preços em queda',
     ctaTop: 'Mais vendidos',
+    robotAlt: 'Robô futurista em 3D a empurrar carrinho de compras com descontos',
+    robotCaption: 'Descontos em tempo real',
   },
   product: {
     best: 'Melhor: {{store}}',

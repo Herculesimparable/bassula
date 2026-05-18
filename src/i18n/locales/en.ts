@@ -50,6 +50,8 @@ export const en = {
     body: 'Compare Kero, Candando, Shoprite and more. Rice, oil, beans and everything you need — the lowest price at each store.',
     ctaOffers: 'See falling prices',
     ctaTop: 'Best sellers',
+    robotAlt: 'Futuristic 3D robot pushing a shopping cart with discount badges',
+    robotCaption: 'Real-time discounts',
   },
   product: {
     best: 'Best: {{store}}',
