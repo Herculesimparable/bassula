@@ -1,5 +1,5 @@
 import { Check, MapPin, ShoppingCart } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { BackButton } from '../components/BackButton'
 import { Button } from '../components/ui/Button'
@@ -7,7 +7,7 @@ import { ProductImage } from '../components/ProductImage'
 import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
 import { getProductById } from '../data/products'
-import { formatPrice, getDisplayPrice } from '../utils/price'
+import { formatPrice, getBestPrice, getDisplayPrice } from '../utils/price'
 
 export function ProductDetailPage() {
   const { t } = useTranslation()
@@ -17,7 +17,19 @@ export function ProductDetailPage() {
 
   const product = id ? getProductById(id) : undefined
 
-  if (!product) {
+  const sorted = useMemo(
+    () =>
+      product?.prices?.length
+        ? [...product.prices].sort(
+            (a, b) => (a.promo ?? a.price) - (b.promo ?? b.price),
+          )
+        : [],
+    [product],
+  )
+
+  const best = sorted.length ? getBestPrice(sorted) : null
+
+  if (!product || !best) {
     return (
       <main className="page-product-detail">
         <div className="container">
@@ -32,11 +44,6 @@ export function ProductDetailPage() {
       </main>
     )
   }
-
-  const sorted = [...product.prices].sort(
-    (a, b) => (a.promo ?? a.price) - (b.promo ?? b.price),
-  )
-  const best = sorted[0]
 
   return (
     <main className="page-product-detail">
@@ -61,7 +68,9 @@ export function ProductDetailPage() {
 
             <div className="product-detail-best">
               <span className="best-label">{t('detail.bestPrice')}</span>
-              <span className="best-price">{formatPrice(getDisplayPrice(best, currency), currency)}</span>
+              <span className="best-price">
+                {formatPrice(getDisplayPrice(best, currency), currency)}
+              </span>
               <span className="best-store">
                 <MapPin size={16} />
                 {best.storeName}
@@ -69,16 +78,19 @@ export function ProductDetailPage() {
             </div>
 
             <div className="qty-row qty-row-lg">
-              <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
+              <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))}>
+                −
+              </button>
               <span>{qty}</span>
-              <button type="button" onClick={() => setQty((q) => q + 1)}>+</button>
+              <button type="button" onClick={() => setQty((q) => q + 1)}>
+                +
+              </button>
             </div>
 
             <Button
               type="button"
               variant="primary"
               fullWidth
-              animated
               onClick={() => addToCart(product, qty, best.storeId)}
             >
               <ShoppingCart size={20} />
@@ -111,7 +123,9 @@ export function ProductDetailPage() {
                     <strong>{store.storeName}</strong>
                   </div>
                   <div className="store-compare-prices">
-                    {oldPrice != null && <span className="price-old">{formatPrice(oldPrice, currency)}</span>}
+                    {oldPrice != null && (
+                      <span className="price-old">{formatPrice(oldPrice, currency)}</span>
+                    )}
                     <span className="price-current">{formatPrice(price, currency)}</span>
                   </div>
                   <Button

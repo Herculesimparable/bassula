@@ -1,4 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react'
+import { lazyImport } from './utils/lazyImport'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles/theme.css'
 import './App.css'
@@ -19,8 +20,10 @@ const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ defaul
 const CartPage = lazy(() => import('./pages/CartPage').then((m) => ({ default: m.CartPage })))
 const MapPage = lazy(() => import('./pages/MapPage').then((m) => ({ default: m.MapPage })))
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })))
-const FavoritesPage = lazy(() => import('./pages/FavoritesPage').then((m) => ({ default: m.FavoritesPage })))
-const ProductDetailPage = lazy(() =>
+const FavoritesPage = lazy(() =>
+  import('./pages/FavoritesPage').then((m) => ({ default: m.FavoritesPage })),
+)
+const ProductDetailPage = lazyImport(() =>
   import('./pages/ProductDetailPage').then((m) => ({ default: m.ProductDetailPage })),
 )
 const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })))
