@@ -7,7 +7,7 @@ import './index.css'
 
 const rootEl = document.documentElement
 rootEl.style.setProperty('--app-promo-bg-image', `url(${HERO_IMAGE})`)
-rootEl.style.setProperty('--newsletter-bg-image', `url(${publicAsset('images/categories/frutas.jpg?v=9')})`)
+rootEl.style.setProperty('--newsletter-bg-image', `url(${publicAsset('images/categories/frutas.jpg?v=10')})`)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

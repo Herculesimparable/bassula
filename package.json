@@ -10,7 +10,9 @@
     "build:pages": "tsc -b && cross-env VITE_GITHUB_PAGES=true vite build",
     "preview": "vite preview",
     "preview:pages": "npm run build:pages && vite preview --base /bassula/",
-    "images:fetch": "node scripts/download-product-images.mjs"
+    "images:fetch": "node scripts/download-product-images.mjs",
+    "verify": "node scripts/verify-catalog.mjs",
+    "release": "npm run images:fetch && npm run verify && npm run build && npm run build:pages"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.100.10",
