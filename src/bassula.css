@@ -1749,336 +1749,139 @@
   margin-top: 8px;
 }
 
-/* Hero — visual futurista (lado direito) */
-.hero-fx {
+/* Hero — robô com carrinho e descontos */
+.hero-robot {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin-left: auto;
-  aspect-ratio: 1;
-  min-height: 280px;
+  min-height: 260px;
 }
 
-.hero-fx__stage {
+.hero-robot__scene {
   position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 12px 8px 0;
 }
 
-.hero-fx__grid-floor {
+.hero-robot__glow {
   position: absolute;
-  inset: auto 5% 8% 5%;
-  height: 42%;
-  background:
-    linear-gradient(rgba(8, 145, 178, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(8, 145, 178, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px;
-  transform: perspective(400px) rotateX(68deg);
-  transform-origin: center bottom;
-  mask-image: linear-gradient(to top, black 20%, transparent 85%);
-  pointer-events: none;
-}
-
-.hero-fx__beam {
-  position: absolute;
-  left: 50%;
-  top: 12%;
-  width: 3px;
-  height: 55%;
-  margin-left: -1px;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(34, 211, 238, 0.5) 30%,
-    rgba(225, 29, 72, 0.85) 70%,
-    transparent
-  );
-  filter: blur(0.5px);
-  animation: hero-fx-beam 2.5s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.hero-fx__beam--2 {
-  width: 48px;
-  margin-left: -24px;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(225, 29, 72, 0.08) 40%,
-    rgba(225, 29, 72, 0.15) 60%,
-    transparent
-  );
-  animation-delay: 0.6s;
-}
-
-@keyframes hero-fx-beam {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: scaleY(0.92);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
-
-.hero-fx__ring {
-  position: absolute;
+  inset: 10% 5% 20%;
   border-radius: 50%;
-  border: 1px solid transparent;
+  background: radial-gradient(ellipse at center, rgba(196, 30, 58, 0.14) 0%, rgba(8, 145, 178, 0.08) 45%, transparent 70%);
   pointer-events: none;
 }
 
-.hero-fx__ring--outer {
-  inset: 4%;
-  border-color: rgba(34, 211, 238, 0.25);
-  animation: hero-fx-spin 24s linear infinite;
+.hero-robot__badge {
+  position: absolute;
+  z-index: 3;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--red, #c41e3a), #9f1239);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
 }
 
-.hero-fx__ring--mid {
-  inset: 18%;
-  border-color: rgba(225, 29, 72, 0.3);
-  border-style: dashed;
-  animation: hero-fx-spin-rev 16s linear infinite;
+.hero-robot__badge--teal {
+  background: linear-gradient(135deg, #0891b2, #22d3ee);
+  box-shadow: 0 6px 18px rgba(8, 145, 178, 0.4);
 }
 
-.hero-fx__ring--inner {
-  inset: 32%;
-  border-color: rgba(245, 158, 11, 0.25);
-  animation: hero-fx-spin 10s linear infinite;
+.hero-robot__badge--green {
+  background: linear-gradient(135deg, #16a34a, #4ade80);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+  color: #052e16;
 }
 
-@keyframes hero-fx-spin {
+.hero-robot__svg {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 28px rgba(15, 23, 42, 0.12));
+}
+
+.hero-robot__wheel {
+  transform-origin: 268px 238px;
+  animation: hero-robot-wheel 1.2s linear infinite;
+}
+
+.hero-robot__wheel--2 {
+  transform-origin: 318px 238px;
+  animation-delay: 0.15s;
+}
+
+@keyframes hero-robot-wheel {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes hero-fx-spin-rev {
-  to {
-    transform: rotate(-360deg);
-  }
+.hero-robot__arm {
+  transform-origin: 206px 200px;
+  animation: hero-robot-push 1.6s ease-in-out infinite;
 }
 
-.hero-fx__scan {
-  position: absolute;
-  inset: 10%;
-  border-radius: 50%;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(34, 211, 238, 0.12) 45%,
-    rgba(225, 29, 72, 0.2) 50%,
-    transparent 55%
-  );
-  background-size: 100% 200%;
-  animation: hero-fx-scan 4s linear infinite;
-  pointer-events: none;
-  mix-blend-mode: screen;
+.hero-robot__arm--left {
+  transform-origin: 118px 200px;
+  animation-delay: 0.2s;
 }
 
-@keyframes hero-fx-scan {
-  0% {
-    background-position: 0 -100%;
-  }
-  100% {
-    background-position: 0 100%;
-  }
-}
-
-.hero-fx__particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hero-fx__particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--teal-light);
-  box-shadow: 0 0 8px var(--teal-light);
-  top: calc(15% + (var(--i) * 6.5%));
-  left: calc(10% + (var(--i) * 7%));
-  animation: hero-fx-float 3s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.22s);
-  opacity: 0.7;
-}
-
-@keyframes hero-fx-float {
+@keyframes hero-robot-push {
   0%,
   100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.4;
+    transform: rotate(0deg);
   }
   50% {
-    transform: translateY(-12px) scale(1.2);
-    opacity: 1;
+    transform: rotate(4deg);
   }
 }
 
-.hero-fx__orbit {
-  position: absolute;
-  inset: 8%;
-  animation: hero-fx-spin 28s linear infinite;
-  pointer-events: none;
+.hero-robot__eye {
+  animation: hero-robot-blink 4s ease-in-out infinite;
 }
 
-.hero-fx__node {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #e2e8f0;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(34, 211, 238, 0.45);
-  backdrop-filter: blur(8px);
-  white-space: nowrap;
-  transform: rotate(var(--angle)) translateX(min(42%, 130px)) rotate(calc(-1 * var(--angle)));
-  transform-origin: center center;
+.hero-robot__eye--2 {
+  animation-delay: 0.1s;
 }
 
-.hero-fx__node-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 8px #4ade80;
-  flex-shrink: 0;
+@keyframes hero-robot-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.15);
+  }
 }
 
-.hero-fx__core {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: clamp(140px, 42%, 200px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #1e293b 0%, #0f172a 55%, #020617 100%);
-  border: 2px solid rgba(34, 211, 238, 0.5);
+.hero-robot__cart {
+  animation: hero-robot-cart-nudge 1.6s ease-in-out infinite;
+  transform-origin: 290px 210px;
+}
+
+@keyframes hero-robot-cart-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.hero-robot__caption {
+  margin: 4px 0 0;
   text-align: center;
-  padding: 1rem;
-}
-
-.hero-fx__core-ring {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1px solid rgba(225, 29, 72, 0.6);
-  animation: hero-fx-pulse-ring 2s ease-out infinite;
-}
-
-@keyframes hero-fx-pulse-ring {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.15);
-    opacity: 0;
-  }
-}
-
-.hero-fx__core-label {
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--teal-light);
-  margin-bottom: 4px;
-}
-
-.hero-fx__core-price {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: clamp(1.75rem, 5vw, 2.25rem);
-  font-weight: 800;
-  line-height: 1;
-  color: #fff;
-  text-shadow: 0 0 24px rgba(225, 29, 72, 0.8);
-}
-
-.hero-fx__arrow {
-  color: #4ade80;
-  animation: hero-fx-bounce 1.2s ease-in-out infinite;
-}
-
-@keyframes hero-fx-bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(5px);
-  }
-}
-
-.hero-fx__amount {
-  background: linear-gradient(135deg, #4ade80, #22d3ee);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-fx__core-sub {
-  margin-top: 4px;
-  font-size: 0.7rem;
-  color: rgba(148, 163, 184, 0.95);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.hero-fx__ticker {
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.12);
-  border: 1px solid rgba(74, 222, 128, 0.35);
-}
-
-.hero-fx__ticker-sep {
-  opacity: 0.5;
-}
-
-.hero-fx__lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.85;
-}
-
-.hero-fx__svg-spin {
-  transform-origin: 200px 200px;
-  animation: hero-fx-spin 20s linear infinite;
-}
-
-.hero-fx__svg-spin-rev {
-  transform-origin: 200px 200px;
-  animation: hero-fx-spin-rev 14s linear infinite;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
 }
 
 @media (max-width: 960px) {
@@ -2096,26 +1899,19 @@
     justify-content: center;
   }
 
-  .hero-fx {
+  .hero-robot {
     margin: 0 auto;
-    max-width: min(360px, 92vw);
+    max-width: min(380px, 92vw);
     order: -1;
-    min-height: 240px;
+    min-height: 220px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-fx__ring--outer,
-  .hero-fx__ring--mid,
-  .hero-fx__ring--inner,
-  .hero-fx__orbit,
-  .hero-fx__scan,
-  .hero-fx__beam,
-  .hero-fx__particle,
-  .hero-fx__core-ring,
-  .hero-fx__arrow,
-  .hero-fx__svg-spin,
-  .hero-fx__svg-spin-rev {
+  .hero-robot__wheel,
+  .hero-robot__arm,
+  .hero-robot__eye,
+  .hero-robot__cart {
     animation: none !important;
   }
 }

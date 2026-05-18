@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Button } from './ui/Button'
-import { HeroFuturisticVisual } from './HeroFuturisticVisual'
+import { HeroRobotVisual } from './HeroRobotVisual'
 import { useTranslation } from '../context/LocaleContext'
 
 export function Hero() {
@@ -37,7 +37,7 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        <HeroFuturisticVisual />
+        <HeroRobotVisual />
       </div>
     </section>
   )
