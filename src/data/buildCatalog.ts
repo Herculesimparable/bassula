@@ -49,7 +49,7 @@ function makeProduct(
     image: imageForId(id, category),
     unit,
     section,
-    groups,
+    groups: [...new Set<NavGroup>([...groups, 'ofertas'])],
     prices: makePrices(basePrice + index * Math.round(basePrice * 0.08), index),
     badge: 'Oferta',
   }

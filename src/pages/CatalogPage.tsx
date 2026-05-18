@@ -53,11 +53,13 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   const isTopSellers = group === 'vendidos'
   const qFromUrl = searchParams.get('q')?.trim() ?? ''
   const isGlobalSearch = !!(qFromUrl || searchQuery.trim())
+  const catsFromUrl = searchParams.getAll('cat').filter((c) => c && c !== 'todos')
+  const hasCategoryFilter = activeCategories.length > 0 || catsFromUrl.length > 0
 
   const base = useMemo(() => {
-    if (isGlobalSearch) return products
+    if (isGlobalSearch || hasCategoryFilter) return products
     return groupProducts
-  }, [isGlobalSearch, groupProducts])
+  }, [isGlobalSearch, hasCategoryFilter, groupProducts])
 
   const isLoading = loadingGroup && !isGlobalSearch
 
