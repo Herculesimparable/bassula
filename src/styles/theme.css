@@ -26,6 +26,8 @@
   --text: #0f172a;
   --text-muted: #475569;
   --text-soft: #64748b;
+  /** Alias usado em páginas legais e avisos */
+  --muted: #475569;
 
   --white: #ffffff;
   --border: #cbd5e1;
