@@ -1749,19 +1749,28 @@
   margin-top: 8px;
 }
 
-/* Hero — robô 3D (imagem IA) com efeitos dinâmicos */
+/* Hero — robô 3D (imagem IA) com movimento contínuo */
 .hero-robot {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   margin-left: auto;
-  min-height: 300px;
-  perspective: 1200px;
+  min-height: 320px;
+  perspective: 900px;
+  perspective-origin: 50% 42%;
 }
 
 .hero-robot__stage {
   position: relative;
   padding: 8px 4px 0;
+  transform-style: preserve-3d;
+}
+
+.hero-robot__walker {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .hero-robot__aura {
@@ -1823,6 +1832,19 @@
   color: #052e16;
 }
 
+.hero-robot__shadow {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 6%;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(15, 23, 42, 0.35) 0%, transparent 72%);
+  transform: translateZ(-40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero-robot__card-3d {
   position: relative;
   z-index: 2;
@@ -1830,6 +1852,7 @@
   max-width: 100%;
   transform-style: preserve-3d;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .hero-robot__img {
@@ -1838,8 +1861,10 @@
   display: block;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(0 20px 36px rgba(196, 30, 58, 0.22))
-    drop-shadow(0 8px 24px rgba(8, 145, 178, 0.18)) saturate(1.06);
+  transform: translateZ(24px);
+  backface-visibility: hidden;
+  filter: drop-shadow(0 24px 40px rgba(196, 30, 58, 0.28))
+    drop-shadow(0 12px 28px rgba(8, 145, 178, 0.22)) saturate(1.08);
 }
 
 .hero-robot__scan {
@@ -1873,18 +1898,6 @@
   100% {
     top: 105%;
   }
-}
-
-.hero-robot__floor {
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: 14%;
-  height: 24px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(15, 23, 42, 0.2) 0%, transparent 70%);
-  z-index: 1;
-  pointer-events: none;
 }
 
 .hero-robot__caption {
