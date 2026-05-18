@@ -1836,34 +1836,19 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 20px;
   object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.2)) saturate(1.05);
-}
-
-.hero-robot__shine {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: linear-gradient(
-    125deg,
-    rgba(255, 255, 255, 0.35) 0%,
-    transparent 42%,
-    transparent 58%,
-    rgba(34, 211, 238, 0.12) 100%
-  );
-  pointer-events: none;
-  z-index: 3;
-  mix-blend-mode: overlay;
+  background: transparent;
+  filter: drop-shadow(0 20px 36px rgba(196, 30, 58, 0.22))
+    drop-shadow(0 8px 24px rgba(8, 145, 178, 0.18)) saturate(1.06);
 }
 
 .hero-robot__scan {
   position: absolute;
-  inset: 0;
-  border-radius: 20px;
+  inset: 5% 8%;
   overflow: hidden;
   pointer-events: none;
   z-index: 3;
+  border-radius: 12px;
 }
 
 .hero-robot__scan::after {
@@ -1871,14 +1856,14 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 40%;
+  height: 35%;
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(34, 211, 238, 0.18) 50%,
+    rgba(34, 211, 238, 0.22) 50%,
     transparent
   );
-  animation: hero-robot-scan 3.5s linear infinite;
+  animation: hero-robot-scan 2.8s linear infinite;
 }
 
 @keyframes hero-robot-scan {

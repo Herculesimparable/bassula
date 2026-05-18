@@ -12,6 +12,18 @@ import { publicAsset } from '../utils/publicAsset'
 
 const HERO_ROBOT_IMAGE = publicAsset('images/hero/hero-robot-3d.png')
 
+const WALK_ANIM = {
+  y: [0, -16, -8, -18, 0],
+  x: [0, 10, 4, -6, 0],
+  rotate: [0, 0.6, -0.4, 0.5, 0],
+}
+
+const WALK_TRANSITION = {
+  duration: 5.5,
+  repeat: Infinity,
+  ease: 'easeInOut' as const,
+}
+
 const DISCOUNTS = [
   { label: '−32%', top: '6%', left: '58%', delay: 0, tone: 'red' as const },
   { label: '−15%', top: '18%', left: '4%', delay: 0.35, tone: 'red' as const },
@@ -30,10 +42,10 @@ export function HeroRobotVisual({ className = '' }: Props) {
 
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
-  const spring = { stiffness: 120, damping: 18, mass: 0.6 }
+  const spring = { stiffness: 140, damping: 16, mass: 0.55 }
 
-  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [10, -10]), spring)
-  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-12, 12]), spring)
+  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [12, -12]), spring)
+  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-14, 14]), spring)
 
   function onPointerMove(e: MouseEvent<HTMLDivElement>) {
     if (reduceMotion || !stageRef.current) return
@@ -62,8 +74,8 @@ export function HeroRobotVisual({ className = '' }: Props) {
       >
         <motion.div
           className="hero-robot__aura"
-          animate={reduceMotion ? undefined : { scale: [1, 1.06, 1], opacity: [0.45, 0.8, 0.45] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+          animate={reduceMotion ? undefined : { scale: [1, 1.08, 1], opacity: [0.4, 0.85, 0.4] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
         />
         <div className="hero-robot__grid" aria-hidden />
 
@@ -75,10 +87,10 @@ export function HeroRobotVisual({ className = '' }: Props) {
             animate={
               reduceMotion
                 ? undefined
-                : { y: [0, -10, 0], scale: [1, 1.05, 1] }
+                : { y: [0, -12, 0], x: [0, 4, 0], scale: [1, 1.08, 1] }
             }
             transition={{
-              duration: 2.6,
+              duration: 2.2,
               repeat: Infinity,
               ease: 'easeInOut',
               delay: tag.delay,
@@ -99,11 +111,15 @@ export function HeroRobotVisual({ className = '' }: Props) {
                   transformStyle: 'preserve-3d',
                 }
           }
-          animate={reduceMotion ? undefined : { y: [0, -8, 0] }}
-          transition={{ y: { duration: 4, repeat: Infinity, ease: 'easeInOut' } }}
+          animate={reduceMotion ? undefined : WALK_ANIM}
+          transition={WALK_TRANSITION}
         >
-          <motion.div className="hero-robot__shine" aria-hidden />
-          <motion.div className="hero-robot__scan" aria-hidden />
+          <motion.div
+            className="hero-robot__scan"
+            aria-hidden
+            animate={reduceMotion ? undefined : { opacity: [0.35, 0.7, 0.35] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+          />
           <motion.img
             src={HERO_ROBOT_IMAGE}
             alt={t('hero.robotAlt')}
@@ -113,15 +129,28 @@ export function HeroRobotVisual({ className = '' }: Props) {
             loading="eager"
             decoding="async"
             draggable={false}
-            animate={reduceMotion ? undefined : { scale: [1, 1.02, 1] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            animate={
+              reduceMotion
+                ? undefined
+                : {
+                    scale: [1, 1.04, 1.02, 1.05, 1],
+                    filter: [
+                      'drop-shadow(0 18px 32px rgba(196,30,58,0.25))',
+                      'drop-shadow(0 22px 40px rgba(8,145,178,0.35))',
+                      'drop-shadow(0 18px 32px rgba(196,30,58,0.25))',
+                      'drop-shadow(0 24px 44px rgba(8,145,178,0.4))',
+                      'drop-shadow(0 18px 32px rgba(196,30,58,0.25))',
+                    ],
+                  }
+            }
+            transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
 
         <motion.div
           className="hero-robot__floor"
-          animate={reduceMotion ? undefined : { opacity: [0.35, 0.6, 0.35] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          animate={reduceMotion ? undefined : { scaleX: [1, 1.08, 1], opacity: [0.3, 0.55, 0.3] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
           aria-hidden
         />
 
