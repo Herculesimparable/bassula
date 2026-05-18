@@ -5,6 +5,7 @@ import { CatalogSidebar } from '../components/CatalogSidebar'
 import { ProductGridCard } from '../components/ProductGridCard'
 import { PageLoader } from '../components/PageLoader'
 import { useApp } from '../context/AppContext'
+import { products } from '../data/products'
 import { useProducts } from '../hooks/useProducts'
 import { buildCatalogSearchParams, parseCatalogSearchParams } from '../utils/catalogUrl'
 import { filterProducts } from '../utils/price'
@@ -47,8 +48,17 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
     filterDrawerOpen,
   } = useApp()
   const [visible, setVisible] = useState(PAGE_SIZE)
-  const { data: base = [], isLoading, isError } = useProducts(group)
+  const { data: groupProducts = [], isLoading: loadingGroup, isError } = useProducts(group)
   const isTopSellers = group === 'vendidos'
+  const qFromUrl = searchParams.get('q')?.trim() ?? ''
+  const isGlobalSearch = !!(qFromUrl || searchQuery.trim())
+
+  const base = useMemo(() => {
+    if (isGlobalSearch) return products
+    return groupProducts
+  }, [isGlobalSearch, groupProducts])
+
+  const isLoading = loadingGroup && !isGlobalSearch
 
   useEffect(() => {
     const parsed = parseCatalogSearchParams(searchParams)

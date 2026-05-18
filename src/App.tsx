@@ -15,6 +15,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 
 const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })))
 const CatalogPage = lazy(() => import('./pages/CatalogPage').then((m) => ({ default: m.CatalogPage })))
+const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })))
 const CartPage = lazy(() => import('./pages/CartPage').then((m) => ({ default: m.CartPage })))
 const MapPage = lazy(() => import('./pages/MapPage').then((m) => ({ default: m.MapPage })))
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })))
@@ -47,6 +48,14 @@ export default function App() {
                 element={
                   <Lazy>
                     <HomePage />
+                  </Lazy>
+                }
+              />
+              <Route
+                path="pesquisa"
+                element={
+                  <Lazy>
+                    <SearchPage />
                   </Lazy>
                 }
               />

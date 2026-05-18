@@ -98,31 +98,42 @@ export const en = {
     stripLink: 'See falling prices →',
     seeOffers: 'See deals',
   },
+  search: {
+    title: 'Results for "{{query}}"',
+    allProducts: 'Search products',
+    subtitle: 'We compare prices across all partner stores.',
+    tryOther: 'Try another word or remove filters.',
+  },
   features: {
     learnMore: 'Learn more',
+    helpLink: 'Help center',
     fast: {
       title: 'Fast delivery',
       desc: 'In Luanda and major cities',
-      detail:
-        'Delivery in Luanda within 24–48 business hours. Other provinces: 3–5 days. Track your order in your account or by SMS.',
+      detail: 'Bassula works with logistics partners to deliver your groceries safely.',
+      bullets:
+        'Luanda: 24–48 business hours|Other provinces: 3–5 business days|Track by SMS or in your account|Home delivery or store pickup',
     },
     quality: {
       title: 'Quality guaranteed',
       desc: 'Products checked daily',
-      detail:
-        'We only work with certified partner stores. Prices and availability are updated every day.',
+      detail: 'We only list products from partner supermarkets with up-to-date stock.',
+      bullets:
+        'Prices reviewed daily|Food and non-food items|Trusted brands and packaging|Returns on non-perishables (7 days)',
     },
     fair: {
       title: 'Fair comparison',
       desc: 'Prices updated in real time',
-      detail:
-        'Compare Kero, Candando, Shoprite, Alimenta Angola and more on one screen. The lowest price is always highlighted.',
+      detail: 'See side by side what you pay at each chain — no checkout surprises.',
+      bullets:
+        'Kero, Candando, Shoprite, Alimenta Angola|Lowest price highlighted in red|Deals and regular prices|Compare per unit or pack',
     },
     support: {
       title: '24/7 support',
       desc: 'Help in Portuguese and English',
-      detail:
-        'Call center available 24/7: +244 923 000 000. Chat, email and help page for shipping, returns and payments.',
+      detail: 'Our team is available anytime to help with your purchase.',
+      bullets:
+        'Phone: +244 923 000 000|Chat and email|Average response: 2 minutes|Help with orders, payments and delivery',
     },
   },
   cart: {

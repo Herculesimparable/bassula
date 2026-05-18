@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ProductGridCard } from '../components/ProductGridCard'
 import { Hero } from '../components/Hero'
 import { PromoSlideshow } from '../components/PromoSlideshow'
 import { BassulaCampaignBanner } from '../components/BassulaCampaignBanner'
@@ -25,15 +26,29 @@ export function HomePage() {
       <Hero />
       <PromoSlideshow />
       <FeaturesBar />
-      {searchQuery && (
-        <div className="search-results-banner">
+      {searchQuery.trim() && (
+        <section className="section search-results-section">
           <div className="container">
-            {t('home.searchResults', { count: filtered.length, query: searchQuery })} —{' '}
-            <Link to={`/ofertas?q=${encodeURIComponent(searchQuery.trim())}`}>
-              {t('home.searchSeeAll')}
-            </Link>
+            <div className="section-header">
+              <h2>{t('home.searchResults', { count: filtered.length, query: searchQuery })}</h2>
+              <Link
+                to={`/pesquisa?q=${encodeURIComponent(searchQuery.trim())}`}
+                className="btn btn-outline btn-sm"
+              >
+                {t('home.searchSeeAll')}
+              </Link>
+            </div>
+            {filtered.length === 0 ? (
+              <p className="empty-state">{t('catalog.noProducts')}</p>
+            ) : (
+              <div className="product-grid search-results-grid">
+                {filtered.slice(0, 12).map((p) => (
+                  <ProductGridCard key={p.id} product={p} />
+                ))}
+              </div>
+            )}
           </div>
-        </div>
+        </section>
       )}
       <BassulaCampaignBanner />
       <ProductCarousel

@@ -98,31 +98,42 @@ export const pt = {
     stripLink: 'Ver preços em queda →',
     seeOffers: 'Ver ofertas',
   },
+  search: {
+    title: 'Resultados para «{{query}}»',
+    allProducts: 'Pesquisar produtos',
+    subtitle: 'Comparamos preços em todas as lojas parceiras.',
+    tryOther: 'Experimente outra palavra ou remova filtros.',
+  },
   features: {
     learnMore: 'Saber mais',
+    helpLink: 'Centro de ajuda',
     fast: {
       title: 'Entrega rápida',
       desc: 'Em Luanda e principais cidades',
-      detail:
-        'Entregas em Luanda em 24–48 horas úteis. Outras províncias: 3–5 dias. Acompanhe o estado do pedido na sua conta ou por SMS.',
+      detail: 'A Bassula trabalha com parceiros logísticos para entregar as suas compras com segurança.',
+      bullets:
+        'Luanda: 24–48 horas úteis|Outras províncias: 3–5 dias úteis|Seguimento por SMS ou na conta|Entrega ao domicílio ou recolha na loja',
     },
     quality: {
       title: 'Qualidade garantida',
       desc: 'Produtos verificados diariamente',
-      detail:
-        'Trabalhamos apenas com lojas parceiras certificadas. Os preços e disponibilidade são actualizados todos os dias.',
+      detail: 'Só listamos produtos de supermercados parceiros com stock actualizado.',
+      bullets:
+        'Preços revistos todos os dias|Produtos alimentares e não alimentares|Embalagens e marcas reconhecidas|Devolução em produtos não perecíveis (7 dias)',
     },
     fair: {
       title: 'Comparação justa',
       desc: 'Preços actualizados em tempo real',
-      detail:
-        'Compare Kero, Candando, Shoprite, Alimenta Angola e mais no mesmo ecrã. O preço mais baixo fica sempre destacado.',
+      detail: 'Veja lado a lado quanto paga em cada rede — sem surpresas no caixa.',
+      bullets:
+        'Kero, Candando, Shoprite, Alimenta Angola|Melhor preço destacado a vermelho|Promoções e preços normais|Compare por unidade ou pack',
     },
     support: {
       title: 'Suporte 24/7',
       desc: 'Apoio em português e inglês',
-      detail:
-        'Call center disponível 24 horas: +244 923 000 000. Chat, email e página de ajuda com envios, devoluções e pagamentos.',
+      detail: 'A nossa equipa está disponível a qualquer hora para ajudar na sua compra.',
+      bullets:
+        'Telefone: +244 923 000 000|Chat e email|Resposta média: 2 minutos|Ajuda com pedidos, pagamentos e entregas',
     },
   },
   cart: {

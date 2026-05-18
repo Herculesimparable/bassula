@@ -56,7 +56,7 @@ export function Header() {
     setActiveCategories([])
     setPriceMax(null)
     const qs = params.toString()
-    navigate(qs ? `/ofertas?${qs}` : '/ofertas?reset=1')
+    navigate(qs ? `/pesquisa?${qs}` : '/pesquisa?reset=1')
   }
 
   const openAccount = (mode: 'login' | 'register') => {
