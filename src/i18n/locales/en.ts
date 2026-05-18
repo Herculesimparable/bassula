@@ -92,6 +92,7 @@ export const en = {
     winesDesc: 'Compare prices at every store',
     discount: 'off',
     dairy: 'On selected dairy products',
+    dairyAlt: 'Cheese and dairy — cheese slices on a plate',
     enjoy: 'Shop now',
     stripTitle: 'Bassula on Prices',
     stripDesc: 'Rice, oil, beans and sugar — tap the image to see deals',

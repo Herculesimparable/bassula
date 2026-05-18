@@ -46,7 +46,7 @@ export function PromoBanners() {
             </div>
             <img
               src={PROMO_DISCOUNT_IMAGE}
-              alt={t('promo.dairy')}
+              alt={t('promo.dairyAlt')}
               className="promo-banner__photo"
               loading="lazy"
             />

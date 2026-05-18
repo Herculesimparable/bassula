@@ -21,7 +21,7 @@ const CATEGORY_PROMO: Partial<Record<string, string>> = {
 }
 
 export const PROMO_WINE_IMAGE = publicAsset('promo/promo-wine.jpg?v=3')
-export const PROMO_DISCOUNT_IMAGE = publicAsset('promo/promo-discount.jpg?v=3')
+export const PROMO_DISCOUNT_IMAGE = publicAsset('promo/promo-discount.jpg?v=4')
 
 /** Textos alt em pt-AO para cartões de categoria */
 export const CATEGORY_IMAGE_ALT: Record<string, string> = {

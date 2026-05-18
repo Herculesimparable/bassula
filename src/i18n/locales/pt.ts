@@ -92,6 +92,7 @@ export const pt = {
     winesDesc: 'Compare preços em todas as lojas',
     discount: 'de desconto',
     dairy: 'Em lacticínios selecionados',
+    dairyAlt: 'Queijo e lacticínios — rodelas de queijo em prato',
     enjoy: 'Aproveitar',
     stripTitle: 'Bassula nos Preços',
     stripDesc: 'Arroz, óleo, feijão e açúcar — clique na imagem para ver ofertas',
