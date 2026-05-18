@@ -1723,20 +1723,21 @@
   width: 100%;
 }
 
-.hero--text-only {
-  padding: clamp(32px, 6vw, 56px) 0 clamp(20px, 4vw, 32px);
-}
-
-.hero-content--solo {
+.hero--bassula .hero-content {
   max-width: 42rem;
   text-align: left;
 }
 
-.hero-content--solo .hero-actions {
+.hero--bassula .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 8px;
+}
+
+.hero--bassula .hero-image {
+  border-radius: var(--radius-lg, 16px);
+  aspect-ratio: 4 / 3;
 }
 
 .btn-bassula-cta {

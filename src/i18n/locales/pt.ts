@@ -50,6 +50,7 @@ export const pt = {
     body: 'Compare Kero, Candando, Shoprite e mais. Arroz, óleo, feijão e tudo o que precisa — o mais barato em cada loja.',
     ctaOffers: 'Ver preços em queda',
     ctaTop: 'Mais vendidos',
+    imageAlt: 'Variedade de pães e produtos de padaria frescos',
   },
   product: {
     best: 'Melhor: {{store}}',
