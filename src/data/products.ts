@@ -36,12 +36,12 @@ function p(
 }
 
 export const products: Product[] = [
-  p('1', 'Leite UHT Meio Gordo 1L', 'Leite e derivados', '1550586808-ef763c3d4f2', '1 L', 'ofertas', ['ofertas', 'alimentos'], [
+  p('1', 'Leite UHT Meio Gordo 1L', 'Leite e derivados', '1550586808-ef763c3d4f2', '1 L', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'kero', storeName: 'Kero', price: 890, promo: 750 },
     { storeId: 'candando', storeName: 'Candando', price: 920 },
     { storeId: 'shoprite', storeName: 'Shoprite', price: 850 },
   ], 'Oferta'),
-  p('2', 'Arroz Agulha 5kg', 'Massas e grãos', '1586209587009-36cbe0a3d0f1', '5 kg', 'ofertas', ['ofertas', 'alimentos'], [
+  p('2', 'Arroz Agulha 5kg', 'Massas e grãos', '1586209587009-36cbe0a3d0f1', '5 kg', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'kero', storeName: 'Kero', price: 4500, promo: 3990 },
     { storeId: 'alimenta', storeName: 'Alimenta Angola', price: 4200 },
     { storeId: 'shoprite', storeName: 'Shoprite', price: 4350 },
@@ -50,31 +50,31 @@ export const products: Product[] = [
     { storeId: 'candando', storeName: 'Candando', price: 3200, promo: 2800 },
     { storeId: 'kero', storeName: 'Kero', price: 3100 },
   ], 'Oferta'),
-  p('4', 'Pão de Forma Integral', 'Padaria', '1509440159596-024908877f35', '500 g', 'ofertas', ['ofertas', 'alimentos'], [
+  p('4', 'Pão de Forma Integral', 'Padaria', '1509440159596-024908877f35', '500 g', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'shoprite', storeName: 'Shoprite', price: 650, promo: 520 },
     { storeId: 'kero', storeName: 'Kero', price: 590 },
   ], 'Oferta'),
-  p('5', 'Morangos Frescos 400g', 'Frutas', '1464966088849-7d0e2f8e8b6e', '400 g', 'ofertas', ['ofertas', 'alimentos'], [
+  p('5', 'Morangos Frescos 400g', 'Frutas', '1464966088849-7d0e2f8e8b6e', '400 g', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'kero', storeName: 'Kero', price: 1800, promo: 1490 },
     { storeId: 'candando', storeName: 'Candando', price: 1750 },
   ], 'Oferta'),
-  p('6', 'Abacate Hass unidade', 'Frutas', '1523042130041-5e9c6b0e8b6e', '1 un', 'ofertas', ['ofertas', 'alimentos'], [
+  p('6', 'Abacate Hass unidade', 'Frutas', '1523042130041-5e9c6b0e8b6e', '1 un', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'shoprite', storeName: 'Shoprite', price: 450, promo: 380 },
     { storeId: 'kero', storeName: 'Kero', price: 420 },
   ], 'Oferta'),
-  p('7', 'Frango Inteiro Fresco', 'Carnes e aves', '1607620401052-94d007f69a8f', '1.2 kg', 'ofertas', ['ofertas', 'alimentos', 'vendidos'], [
+  p('7', 'Frango Inteiro Fresco', 'Carnes e aves', '1607620401052-94d007f69a8f', '1.2 kg', 'carrinho', ['ofertas', 'alimentos', 'vendidos'], [
     { storeId: 'shoprite', storeName: 'Shoprite', price: 2800, promo: 2490 },
     { storeId: 'kero', storeName: 'Kero', price: 2650 },
   ], 'Oferta'),
-  p('8', 'Iogurte Natural Pack 4', 'Leite e derivados', '1571216711018-0f1e0a1d9f6c', '4 un', 'ofertas', ['ofertas', 'alimentos'], [
+  p('8', 'Iogurte Natural Pack 4', 'Leite e derivados', '1571216711018-0f1e0a1d9f6c', '4 un', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'shoprite', storeName: 'Shoprite', price: 980, promo: 850 },
     { storeId: 'kero', storeName: 'Kero', price: 920 },
   ], 'Oferta'),
-  p('9', 'Queijo Flamengo Fatias', 'Leite e derivados', '1452193370444-9ec884674d7a', '200 g', 'ofertas', ['ofertas', 'alimentos'], [
+  p('9', 'Queijo Flamengo Fatias', 'Leite e derivados', '1452193370444-9ec884674d7a', '200 g', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'candando', storeName: 'Candando', price: 1100, promo: 880 },
     { storeId: 'kero', storeName: 'Kero', price: 1050 },
   ], 'Oferta'),
-  p('10', 'Massa Espaguete 500g', 'Massas e grãos', '1621996340255-e9e6f1240b9c', '500 g', 'ofertas', ['ofertas', 'alimentos', 'vendidos'], [
+  p('10', 'Massa Espaguete 500g', 'Massas e grãos', '1621996340255-e9e6f1240b9c', '500 g', 'carrinho', ['ofertas', 'alimentos', 'vendidos'], [
     { storeId: 'kero', storeName: 'Kero', price: 450, promo: 350 },
     { storeId: 'candando', storeName: 'Candando', price: 420 },
   ], 'Oferta'),
@@ -102,11 +102,11 @@ export const products: Product[] = [
     { storeId: 'shoprite', storeName: 'Shoprite', price: 2200, promo: 1890 },
     { storeId: 'kero', storeName: 'Kero', price: 2100 },
   ], 'Oferta'),
-  p('17', 'Bolachas de Chocolate', 'Doces', '1558964541-7a0e2f8e8b6e', '300 g', 'ofertas', ['ofertas', 'alimentos'], [
+  p('17', 'Bolachas de Chocolate', 'Doces', '1558964541-7a0e2f8e8b6e', '300 g', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'kero', storeName: 'Kero', price: 890, promo: 750 },
     { storeId: 'alimenta', storeName: 'Alimenta Angola', price: 850 },
   ], 'Oferta'),
-  p('18', 'Sumo de Laranja Natural 1L', 'Sucos e refrigerantes', '1622483662024-d060814a101f', '1 L', 'ofertas', ['ofertas', 'bebidas'], [
+  p('18', 'Sumo de Laranja Natural 1L', 'Sucos e refrigerantes', '1622483662024-d060814a101f', '1 L', 'carrinho', ['ofertas', 'bebidas'], [
     { storeId: 'kero', storeName: 'Kero', price: 1100, promo: 950 },
     { storeId: 'candando', storeName: 'Candando', price: 1050 },
   ], 'Oferta'),
@@ -154,7 +154,7 @@ export const products: Product[] = [
     { storeId: 'candando', storeName: 'Candando', price: 2100 },
     { storeId: 'kero', storeName: 'Kero', price: 1990 },
   ], 'Mais vendido'),
-  p('30', 'Croissant Manteiga 4un', 'Padaria', '1555503726-4f27f7324b1c', '4 un', 'vendidos', ['alimentos', 'novos'], [
+  p('30', 'Croissant Manteiga 4un', 'Padaria', '1555503726-4f27f7324b1c', '4 un', 'carrinho', ['alimentos', 'novos'], [
     { storeId: 'kero', storeName: 'Kero', price: 480 },
     { storeId: 'alimenta', storeName: 'Alimenta Angola', price: 450 },
   ], 'Mais vendido'),
@@ -166,7 +166,7 @@ export const products: Product[] = [
     { storeId: 'candando', storeName: 'Candando', price: 450 },
     { storeId: 'kero', storeName: 'Kero', price: 420 },
   ], 'Mais vendido'),
-  p('33', 'Manteiga com Sal 250g', 'Leite e derivados', '1588167316678-418f4a7a3029', '250 g', 'frescos', ['alimentos'], [
+  p('33', 'Manteiga com Sal 250g', 'Leite e derivados', '1588167316678-418f4a7a3029', '250 g', 'carrinho', ['alimentos'], [
     { storeId: 'kero', storeName: 'Kero', price: 750 },
     { storeId: 'shoprite', storeName: 'Shoprite', price: 720 },
   ]),

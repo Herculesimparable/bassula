@@ -58,6 +58,13 @@ export function HomePage() {
       />
       <PromoBanners />
       <ProductCarousel
+        title={t('home.fillCart')}
+        products={bySection('carrinho')}
+        centered
+        moreLink="/alimentos?reset=1"
+        moreLabel={t('home.seeMoreFood')}
+      />
+      <ProductCarousel
         id="mais-vendidos"
         title={t('home.topSellers')}
         products={topSellers}
