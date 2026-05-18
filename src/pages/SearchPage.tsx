@@ -6,6 +6,7 @@ import { ProductGridCard } from '../components/ProductGridCard'
 import { useApp } from '../context/AppContext'
 import { products } from '../data/products'
 import { buildCatalogSearchParams, parseCatalogSearchParams } from '../utils/catalogUrl'
+import { getEffectiveCatalogFilters } from '../utils/effectiveCatalogFilters'
 import { filterProducts } from '../utils/price'
 import { useTranslation } from '../context/LocaleContext'
 
@@ -27,6 +28,11 @@ export function SearchPage() {
   } = useApp()
   const [visible, setVisible] = useState(PAGE_SIZE)
 
+  const effective = useMemo(
+    () => getEffectiveCatalogFilters(searchParams, searchQuery, activeCategories, priceMax),
+    [searchParams, searchQuery, activeCategories, priceMax],
+  )
+
   useEffect(() => {
     const parsed = parseCatalogSearchParams(searchParams)
     if (parsed.reset) {
@@ -41,7 +47,7 @@ export function SearchPage() {
 
   useEffect(() => {
     setVisible(PAGE_SIZE)
-  }, [searchQuery, activeCategories, priceMax])
+  }, [effective.query, effective.categories, effective.priceMax])
 
   const syncFiltersToUrl = (overrides?: {
     q?: string
@@ -49,9 +55,9 @@ export function SearchPage() {
     priceMax?: number | null
   }) => {
     const next = buildCatalogSearchParams({
-      q: overrides?.q ?? searchQuery,
-      categories: overrides?.categories ?? activeCategories,
-      priceMax: overrides?.priceMax !== undefined ? overrides.priceMax : priceMax,
+      q: overrides?.q ?? effective.query,
+      categories: overrides?.categories ?? effective.categories,
+      priceMax: overrides?.priceMax !== undefined ? overrides.priceMax : effective.priceMax,
     })
     setSearchParams(next, { replace: true })
   }
@@ -62,9 +68,9 @@ export function SearchPage() {
       syncFiltersToUrl({ categories: [] })
       return
     }
-    const next = activeCategories.includes(cat)
-      ? activeCategories.filter((c) => c !== cat)
-      : [...activeCategories, cat]
+    const next = effective.categories.includes(cat)
+      ? effective.categories.filter((c) => c !== cat)
+      : [...effective.categories, cat]
     setActiveCategories(next)
     syncFiltersToUrl({ categories: next })
   }
@@ -80,24 +86,22 @@ export function SearchPage() {
   }
 
   const filtered = useMemo(
-    () => filterProducts(products, searchQuery, activeCategories, priceMax),
-    [searchQuery, activeCategories, priceMax],
+    () =>
+      filterProducts(products, effective.query, effective.categories, effective.priceMax),
+    [effective.query, effective.categories, effective.priceMax],
   )
 
   const shown = filtered.slice(0, visible)
-  const q = searchQuery.trim()
-  const hasActiveFilters =
-    activeCategories.length > 0 || !!searchQuery.trim() || priceMax != null
 
   return (
     <div className="catalog-page catalog-page--search">
       <div className="container">
         <h1 className="page-title">
-          {q ? t('search.title', { query: q }) : t('search.allProducts')}
+          {effective.query ? t('search.title', { query: effective.query }) : t('search.allProducts')}
         </h1>
-        {q && <p className="page-subtitle">{t('search.subtitle')}</p>}
+        {effective.query && <p className="page-subtitle">{t('search.subtitle')}</p>}
 
-        {hasActiveFilters && (
+        {effective.hasAnyFilter && (
           <p className="catalog-filter-hint">
             {t('catalog.productsFound', { count: filtered.length })}
             <button type="button" className="link-reset" onClick={clearAllFilters}>
@@ -116,8 +120,8 @@ export function SearchPage() {
 
         <div className="catalog-layout">
           <CatalogSidebar
-            activeCategories={activeCategories}
-            priceMax={priceMax}
+            activeCategories={effective.categories}
+            priceMax={effective.priceMax}
             onToggleCategory={handleToggleCategory}
             onPriceChange={handlePriceChange}
             onClearAll={clearAllFilters}
@@ -160,8 +164,8 @@ export function SearchPage() {
           <div className="overlay" onClick={() => setFilterDrawerOpen(false)} />
           <aside className="filter-drawer">
             <CatalogSidebar
-              activeCategories={activeCategories}
-              priceMax={priceMax}
+              activeCategories={effective.categories}
+              priceMax={effective.priceMax}
               onToggleCategory={handleToggleCategory}
               onPriceChange={handlePriceChange}
               onClearAll={clearAllFilters}

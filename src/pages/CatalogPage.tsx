@@ -9,6 +9,7 @@ import { useApp } from '../context/AppContext'
 import { products } from '../data/products'
 import { useProducts } from '../hooks/useProducts'
 import { buildCatalogSearchParams, parseCatalogSearchParams } from '../utils/catalogUrl'
+import { getEffectiveCatalogFilters } from '../utils/effectiveCatalogFilters'
 import { filterProducts } from '../utils/price'
 import { useTranslation } from '../context/LocaleContext'
 import type { NavGroup } from '../types'
@@ -31,6 +32,7 @@ interface Props {
 }
 
 const PAGE_SIZE = 12
+const CATEGORY_PAGE_SIZE = 20
 
 export function CatalogPage({ group, title, defaultBadge }: Props) {
   const { t } = useTranslation()
@@ -48,20 +50,24 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
     setFilterDrawerOpen,
     filterDrawerOpen,
   } = useApp()
-  const [visible, setVisible] = useState(PAGE_SIZE)
+
+  const effective = useMemo(
+    () => getEffectiveCatalogFilters(searchParams, searchQuery, activeCategories, priceMax),
+    [searchParams, searchQuery, activeCategories, priceMax],
+  )
+
+  const pageSize = effective.hasCategoryFilter ? CATEGORY_PAGE_SIZE : PAGE_SIZE
+  const [visible, setVisible] = useState(pageSize)
+
   const { data: groupProducts = [], isLoading: loadingGroup, isError } = useProducts(group)
   const isTopSellers = group === 'vendidos'
-  const qFromUrl = searchParams.get('q')?.trim() ?? ''
-  const isGlobalSearch = !!(qFromUrl || searchQuery.trim())
-  const catsFromUrl = searchParams.getAll('cat').filter((c) => c && c !== 'todos')
-  const hasCategoryFilter = activeCategories.length > 0 || catsFromUrl.length > 0
 
   const base = useMemo(() => {
-    if (isGlobalSearch || hasCategoryFilter) return products
+    if (effective.hasQuery || effective.hasCategoryFilter) return products
     return groupProducts
-  }, [isGlobalSearch, hasCategoryFilter, groupProducts])
+  }, [effective.hasQuery, effective.hasCategoryFilter, groupProducts])
 
-  const isLoading = loadingGroup && !isGlobalSearch
+  const isLoading = loadingGroup && !effective.hasQuery && !effective.hasCategoryFilter
 
   useEffect(() => {
     const parsed = parseCatalogSearchParams(searchParams)
@@ -80,13 +86,13 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   const syncFiltersToUrl = useCallback(
     (overrides?: { q?: string; categories?: string[]; priceMax?: number | null }) => {
       const next = buildCatalogSearchParams({
-        q: overrides?.q ?? searchQuery,
-        categories: overrides?.categories ?? activeCategories,
-        priceMax: overrides?.priceMax !== undefined ? overrides.priceMax : priceMax,
+        q: overrides?.q ?? effective.query,
+        categories: overrides?.categories ?? effective.categories,
+        priceMax: overrides?.priceMax !== undefined ? overrides.priceMax : effective.priceMax,
       })
       setSearchParams(next, { replace: true })
     },
-    [searchQuery, activeCategories, priceMax, setSearchParams],
+    [effective.query, effective.categories, effective.priceMax, setSearchParams],
   )
 
   const handleToggleCategory = useCallback(
@@ -96,13 +102,13 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
         syncFiltersToUrl({ categories: [] })
         return
       }
-      const next = activeCategories.includes(cat)
-        ? activeCategories.filter((c) => c !== cat)
-        : [...activeCategories, cat]
+      const next = effective.categories.includes(cat)
+        ? effective.categories.filter((c) => c !== cat)
+        : [...effective.categories, cat]
       setActiveCategories(next)
       syncFiltersToUrl({ categories: next })
     },
-    [activeCategories, setActiveCategories, syncFiltersToUrl],
+    [effective.categories, setActiveCategories, syncFiltersToUrl],
   )
 
   const handlePriceChange = useCallback(
@@ -119,18 +125,16 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   }, [clearCatalogFilters, setSearchParams])
 
   useEffect(() => {
-    setVisible(PAGE_SIZE)
-  }, [location.pathname, location.search, searchQuery, activeCategories, priceMax])
+    setVisible(pageSize)
+  }, [location.pathname, location.search, effective.query, effective.categories, effective.priceMax, pageSize])
 
   const filtered = useMemo(
-    () => filterProducts(base, searchQuery, activeCategories, priceMax),
-    [base, searchQuery, activeCategories, priceMax],
+    () =>
+      filterProducts(base, effective.query, effective.categories, effective.priceMax),
+    [base, effective.query, effective.categories, effective.priceMax],
   )
 
   const shown = filtered.slice(0, visible)
-
-  const hasActiveFilters =
-    activeCategories.length > 0 || !!searchQuery.trim() || priceMax != null
 
   const applyFiltersMobile = () => {
     syncFiltersToUrl()
@@ -154,15 +158,15 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
           <h1 className="page-title">{pageTitle}</h1>
         )}
 
-        {searchQuery.trim() && (
+        {effective.query && (
           <p className="catalog-filter-hint">
-            {t('catalog.searching')}: <strong>{searchQuery}</strong>
+            {t('catalog.searching')}: <strong>{effective.query}</strong>
           </p>
         )}
 
-        {activeCategories.length > 0 && (
+        {effective.categories.length > 0 && (
           <div className="catalog-active-filters">
-            {activeCategories.map((cat) => (
+            {effective.categories.map((cat) => (
               <button
                 key={cat}
                 type="button"
@@ -177,7 +181,7 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
           </div>
         )}
 
-        {hasActiveFilters && (
+        {effective.hasAnyFilter && (
           <p className="catalog-filter-hint">
             {t('catalog.productsFound', { count: filtered.length })}
             <button type="button" className="link-reset" onClick={clearAllFilters}>
@@ -197,8 +201,8 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
         <div className="catalog-layout">
           <CatalogSidebar
             group={group}
-            activeCategories={activeCategories}
-            priceMax={priceMax}
+            activeCategories={effective.categories}
+            priceMax={effective.priceMax}
             onToggleCategory={handleToggleCategory}
             onPriceChange={handlePriceChange}
             onClearAll={clearAllFilters}
@@ -237,7 +241,7 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
                     <button
                       type="button"
                       className="btn btn-primary btn-ver-mais"
-                      onClick={() => setVisible((v) => v + PAGE_SIZE)}
+                      onClick={() => setVisible((v) => v + pageSize)}
                     >
                       {t('catalog.loadMore')}
                     </button>
@@ -255,8 +259,8 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
           <aside className="filter-drawer">
             <CatalogSidebar
               group={group}
-              activeCategories={activeCategories}
-              priceMax={priceMax}
+              activeCategories={effective.categories}
+              priceMax={effective.priceMax}
               onToggleCategory={handleToggleCategory}
               onPriceChange={handlePriceChange}
               onClearAll={clearAllFilters}

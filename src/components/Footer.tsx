@@ -79,7 +79,7 @@ export function Footer() {
       </div>
       <div className="footer-bar">
         <div className="container footer-bar-inner">
-          <span>{t('footer.copyright', { year })}</span>
+          <span>{t('footer.copyright', { year })} · v2.1</span>
           <span>{t('footer.address')}</span>
           <div className="payment-icons">
             <span>VISA</span>

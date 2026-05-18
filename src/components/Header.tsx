@@ -59,12 +59,14 @@ export function Header() {
   const onSearch = (e: FormEvent) => {
     e.preventDefault()
     const q = searchQuery.trim()
-    const params = new URLSearchParams()
-    if (q) params.set('q', q)
     setActiveCategories([])
     setPriceMax(null)
-    const qs = params.toString()
-    navigate(qs ? `/pesquisa?${qs}` : '/pesquisa?reset=1')
+    if (!q) {
+      navigate('/pesquisa?reset=1')
+      return
+    }
+    setSearchQuery(q)
+    navigate(`/pesquisa?q=${encodeURIComponent(q)}`)
   }
 
   const openAccount = (mode: 'login' | 'register') => {
