@@ -87,7 +87,7 @@ const PROMOS = {
   'promo-frutas': 'fresh,fruit,market',
   'promo-padaria': 'bakery,bread,loaf',
   'promo-electro': 'kitchen,appliances',
-  'promo-wine': 'wine,bottle,cheese,board',
+  'promo-wine': 'red,wine,bottle,cheese,cheddar,plate',
   'promo-discount': 'cheese,slices,plate',
   'promo-higiene': 'shampoo,toiletries,cleaning',
 }

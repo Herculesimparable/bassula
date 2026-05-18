@@ -592,43 +592,65 @@
   opacity: 0.9;
 }
 
-.promo-banner--image {
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  min-height: 220px;
+.promo-banner--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  padding: 0;
+  min-height: 240px;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
-.promo-banner--image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, rgba(15, 39, 68, 0.82) 0%, rgba(15, 39, 68, 0.35) 55%, transparent 100%);
-  pointer-events: none;
-}
-
-.promo-banner__content {
+.promo-banner--split .promo-banner__content {
   position: relative;
   z-index: 1;
-  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px 24px;
+  max-width: none;
 }
 
-.promo-banner--image h3,
-.promo-banner--image p {
+.promo-banner.wine .promo-banner__content {
+  background: linear-gradient(135deg, #4a0e1e 0%, #7a1c35 100%);
   color: #fff;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
-.promo-banner.wine {
-  background-color: #1a3a5c;
+.promo-banner.cheese .promo-banner__content {
+  background: linear-gradient(135deg, #78350f 0%, #b45309 100%);
+  color: #fff;
 }
 
-.promo-banner.cheese {
-  background-color: #78350f;
+.promo-banner.wine .promo-banner__content h3,
+.promo-banner.wine .promo-banner__content p,
+.promo-banner.cheese .promo-banner__content h3,
+.promo-banner.cheese .promo-banner__content p {
+  color: #fff;
 }
 
 .promo-banner.cheese .promo-discount {
   color: #fde68a;
+}
+
+.promo-banner__photo {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .promo-banner--split {
+    grid-template-columns: 1fr;
+  }
+
+  .promo-banner__photo {
+    min-height: 200px;
+    order: -1;
+  }
 }
 
 .promo-banner.pasta {
