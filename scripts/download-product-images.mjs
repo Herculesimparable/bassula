@@ -130,6 +130,12 @@ function loremFlickr(tag, lock) {
   return `https://loremflickr.com/800/800/${tag}?lock=bassula-${LOCK_VER}-${lock}`
 }
 
+/** Fallback quando LoremFlickr/Open Food Facts falham (rede/DNS) */
+function picsumFallback(id, tag) {
+  const seed = encodeURIComponent(`bassula-${LOCK_VER}-${id}-${tag.replace(/,/g, '-')}`)
+  return `https://picsum.photos/seed/${seed}/800/800`
+}
+
 function matchesKeywords(name, keywords, min = 1) {
   const n = (name || '').toLowerCase().normalize('NFD').replace(/\p{M}/gu, '')
   const hits = keywords.filter((k) => {
@@ -176,23 +182,25 @@ async function getUrl(id, meta) {
 
 async function saveProduct(id, meta, attempt = 0) {
   const dest = path.join(outDir, `${id}.jpg`)
-  try {
-    const url = await getUrl(id, meta)
-    await download(url, dest)
-    const stat = fs.statSync(dest)
-    if (stat.size < 1500) throw new Error('imagem demasiado pequena')
-    return url
-  } catch (e) {
-    if (attempt < 2) {
-      await sleep(400)
-      const url = loremFlickr(meta.lf || 'grocery,product', `prod-${id}-r${attempt + 1}`)
+  const sources = [
+    () => getUrl(id, meta),
+    () => Promise.resolve(loremFlickr(meta.lf || 'grocery,product', `prod-${id}-r1`)),
+    () => Promise.resolve(picsumFallback(id, meta.lf || 'grocery')),
+  ]
+  let lastErr
+  for (let i = attempt; i < sources.length; i++) {
+    try {
+      const url = await sources[i]()
       await download(url, dest)
       const stat = fs.statSync(dest)
-      if (stat.size < 1500) throw new Error('retry small')
-      return url
+      if (stat.size < 1500) throw new Error('imagem demasiado pequena')
+      return { url, source: i === 0 ? 'primary' : i === 1 ? 'lf' : 'picsum' }
+    } catch (e) {
+      lastErr = e
+      await sleep(800)
     }
-    throw e
   }
+  throw lastErr
 }
 
 async function main() {
@@ -204,12 +212,19 @@ async function main() {
   let fail = 0
   const manifest = []
 
-  console.log('A descarregar 48 produtos + categorias + promos...\n')
+  const onlyIds = process.env.ONLY_IDS?.split(',').map((s) => s.trim()).filter(Boolean)
+  const productEntries = Object.entries(PRODUCTS).filter(([id]) => !onlyIds?.length || onlyIds.includes(id))
+  console.log(
+    onlyIds?.length
+      ? `A re-descarregar produtos: ${onlyIds.join(', ')}...\n`
+      : 'A descarregar 48 produtos + categorias + promos...\n',
+  )
 
-  for (const [id, meta] of Object.entries(PRODUCTS)) {
+  for (const [id, meta] of productEntries) {
     try {
-      const src = await saveProduct(id, meta)
-      manifest.push({ id, fresh: !!meta.fresh, source: src.includes('openfoodfacts') ? 'off' : 'lf', src: src.slice(0, 100) })
+      const { url: src, source } = await saveProduct(id, meta)
+      const srcType = src.includes('openfoodfacts') ? 'off' : source === 'picsum' ? 'picsum' : 'lf'
+      manifest.push({ id, fresh: !!meta.fresh, source: srcType, src: src.slice(0, 100) })
       console.log(`OK produto ${id} (${manifest.at(-1).source})`)
       ok++
     } catch (e) {
@@ -217,6 +232,11 @@ async function main() {
       fail++
     }
     await sleep(600)
+  }
+
+  if (onlyIds?.length) {
+    console.log(`\nConcluído: ${ok} OK, ${fail} falhas`)
+    process.exit(fail > 0 ? 1 : 0)
   }
 
   for (const [slug, tags] of Object.entries(CATEGORIES)) {
