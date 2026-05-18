@@ -135,18 +135,20 @@ export function Header() {
               </button>
             </>
           )}
-          <LanguageSelect variant="utility" />
-          <label className="currency-select">
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as Currency)}
-              aria-label={t('header.currency')}
-            >
-              <option value="AOA">AOA</option>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-            </select>
-          </label>
+          <div className="utility-controls">
+            <LanguageSelect variant="utility" />
+            <label className="currency-select">
+              <select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value as Currency)}
+                aria-label={t('header.currency')}
+              >
+                <option value="AOA">AOA</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </label>
+          </div>
         </div>
       </div>
 

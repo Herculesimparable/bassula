@@ -126,18 +126,52 @@
   background: rgba(0, 0, 0, 0.28);
 }
 
+/* Idioma + moeda — barra superior */
+.utility-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.lang-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.lang-select__icon {
+  flex-shrink: 0;
+  color: #fff;
+  opacity: 0.95;
+}
+
+.lang-select__field {
+  min-width: 4.5rem;
+  max-width: 5.5rem;
+}
+
+.lang-select__field,
 .currency-select select {
   background: #fff;
   color: #0f172a;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 5px 28px 5px 10px;
   font-size: 0.75rem;
   font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
   color-scheme: light;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
 }
 
+.lang-select__field:hover,
+.lang-select__field:focus,
 .currency-select select:hover,
 .currency-select select:focus {
   border-color: #0f172a;
@@ -145,149 +179,31 @@
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
 }
 
+.lang-select__field option,
 .currency-select select option {
   background: #fff;
   color: #0f172a;
-}
-
-/* Botão de idioma */
-.lang-btn-wrap {
-  position: relative;
-  display: inline-flex;
-}
-
-.lang-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.2;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.lang-btn__code {
-  display: inline-flex;
-  min-width: 1.75rem;
-  justify-content: center;
-  padding: 1px 5px;
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-.lang-btn-wrap--utility .lang-btn,
-.lang-btn-wrap--header .lang-btn {
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  padding: 4px 10px;
-}
-
-.lang-btn-wrap--utility .lang-btn:hover,
-.lang-btn-wrap--header .lang-btn:hover {
-  background: #f1f5f9;
-  border-color: #0f172a;
-}
-
-.lang-btn-wrap--utility .lang-btn__code,
-.lang-btn-wrap--header .lang-btn__code {
-  background: #e2e8f0;
-  color: #0f172a;
-}
-
-.lang-btn-wrap--utility .lang-btn svg,
-.lang-btn-wrap--header .lang-btn svg {
-  color: #0f172a;
-}
-
-.lang-btn-wrap--header .lang-btn__label {
-  display: none;
-}
-
-.lang-btn-wrap--drawer {
-  width: 100%;
-}
-
-.lang-btn-wrap--drawer .lang-btn {
-  width: 100%;
-  justify-content: flex-start;
-  padding: 12px 14px;
-  font-size: 0.95rem;
-  color: var(--text);
-  border: 1px solid var(--border);
-  background: var(--bg-soft, #f8f9fb);
-}
-
-.lang-btn-wrap--drawer .lang-btn__code {
-  margin-left: auto;
-  background: var(--primary);
-  color: #fff;
-}
-
-.lang-btn-menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  z-index: 300;
-  min-width: min(260px, calc(100vw - 24px));
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 12px 32px rgba(15, 39, 68, 0.18);
-}
-
-.lang-btn-wrap--drawer .lang-btn-menu {
-  position: static;
-  margin-top: 8px;
-  width: 100%;
-  box-shadow: none;
-}
-
-.lang-btn-menu__item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 12px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text);
-  font-size: 0.85rem;
   font-weight: 500;
-  text-align: left;
-  cursor: pointer;
 }
 
-.lang-btn-menu__item:hover {
-  background: var(--bg-soft, #f3f5f8);
+.currency-select select {
+  min-width: 4.25rem;
+  max-width: 5rem;
 }
 
-.lang-btn-menu__item.is-active {
-  background: rgba(196, 30, 58, 0.08);
-  color: var(--primary);
-  font-weight: 600;
+.lang-select--drawer {
+  width: 100%;
 }
 
-.lang-btn-menu__check {
-  display: inline-flex;
-  width: 18px;
-  flex-shrink: 0;
-  color: var(--primary);
+.lang-select--drawer .lang-select__icon {
+  color: var(--text);
 }
 
-.drawer-lang {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
+.lang-select--drawer .lang-select__field {
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+  width: 100%;
 }
 
 .catalog-active-filters {
