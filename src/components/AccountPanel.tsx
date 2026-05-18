@@ -5,14 +5,7 @@ import type { FormEvent } from 'react'
 import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
 import type { AuthErrorKey } from '../utils/auth'
-import {
-  clearSession,
-  getSessionUser,
-  isLoggedIn,
-  loginUser,
-  registerUser,
-  setSession,
-} from '../utils/auth'
+import { loginUser, registerUser, setSession } from '../utils/auth'
 
 export function AccountPanel() {
   const {
@@ -22,6 +15,9 @@ export function AccountPanel() {
     setAccountMode,
     showToast,
     wishlist,
+    sessionUser,
+    refreshSession,
+    logout,
   } = useApp()
   const { t } = useTranslation()
 
@@ -29,18 +25,11 @@ export function AccountPanel() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
-  const [loggedIn, setLoggedIn] = useState(isLoggedIn)
-  const [userName, setUserName] = useState(() => getSessionUser()?.name ?? '')
 
   if (!accountOpen) return null
 
+  const loggedIn = !!sessionUser
   const authError = (key: AuthErrorKey) => t(`auth.${key}`)
-
-  const refreshSession = () => {
-    const u = getSessionUser()
-    setLoggedIn(isLoggedIn())
-    setUserName(u?.name ?? '')
-  }
 
   const onRegister = async (e: FormEvent) => {
     e.preventDefault()
@@ -70,14 +59,7 @@ export function AccountPanel() {
     setSession(result.user.email)
     refreshSession()
     showToast(t('account.welcomeBack', { name: result.user.name.split(' ')[0] }))
-  }
-
-  const onLogout = () => {
-    clearSession()
-    setLoggedIn(false)
-    setUserName('')
-    showToast(t('account.sessionEnded'))
-    setAccountOpen(false)
+    setPassword('')
   }
 
   const inputStyle = {
@@ -108,18 +90,20 @@ export function AccountPanel() {
         </button>
       </div>
       <div className="panel-body">
-        {loggedIn ? (
-          <div>
-            <p style={{ marginBottom: 8 }}>
-              {t('account.helloPrefix')} <strong>{userName}</strong>
+        {loggedIn && sessionUser ? (
+          <div className="account-session">
+            <div className="account-session-badge" role="status">
+              <span className="account-session-dot" aria-hidden />
+              {t('header.connected')}
+            </div>
+            <p className="account-session-greeting">
+              {t('account.helloPrefix')} <strong>{sessionUser.name}</strong>
             </p>
-            <p style={{ marginBottom: 16, color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              {localStorage.getItem('bassula-user')}
-            </p>
-            <p style={{ marginBottom: 16, color: 'var(--text-muted)' }}>
+            <p className="account-session-email">{sessionUser.email}</p>
+            <p className="account-session-meta">
               {t('account.favoritesCount', { count: wishlist.length })}
             </p>
-            <Button type="button" variant="outline" fullWidth onClick={onLogout}>
+            <Button type="button" variant="outline" fullWidth onClick={logout}>
               {t('account.signOut')}
             </Button>
           </div>

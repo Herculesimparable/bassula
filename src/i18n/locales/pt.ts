@@ -32,6 +32,8 @@ export const pt = {
   header: {
     login: 'Entrar',
     register: 'Criar conta',
+    connected: 'Conectado',
+    myAccount: 'Minha conta',
     search: 'Pesquisar',
     searchPlaceholder: 'Pesquisar produtos...',
     currency: 'Moeda',

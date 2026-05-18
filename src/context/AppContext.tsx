@@ -12,6 +12,11 @@ import type { CartItem, Currency, NavGroup, Product } from '../types'
 import { tr } from '../i18n/runtime'
 import { cartLineKey } from '../utils/cart'
 import { sanitizeEmail, sanitizeSearchQuery } from '../utils/sanitize'
+import {
+  clearSession,
+  getSessionUser,
+  type UserAccount,
+} from '../utils/auth'
 
 export interface MegaNavState {
   path: string
@@ -63,6 +68,9 @@ interface AppState {
   showToast: (message: string, type?: Toast['type']) => void
   subscribed: boolean
   subscribe: (email: string) => boolean
+  sessionUser: UserAccount | null
+  refreshSession: () => void
+  logout: () => void
 }
 
 const AppContext = createContext<AppState | null>(null)
@@ -127,6 +135,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [subscribed, setSubscribed] = useState(
     () => localStorage.getItem('bassula-subscribed') === 'true',
   )
+  const [sessionUser, setSessionUser] = useState<UserAccount | null>(() => getSessionUser())
+
+  const refreshSession = useCallback(() => {
+    setSessionUser(getSessionUser())
+  }, [])
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'bassula-user' || e.key === 'bassula-logged-in') refreshSession()
+    }
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [refreshSession])
 
   useEffect(() => {
     localStorage.setItem('bassula-cart', JSON.stringify(cart))
@@ -146,6 +167,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setToasts((t) => [...t, { id, message, type }])
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3500)
   }, [])
+
+  const logout = useCallback(() => {
+    clearSession()
+    setSessionUser(null)
+    setAccountOpen(false)
+    showToast(tr('account.sessionEnded'), 'info')
+  }, [showToast])
 
   const addToCart = useCallback(
     (product: Product, quantity = 1, storeId?: string, _navigateToCart?: boolean) => {
@@ -281,6 +309,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       showToast,
       subscribed,
       subscribe,
+      sessionUser,
+      refreshSession,
+      logout,
     }),
     [
       currency,
@@ -311,6 +342,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       getCartProducts,
       toggleWishlist,
       setCurrency,
+      sessionUser,
+      refreshSession,
+      logout,
     ],
   )
 

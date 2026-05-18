@@ -1,4 +1,16 @@
-import { ChevronDown, Heart, LogIn, MapPin, Menu, Search, ShoppingCart, UserPlus, X } from 'lucide-react'
+import {
+  ChevronDown,
+  Heart,
+  LogIn,
+  LogOut,
+  MapPin,
+  Menu,
+  Search,
+  ShoppingCart,
+  User,
+  UserPlus,
+  X,
+} from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -24,6 +36,8 @@ export function Header() {
     setMenuOpen,
     setAccountOpen,
     setAccountMode,
+    sessionUser,
+    logout,
     setOpenMegaNav,
     currency,
     setCurrency,
@@ -84,14 +98,43 @@ export function Header() {
             </Link>
           ))}
           <span className="utility-promo">{t('brand.promo')}</span>
-          <button type="button" className="utility-login" onClick={() => openAccount('login')}>
-            <LogIn size={16} />
-            {t('header.login')}
-          </button>
-          <button type="button" className="utility-register" onClick={() => openAccount('register')}>
-            <UserPlus size={16} />
-            {t('header.register')}
-          </button>
+          {sessionUser ? (
+            <div className="utility-auth utility-auth--connected" role="status">
+              <span className="utility-auth-pill">
+                <span className="utility-auth-dot" aria-hidden />
+                {t('header.connected')}
+              </span>
+              <button
+                type="button"
+                className="utility-account-btn"
+                onClick={() => openAccount('login')}
+                title={t('header.myAccount')}
+              >
+                <User size={16} aria-hidden />
+                <span className="utility-account-name">{sessionUser.name.split(' ')[0]}</span>
+              </button>
+              <button
+                type="button"
+                className="utility-logout-btn"
+                onClick={logout}
+                aria-label={t('account.signOut')}
+                title={t('account.signOut')}
+              >
+                <LogOut size={16} aria-hidden />
+              </button>
+            </div>
+          ) : (
+            <>
+              <button type="button" className="utility-login" onClick={() => openAccount('login')}>
+                <LogIn size={16} />
+                {t('header.login')}
+              </button>
+              <button type="button" className="utility-register" onClick={() => openAccount('register')}>
+                <UserPlus size={16} />
+                {t('header.register')}
+              </button>
+            </>
+          )}
           <LanguageSelect variant="utility" />
           <label className="currency-select">
             <select

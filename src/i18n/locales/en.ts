@@ -32,6 +32,8 @@ export const en = {
   header: {
     login: 'Sign in',
     register: 'Create account',
+    connected: 'Connected',
+    myAccount: 'My account',
     search: 'Search',
     searchPlaceholder: 'Search products...',
     currency: 'Currency',
