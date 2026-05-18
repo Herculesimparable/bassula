@@ -1773,6 +1773,96 @@
   will-change: transform;
 }
 
+/* Movimento 3D contínuo (CSS — funciona mesmo se Framer Motion estiver limitado) */
+.hero-robot--live .hero-robot__walker {
+  animation: hero-robot-walk 2.6s ease-in-out infinite;
+}
+
+.hero-robot--live .hero-robot__shadow {
+  animation: hero-robot-shadow 2.6s ease-in-out infinite;
+}
+
+.hero-robot--live .hero-robot__img {
+  animation: hero-robot-bob 2.6s ease-in-out infinite;
+}
+
+.hero-robot--live .hero-robot__aura {
+  animation: hero-robot-aura 3s ease-in-out infinite;
+}
+
+.hero-robot--live .hero-robot__badge--float {
+  animation: hero-robot-badge 2.2s ease-in-out infinite;
+}
+
+@keyframes hero-robot-walk {
+  0% {
+    transform: translate3d(0, 0, 0) rotateY(-14deg) rotateX(5deg);
+  }
+  20% {
+    transform: translate3d(38px, -26px, 48px) rotateY(-4deg) rotateX(-4deg);
+  }
+  45% {
+    transform: translate3d(16px, -12px, 22px) rotateY(12deg) rotateX(3deg);
+  }
+  70% {
+    transform: translate3d(-30px, -30px, 52px) rotateY(6deg) rotateX(-5deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotateY(-14deg) rotateX(5deg);
+  }
+}
+
+@keyframes hero-robot-shadow {
+  0%,
+  100% {
+    transform: translateZ(-40px) scaleX(1);
+    opacity: 0.35;
+  }
+  45% {
+    transform: translateZ(-40px) scaleX(1.25);
+    opacity: 0.55;
+  }
+  70% {
+    transform: translateZ(-40px) scaleX(0.88);
+    opacity: 0.28;
+  }
+}
+
+@keyframes hero-robot-bob {
+  0%,
+  100% {
+    transform: translateZ(20px) scale(1);
+  }
+  35% {
+    transform: translateZ(36px) scale(1.06);
+  }
+  65% {
+    transform: translateZ(28px) scale(1.03);
+  }
+}
+
+@keyframes hero-robot-aura {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes hero-robot-badge {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.08);
+  }
+}
+
 .hero-robot__aura {
   position: absolute;
   inset: 8% 0 18%;
@@ -1853,6 +1943,8 @@
   transform-style: preserve-3d;
   will-change: transform;
   backface-visibility: hidden;
+  transform: rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition: transform 0.35s ease-out;
 }
 
 .hero-robot__img {
@@ -1861,7 +1953,6 @@
   display: block;
   object-fit: contain;
   background: transparent;
-  transform: translateZ(24px);
   backface-visibility: hidden;
   filter: drop-shadow(0 24px 40px rgba(196, 30, 58, 0.28))
     drop-shadow(0 12px 28px rgba(8, 145, 178, 0.22)) saturate(1.08);
@@ -1936,6 +2027,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-robot--live .hero-robot__walker,
+  .hero-robot--live .hero-robot__shadow,
+  .hero-robot--live .hero-robot__img,
+  .hero-robot--live .hero-robot__aura,
+  .hero-robot--live .hero-robot__badge--float,
   .hero-robot__scan::after {
     animation: none !important;
   }

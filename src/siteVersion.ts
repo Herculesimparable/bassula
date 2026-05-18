@@ -1,2 +1,2 @@
 /** Versão visível no site — incrementar em cada deploy importante */
-export const SITE_VERSION = '2.5.4'
+export const SITE_VERSION = '2.5.5'

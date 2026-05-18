@@ -1,36 +1,10 @@
 import type { CSSProperties, MouseEvent, TouchEvent } from 'react'
-import { useRef } from 'react'
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useTranslation } from '../context/LocaleContext'
 import { publicAsset } from '../utils/publicAsset'
 
 const HERO_ROBOT_IMAGE = publicAsset('images/hero/hero-robot-3d.png')
-
-/** Ciclo de “caminhada” 3D — empurra o carrinho com balanço e profundidade */
-const WALK_3D = {
-  y: [0, -32, -14, -36, -10, 0],
-  x: [0, 42, 20, -28, 12, 0],
-  rotateY: [-18, -8, 14, 8, -16, -18],
-  rotateX: [6, -5, 4, -6, 5, 6],
-  z: [0, 55, 20, 60, 15, 0],
-}
-
-const WALK_TRANSITION = {
-  duration: 3,
-  repeat: Infinity,
-  ease: 'easeInOut' as const,
-}
-
-const IMG_BOB = {
-  scale: [1, 1.07, 1.02, 1.08, 1],
-  rotateZ: [0, 1.2, -0.8, 1, 0],
-}
 
 const DISCOUNTS = [
   { label: '−32%', top: '6%', left: '58%', delay: 0, tone: 'red' as const },
@@ -47,19 +21,14 @@ export function HeroRobotVisual({ className = '' }: Props) {
   const { t } = useTranslation()
   const reduceMotion = useReducedMotion()
   const stageRef = useRef<HTMLDivElement>(null)
-
-  const pointerX = useMotionValue(0)
-  const pointerY = useMotionValue(0)
-  const spring = { stiffness: 160, damping: 14, mass: 0.5 }
-
-  const tiltX = useSpring(useTransform(pointerY, [-0.5, 0.5], [14, -14]), spring)
-  const tiltY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-18, 18]), spring)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
 
   function updatePointer(clientX: number, clientY: number) {
-    if (reduceMotion || !stageRef.current) return
+    if (!stageRef.current) return
     const rect = stageRef.current.getBoundingClientRect()
-    pointerX.set((clientX - rect.left) / rect.width - 0.5)
-    pointerY.set((clientY - rect.top) / rect.height - 0.5)
+    const x = ((clientX - rect.left) / rect.width - 0.5) * 28
+    const y = ((clientY - rect.top) / rect.height - 0.5) * -20
+    setTilt({ x, y })
   }
 
   function onPointerMove(e: MouseEvent<HTMLDivElement>) {
@@ -72,16 +41,20 @@ export function HeroRobotVisual({ className = '' }: Props) {
   }
 
   function resetPointer() {
-    pointerX.set(0)
-    pointerY.set(0)
+    setTilt({ x: 0, y: 0 })
   }
+
+  const tiltStyle = {
+    '--tilt-x': `${tilt.x}deg`,
+    '--tilt-y': `${tilt.y}deg`,
+  } as CSSProperties
 
   return (
     <motion.div
-      className={`hero-robot ${className}`.trim()}
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      className={`hero-robot hero-robot--live ${className}`.trim()}
+      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
         ref={stageRef}
@@ -91,73 +64,30 @@ export function HeroRobotVisual({ className = '' }: Props) {
         onTouchMove={onTouchMove}
         onTouchEnd={resetPointer}
       >
-        <motion.div
-          className="hero-robot__aura"
-          animate={reduceMotion ? undefined : { scale: [1, 1.12, 1], opacity: [0.35, 0.9, 0.35] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <div className="hero-robot__grid" aria-hidden />
+        <div className="hero-robot__aura" aria-hidden />
+        <motion.div className="hero-robot__grid" aria-hidden />
 
         {DISCOUNTS.map((tag) => (
-          <motion.span
+          <span
             key={tag.label}
-            className={`hero-robot__badge hero-robot__badge--${tag.tone} hero-robot__badge--glass`}
-            style={{ top: tag.top, left: tag.left } as CSSProperties}
-            animate={
-              reduceMotion
-                ? undefined
-                : { y: [0, -14, 0], x: [0, 6, 0], scale: [1, 1.1, 1] }
+            className={`hero-robot__badge hero-robot__badge--${tag.tone} hero-robot__badge--glass hero-robot__badge--float`}
+            style={
+              {
+                top: tag.top,
+                left: tag.left,
+                animationDelay: `${tag.delay}s`,
+              } as CSSProperties
             }
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: tag.delay,
-            }}
           >
             {tag.label}
-          </motion.span>
+          </span>
         ))}
 
-        <motion.div
-          className="hero-robot__walker"
-          animate={reduceMotion ? undefined : WALK_3D}
-          transition={WALK_TRANSITION}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <motion.div
-            className="hero-robot__shadow"
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    scaleX: [1, 1.2, 0.92, 1.18, 1],
-                    opacity: [0.35, 0.55, 0.3, 0.5, 0.35],
-                  }
-            }
-            transition={WALK_TRANSITION}
-            aria-hidden
-          />
-
-          <motion.div
-            className="hero-robot__card-3d"
-            style={
-              reduceMotion
-                ? undefined
-                : {
-                    rotateX: tiltX,
-                    rotateY: tiltY,
-                    transformStyle: 'preserve-3d',
-                  }
-            }
-          >
-            <motion.div
-              className="hero-robot__scan"
-              aria-hidden
-              animate={reduceMotion ? undefined : { opacity: [0.4, 0.85, 0.4] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.img
+        <div className="hero-robot__walker">
+          <div className="hero-robot__shadow" aria-hidden />
+          <div className="hero-robot__card-3d" style={tiltStyle}>
+            <div className="hero-robot__scan" aria-hidden />
+            <img
               src={HERO_ROBOT_IMAGE}
               alt={t('hero.robotAlt')}
               className="hero-robot__img"
@@ -166,11 +96,9 @@ export function HeroRobotVisual({ className = '' }: Props) {
               loading="eager"
               decoding="async"
               draggable={false}
-              animate={reduceMotion ? undefined : IMG_BOB}
-              transition={WALK_TRANSITION}
             />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <p className="hero-robot__caption">{t('hero.robotCaption')}</p>
       </motion.div>
