@@ -7,7 +7,7 @@ export function PageTransition() {
 
   return (
     <motion.div
-      key={location.pathname}
+      key={location.pathname + location.search}
       className="page-transition"
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}

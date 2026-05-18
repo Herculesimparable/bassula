@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { CatalogSidebar } from '../components/CatalogSidebar'
-import { CatalogEmptyState } from '../components/CatalogEmptyState'
 import { ProductGridCard } from '../components/ProductGridCard'
 import { useApp } from '../context/AppContext'
 import { products } from '../data/products'
@@ -128,7 +127,13 @@ export function SearchPage() {
           />
           <div className="catalog-main">
             {filtered.length === 0 ? (
-              <CatalogEmptyState />
+              <div className="empty-state empty-state--catalog">
+                <p className="empty-state__title">{t('catalog.noProducts')}</p>
+                <p>{t('search.tryOther')}</p>
+                <button type="button" className="btn btn-primary empty-state__cta" onClick={clearAllFilters}>
+                  {t('catalog.clearAll')}
+                </button>
+              </div>
             ) : (
               <>
                 <div className="catalog-toolbar">

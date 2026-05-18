@@ -1,24 +1,27 @@
 import { parseCatalogSearchParams } from './catalogUrl'
 
-/** Lê filtros da URL + contexto — evita 1º render vazio antes do useEffect. */
+/** Lê filtros da URL com prioridade — evita estado obsoleto do contexto no 1º render. */
 export function getEffectiveCatalogFilters(
   searchParams: URLSearchParams,
   searchQuery: string,
-  activeCategories: string[],
+  _activeCategories: string[],
   priceMax: number | null,
 ) {
   const parsed = parseCatalogSearchParams(searchParams)
-  const query = (searchQuery.trim() || parsed.q).trim()
-  const categories =
-    activeCategories.length > 0 ? activeCategories : parsed.categories
-  const effectivePriceMax = priceMax ?? parsed.priceMax
+
+  const query = searchParams.has('q') ? parsed.q : searchQuery.trim() || parsed.q
+  const categories = searchParams.has('cat') ? parsed.categories : []
+  const effectivePriceMax = searchParams.has('price')
+    ? parsed.priceMax
+    : (priceMax ?? parsed.priceMax)
 
   return {
-    query,
+    query: query.trim(),
     categories,
     priceMax: effectivePriceMax,
     hasCategoryFilter: categories.length > 0,
-    hasQuery: query.length > 0,
-    hasAnyFilter: categories.length > 0 || query.length > 0 || effectivePriceMax != null,
+    hasQuery: query.trim().length > 0,
+    hasAnyFilter:
+      categories.length > 0 || query.trim().length > 0 || effectivePriceMax != null,
   }
 }

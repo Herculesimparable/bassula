@@ -1,5 +1,5 @@
-import { lazy, Suspense, type ReactNode } from 'react'
-import { lazyImport } from './utils/lazyImport'
+import { Suspense, type ReactNode } from 'react'
+import { lazyWithRetry } from './utils/lazyImport'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles/theme.css'
 import './App.css'
@@ -14,26 +14,36 @@ import { Layout } from './components/Layout'
 import { PageLoader } from './components/PageLoader'
 import { ErrorBoundary } from './components/ErrorBoundary'
 
-const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })))
-const CatalogPage = lazy(() => import('./pages/CatalogPage').then((m) => ({ default: m.CatalogPage })))
-const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })))
-const CartPage = lazy(() => import('./pages/CartPage').then((m) => ({ default: m.CartPage })))
-const MapPage = lazy(() => import('./pages/MapPage').then((m) => ({ default: m.MapPage })))
-const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })))
-const FavoritesPage = lazy(() =>
+const HomePage = lazyWithRetry(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })))
+const CatalogPage = lazyWithRetry(() =>
+  import('./pages/CatalogPage').then((m) => ({ default: m.CatalogPage })),
+)
+const SearchPage = lazyWithRetry(() =>
+  import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })),
+)
+const CartPage = lazyWithRetry(() => import('./pages/CartPage').then((m) => ({ default: m.CartPage })))
+const MapPage = lazyWithRetry(() => import('./pages/MapPage').then((m) => ({ default: m.MapPage })))
+const ContactPage = lazyWithRetry(() =>
+  import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })),
+)
+const FavoritesPage = lazyWithRetry(() =>
   import('./pages/FavoritesPage').then((m) => ({ default: m.FavoritesPage })),
 )
-const ProductDetailPage = lazyImport(() =>
+const ProductDetailPage = lazyWithRetry(() =>
   import('./pages/ProductDetailPage').then((m) => ({ default: m.ProductDetailPage })),
 )
-const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })))
-const HelpPage = lazy(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })))
-const ImageCreditsPage = lazy(() =>
+const AboutPage = lazyWithRetry(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })))
+const HelpPage = lazyWithRetry(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })))
+const ImageCreditsPage = lazyWithRetry(() =>
   import('./pages/ImageCreditsPage').then((m) => ({ default: m.ImageCreditsPage })),
 )
-const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })))
-const SecurityPage = lazy(() => import('./pages/SecurityPage').then((m) => ({ default: m.SecurityPage })))
-const TermsPage = lazy(() => import('./pages/TermsPage').then((m) => ({ default: m.TermsPage })))
+const PrivacyPage = lazyWithRetry(() =>
+  import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })),
+)
+const SecurityPage = lazyWithRetry(() =>
+  import('./pages/SecurityPage').then((m) => ({ default: m.SecurityPage })),
+)
+const TermsPage = lazyWithRetry(() => import('./pages/TermsPage').then((m) => ({ default: m.TermsPage })))
 
 function Lazy({ children }: { children: ReactNode }) {
   return <Suspense fallback={<PageLoader />}>{children}</Suspense>
@@ -122,6 +132,14 @@ export default function App() {
                 element={
                   <Lazy>
                     <CatalogPage group="vendidos" defaultBadge="Mais vendido" />
+                  </Lazy>
+                }
+              />
+              <Route
+                path="novos"
+                element={
+                  <Lazy>
+                    <CatalogPage group="novos" defaultBadge="Novo" />
                   </Lazy>
                 }
               />

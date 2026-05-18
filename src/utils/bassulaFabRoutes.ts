@@ -7,11 +7,12 @@ const CATALOG_PATHS = new Set([
   '/pets',
   '/electrodomesticos',
   '/mais-vendidos',
+  '/novos',
   '/favoritos',
 ])
 
 export function shouldShowBassulaFab(pathname: string): boolean {
-  if (pathname === '/' || pathname === '/carrinho') return true
+  if (pathname === '/' || pathname === '/carrinho' || pathname === '/pesquisa') return true
   if (pathname.startsWith('/produto/')) return true
   return CATALOG_PATHS.has(pathname)
 }

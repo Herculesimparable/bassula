@@ -1,10 +1,10 @@
-import { lazy, type LazyExoticComponent } from 'react'
-import type { ProductDetailPage } from '../pages/ProductDetailPage'
+import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
 
-/** Recarrega a página uma vez se o chunk lazy falhar (cache antigo após deploy). */
-export function lazyImport(
-  loader: () => Promise<{ default: typeof ProductDetailPage }>,
-): LazyExoticComponent<typeof ProductDetailPage> {
+/** Recarrega a página uma vez se um chunk lazy falhar (cache antigo após deploy). */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function lazyWithRetry<T extends ComponentType<any>>(
+  loader: () => Promise<{ default: T }>,
+): LazyExoticComponent<T> {
   return lazy(() =>
     loader().catch((err) => {
       const key = 'bassula-chunk-reload'

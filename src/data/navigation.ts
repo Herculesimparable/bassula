@@ -18,6 +18,7 @@ export const mainNav = [
     group: 'electrodomesticos' as NavGroup,
   },
   { path: '/mais-vendidos', navKey: 'nav.maisVendidos', group: 'vendidos' as NavGroup },
+  { path: '/novos', navKey: 'nav.novos', group: 'novos' as NavGroup },
   { path: '/favoritos', navKey: 'nav.favoritos', group: null },
 ]
 

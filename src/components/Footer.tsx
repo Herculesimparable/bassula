@@ -9,6 +9,7 @@ import {
   footerMenuLinks,
 } from '../data/products'
 import { useTranslation } from '../context/LocaleContext'
+import { categoryFilterHref } from '../utils/categories'
 import { SITE_VERSION } from '../siteVersion'
 
 export function Footer() {
@@ -56,7 +57,14 @@ export function Footer() {
         <div className="footer-col">
           <h4>{t('footer.categories')}</h4>
           {footerCategoryLinks.map((link) => (
-            <Link key={link.key} to={link.path}>
+            <Link
+              key={link.key}
+              to={
+                'category' in link && link.category
+                  ? categoryFilterHref(link.path, link.category)
+                  : link.path
+              }
+            >
               {t(link.key)}
             </Link>
           ))}

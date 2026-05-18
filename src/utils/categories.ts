@@ -41,7 +41,7 @@ export const HOME_CATEGORY_TARGETS: Record<string, HomeCategoryTarget> = {
   higiene: { path: '/higiene', category: 'todos' },
   mercearia: { path: '/alimentos', category: 'Mercearia' },
   electrodomesticos: { path: '/electrodomesticos', category: 'todos' },
-  verdura: { path: '/alimentos', category: 'Frutas' },
+  verdura: { path: '/alimentos', category: 'Verduras' },
   brinquedos: { path: '/ofertas', category: 'todos', search: 'brinquedo' },
   sanitarios: { path: '/higiene', category: 'Limpeza e higiene' },
 }

@@ -31,7 +31,6 @@ jobs:
       - name: Instalar e compilar (GitHub Pages — site principal)
         run: |
           npm ci && npm run build:pages
-          cp dist/index.html dist/404.html
 
       - uses: actions/configure-pages@v4
 

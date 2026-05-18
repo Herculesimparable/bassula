@@ -22,7 +22,7 @@ const GROUP_TITLE_KEYS: Record<NavGroup, string> = {
   pets: 'nav.pets',
   electrodomesticos: 'nav.electrodomesticos',
   vendidos: 'nav.maisVendidos',
-  novos: 'nav.ofertas',
+  novos: 'nav.novos',
 }
 
 interface Props {
@@ -63,11 +63,11 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
   const isTopSellers = group === 'vendidos'
 
   const base = useMemo(() => {
-    if (effective.hasQuery || effective.hasCategoryFilter) return products
+    if (effective.hasQuery) return products
     return groupProducts
-  }, [effective.hasQuery, effective.hasCategoryFilter, groupProducts])
+  }, [effective.hasQuery, groupProducts])
 
-  const isLoading = loadingGroup && !effective.hasQuery && !effective.hasCategoryFilter
+  const isLoading = loadingGroup && !effective.hasQuery
 
   useEffect(() => {
     const parsed = parseCatalogSearchParams(searchParams)

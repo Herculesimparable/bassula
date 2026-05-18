@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:pages": "tsc -b && cross-env VITE_GITHUB_PAGES=true vite build",
+    "build:pages": "tsc -b && cross-env VITE_GITHUB_PAGES=true vite build && node scripts/copy-spa-fallback.mjs",
     "preview": "vite preview",
-    "preview:pages": "npm run build:pages && vite preview --base /bassula/",
+    "preview:pages": "npm run build:pages && vite preview",
     "images:fetch": "node scripts/download-product-images.mjs",
     "verify": "node scripts/verify-catalog.mjs",
     "release": "npm run images:fetch && npm run verify && npm run build && npm run build:pages"

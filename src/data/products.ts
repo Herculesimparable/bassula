@@ -183,7 +183,7 @@ const baseProducts: Product[] = [
     { storeId: 'candando', storeName: 'Candando', price: 4200 },
     { storeId: 'kero', storeName: 'Kero', price: 3990 },
   ], 'Novo'),
-  p('37', 'Ralador Inox Profissional', 'Mercearia', '1556911220999-7a0e2f8e8b6e', '1 un', 'frescos', ['novos', 'higiene'], [
+  p('37', 'Ralador Inox Profissional', 'Pequenos eletrodomésticos', '1556911220999-7a0e2f8e8b6e', '1 un', 'frescos', ['novos', 'electrodomesticos'], [
     { storeId: 'kero', storeName: 'Kero', price: 3500 },
     { storeId: 'shoprite', storeName: 'Shoprite', price: 3200 },
   ], 'Novo'),
@@ -250,15 +250,16 @@ export const footerMenuLinks = [
   { key: 'nav.bebidas', path: '/bebidas' },
   { key: 'nav.electrodomesticos', path: '/electrodomesticos' },
   { key: 'nav.maisVendidos', path: '/mais-vendidos' },
+  { key: 'nav.novos', path: '/novos' },
   { key: 'nav.favoritos', path: '/favoritos' },
 ]
 
 export const footerCategoryLinks = [
-  { key: 'footer.frutas', path: '/alimentos' },
-  { key: 'footer.padaria', path: '/alimentos' },
-  { key: 'footer.carnes', path: '/alimentos' },
-  { key: 'footer.peixaria', path: '/alimentos' },
-  { key: 'nav.bebidas', path: '/bebidas' },
+  { key: 'footer.frutas', path: '/alimentos', category: 'Frutas' },
+  { key: 'footer.padaria', path: '/alimentos', category: 'Padaria' },
+  { key: 'footer.carnes', path: '/alimentos', category: 'Carnes e aves' },
+  { key: 'footer.peixaria', path: '/alimentos', category: 'Peixes e frutos do mar' },
+  { key: 'nav.bebidas', path: '/bebidas', category: 'Bebidas' },
   { key: 'nav.higiene', path: '/higiene' },
 ]
 
