@@ -4,24 +4,24 @@ import { publicAsset } from '../utils/publicAsset'
  * Imagens locais — 1 ficheiro por produto em public/images/products/{id}.jpg
  * Regenerar com correspondência correcta: npm run images:fetch
  */
-const V = '7' // incrementar após nova descarga para limpar cache do browser
+const V = '8' // incrementar após nova descarga para limpar cache do browser
 
 const product = (id: string) => publicAsset(`images/products/${id}.jpg?v=${V}`)
 const cat = (slug: string) => publicAsset(`images/categories/${slug}.jpg?v=${V}`)
 
 /** Promoções já alinhadas com categorias da home (fallback se falhar o JPG local) */
 const CATEGORY_PROMO: Partial<Record<string, string>> = {
-  frutas: publicAsset('promo/promo-frutas.jpg?v=2'),
-  padaria: publicAsset('promo/promo-padaria.jpg?v=2'),
-  electrodomesticos: publicAsset('promo/promo-electro.jpg?v=2'),
-  vinhos: publicAsset('promo/promo-wine.jpg?v=2'),
-  verdura: publicAsset('promo/promo-frutas.jpg?v=2'),
-  brinquedos: publicAsset('promo/promo-frutas.jpg?v=2'),
-  sanitarios: publicAsset('promo/promo-higiene.jpg?v=2'),
+  frutas: publicAsset('promo/promo-frutas.jpg?v=8'),
+  padaria: publicAsset('promo/promo-padaria.jpg?v=8'),
+  electrodomesticos: publicAsset('promo/promo-electro.jpg?v=8'),
+  vinhos: publicAsset('promo/promo-wine.jpg?v=8'),
+  verdura: publicAsset('images/categories/verdura.jpg?v=8'),
+  brinquedos: publicAsset('images/categories/brinquedos.jpg?v=8'),
+  sanitarios: publicAsset('images/categories/sanitarios.jpg?v=8'),
 }
 
-export const PROMO_WINE_IMAGE = publicAsset('promo/promo-wine.jpg?v=3')
-export const PROMO_DISCOUNT_IMAGE = publicAsset('promo/promo-discount.jpg?v=4')
+export const PROMO_WINE_IMAGE = publicAsset('promo/promo-wine.jpg?v=8')
+export const PROMO_DISCOUNT_IMAGE = publicAsset('promo/promo-discount.jpg?v=8')
 
 /** Textos alt em pt-AO para cartões de categoria */
 export const CATEGORY_IMAGE_ALT: Record<string, string> = {
@@ -124,7 +124,7 @@ export function categoryImage(slug: string): string {
 }
 
 /** Imagem neutra de alimentos (sem texto) quando falha o carregamento */
-export const FOOD_PLACEHOLDER = publicAsset('promo/promo-frutas.jpg?v=1')
+export const FOOD_PLACEHOLDER = publicAsset('images/categories/mercearia.jpg?v=8')
 
 export function placeholderForProduct(_name?: string): string {
   return FOOD_PLACEHOLDER

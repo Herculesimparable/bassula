@@ -1,4 +1,5 @@
 import { X } from 'lucide-react'
+import { Button } from './ui/Button'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useApp } from '../context/AppContext'
@@ -118,9 +119,9 @@ export function AccountPanel() {
             <p style={{ marginBottom: 16, color: 'var(--text-muted)' }}>
               {t('account.favoritesCount', { count: wishlist.length })}
             </p>
-            <button type="button" className="btn-outline btn-full" onClick={onLogout}>
+            <Button type="button" variant="outline" fullWidth onClick={onLogout}>
               {t('account.signOut')}
-            </button>
+            </Button>
           </div>
         ) : (
           <>
@@ -187,9 +188,9 @@ export function AccountPanel() {
                     minLength={6}
                   />
                 </label>
-                <button type="submit" className="btn-primary btn-full">
+                <Button type="submit" variant="primary" fullWidth animated>
                   {t('account.createAccount')}
-                </button>
+                </Button>
               </form>
             ) : (
               <form onSubmit={onLogin}>
@@ -214,9 +215,9 @@ export function AccountPanel() {
                     minLength={6}
                   />
                 </label>
-                <button type="submit" className="btn-primary btn-full">
+                <Button type="submit" variant="primary" fullWidth animated>
                   {t('account.signIn')}
-                </button>
+                </Button>
               </form>
             )}
           </>

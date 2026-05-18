@@ -1,4 +1,5 @@
 import type { Category, NavGroup, Product } from '../types'
+import { buildFullCatalog } from './buildCatalog'
 import { categoryImage, productImage } from './images'
 
 export const categories: Category[] = [
@@ -35,7 +36,7 @@ function p(
   return { id, name, category, image: productImage(id, category), unit, section, groups, prices, badge }
 }
 
-export const products: Product[] = [
+const baseProducts: Product[] = [
   p('1', 'Leite UHT Meio Gordo 1L', 'Leite e derivados', '1550586808-ef763c3d4f2', '1 L', 'carrinho', ['ofertas', 'alimentos'], [
     { storeId: 'kero', storeName: 'Kero', price: 890, promo: 750 },
     { storeId: 'candando', storeName: 'Candando', price: 920 },
@@ -232,6 +233,9 @@ export const products: Product[] = [
     { storeId: 'kero', storeName: 'Kero', price: 26500 },
   ], 'Oferta'),
 ]
+
+/** Catálogo completo: produtos base + expansão até 20 por categoria de filtro */
+export const products: Product[] = buildFullCatalog(baseProducts)
 
 export const featureItems = [
   { icon: 'truck', titleKey: 'features.fast.title', descKey: 'features.fast.desc' },

@@ -4,7 +4,7 @@ import { ProductImage } from './ProductImage'
 import { useApp } from '../context/AppContext'
 import type { Product } from '../types'
 import { useTranslation } from '../context/LocaleContext'
-import { formatPrice, getBestPrice, getDisplayPrice } from '../utils/price'
+import { formatPrice, getBestPrice, getDisplayPrice, getPromoDiscountPercent } from '../utils/price'
 
 interface Props {
   product: Product
@@ -18,6 +18,8 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
   const { currency, addToCart, wishlist, toggleWishlist } = useApp()
   const best = getBestPrice(product.prices)
   const price = getDisplayPrice(best, currency)
+  const original = best.promo ? getDisplayPrice({ ...best, promo: undefined }, currency) : null
+  const discountPct = getPromoDiscountPercent(best)
   const badge = product.badge
   const badgeClass =
     badgeVariant === 'top' ? 'product-badge product-badge--top' : 'product-badge'
@@ -40,6 +42,11 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
             {t('product.top')}
           </span>
         )}
+        {discountPct != null && !rank && (
+          <span className="product-discount-badge" aria-hidden>
+            -{discountPct}%
+          </span>
+        )}
         <button
           type="button"
           className={`wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}`}
@@ -54,7 +61,7 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
         <Link to={`/produto/${product.id}`} aria-label={product.name}>
           <ProductImage
             src={product.image}
-            alt=""
+            alt={product.name}
             productId={product.id}
             category={product.category}
           />
@@ -64,7 +71,12 @@ export function ProductCard({ product, rank, badgeVariant = 'default' }: Props) 
         <h3>{product.name}</h3>
       </Link>
       <p className="product-unit">{product.unit}</p>
-      <p className="product-price">{formatPrice(price, currency)}</p>
+      <div className="product-prices">
+        {original != null && (
+          <span className="price-old">{formatPrice(original, currency)}</span>
+        )}
+        <p className="product-price">{formatPrice(price, currency)}</p>
+      </div>
       <p className="product-store">{t('product.best', { store: best.storeName })}</p>
       <button
         type="button"

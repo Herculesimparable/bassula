@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
 import { Trash2 } from 'lucide-react'
 import { BackButton } from '../components/BackButton'
+import { Button } from '../components/ui/Button'
 import { ProductImage } from '../components/ProductImage'
 import { useApp } from '../context/AppContext'
 import { cartLineKeyFromItem } from '../utils/cart'
@@ -35,9 +35,9 @@ export function CartPage() {
         {items.length === 0 ? (
           <div className="empty-state card-empty">
             <p>{t('cart.empty')}</p>
-            <Link to="/ofertas" className="btn-primary">
+            <Button to="/ofertas" variant="primary" animated>
               {t('cart.seeOffers')}
-            </Link>
+            </Button>
           </div>
         ) : (
           <div className="cart-page-layout">
@@ -114,19 +114,21 @@ export function CartPage() {
                 <span>{t('cart.total')}</span>
                 <span>{formatPrice(total, currency)}</span>
               </div>
-              <button
+              <Button
                 type="button"
-                className="btn-primary btn-full"
+                variant="primary"
+                fullWidth
+                animated
                 onClick={() => showToast(t('toast.orderConfirmed'))}
               >
                 {t('cart.checkout')}
-              </button>
-              <button type="button" className="btn-outline btn-full" onClick={clearCart}>
+              </Button>
+              <Button type="button" variant="outline" fullWidth onClick={clearCart}>
                 {t('cart.clear')}
-              </button>
-              <Link to="/ofertas" className="link-continue">
+              </Button>
+              <Button to="/ofertas" variant="ghost" className="link-continue">
                 {t('cart.continue')}
-              </Link>
+              </Button>
             </aside>
           </div>
         )}

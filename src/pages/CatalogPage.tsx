@@ -3,7 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { CatalogSidebar } from '../components/CatalogSidebar'
 import { ProductGridCard } from '../components/ProductGridCard'
-import { PageLoader } from '../components/PageLoader'
+import { CatalogEmptyState } from '../components/CatalogEmptyState'
+import { ProductGridSkeleton } from '../components/ProductGridSkeleton'
 import { useApp } from '../context/AppContext'
 import { products } from '../data/products'
 import { useProducts } from '../hooks/useProducts'
@@ -134,8 +135,6 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
     setFilterDrawerOpen(false)
   }
 
-  if (isLoading) return <PageLoader />
-
   return (
     <div className={`catalog-page ${isTopSellers ? 'catalog-page--top' : ''}`}>
       <div className="container">
@@ -203,18 +202,23 @@ export function CatalogPage({ group, title, defaultBadge }: Props) {
             onClearAll={clearAllFilters}
           />
           <div className="catalog-main">
-            {isError ? (
+            {isLoading ? (
+              <ProductGridSkeleton count={8} />
+            ) : isError ? (
               <div className="empty-state">
                 <p>{t('catalog.loadError')}</p>
                 <p>{t('catalog.reload')}</p>
               </div>
             ) : filtered.length === 0 ? (
-              <div className="empty-state">
-                <p>{t('catalog.noProducts')}</p>
-                <p>{t('catalog.tryOther')}</p>
-              </div>
+              <CatalogEmptyState />
             ) : (
               <>
+                <div className="catalog-toolbar">
+                  <span className="catalog-results-badge">
+                    {t('catalog.productsFound', { count: filtered.length })}
+                  </span>
+                  <span className="catalog-sort-hint">{t('catalog.sortHint')}</span>
+                </div>
                 <div className="product-grid">
                   {shown.map((p, index) => (
                     <ProductGridCard

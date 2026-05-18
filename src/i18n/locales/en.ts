@@ -43,6 +43,7 @@ export const en = {
   hero: {
     tag: 'Bassula on Prices',
     title: 'Bassula brings prices down',
+    subtitle: 'Thousands of products with real-time prices in Luanda and beyond.',
     body: 'Compare Kero, Candando, Shoprite and more. Rice, oil, beans and everything you need — the lowest price at each store.',
     ctaOffers: 'See falling prices',
     ctaTop: 'Best sellers',
@@ -202,6 +203,8 @@ export const en = {
     applyFilters: 'Apply filters',
     badgeOffer: 'Deal',
     badgeTopSeller: 'Best seller',
+    seeAllOffers: 'See all deals',
+    sortHint: 'Sorted by best price',
   },
   detail: {
     notFound: 'Product not found.',
@@ -231,6 +234,8 @@ export const en = {
     desc: 'Download our app and compare prices in real time, in Angola and abroad.',
     appStore: 'App Store',
     googlePlay: 'Google Play',
+    appStoreAria: 'Download on the App Store — coming soon',
+    googlePlayAria: 'Get it on Google Play — coming soon',
     phoneAlt: 'Bassula app on mobile',
   },
   newsletter: {
@@ -354,6 +359,7 @@ export const en = {
     less: 'Less',
     more: 'More',
     compareHint: 'compare stores',
+    compareStores: 'Compare {{count}} stores',
   },
   aria: {
     promos: 'Promotions',

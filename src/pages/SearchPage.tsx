@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { CatalogSidebar } from '../components/CatalogSidebar'
+import { CatalogEmptyState } from '../components/CatalogEmptyState'
 import { ProductGridCard } from '../components/ProductGridCard'
 import { useApp } from '../context/AppContext'
 import { products } from '../data/products'
@@ -85,6 +86,8 @@ export function SearchPage() {
 
   const shown = filtered.slice(0, visible)
   const q = searchQuery.trim()
+  const hasActiveFilters =
+    activeCategories.length > 0 || !!searchQuery.trim() || priceMax != null
 
   return (
     <div className="catalog-page catalog-page--search">
@@ -93,6 +96,15 @@ export function SearchPage() {
           {q ? t('search.title', { query: q }) : t('search.allProducts')}
         </h1>
         {q && <p className="page-subtitle">{t('search.subtitle')}</p>}
+
+        {hasActiveFilters && (
+          <p className="catalog-filter-hint">
+            {t('catalog.productsFound', { count: filtered.length })}
+            <button type="button" className="link-reset" onClick={clearAllFilters}>
+              {t('catalog.clearAll')}
+            </button>
+          </p>
+        )}
 
         <button
           type="button"
@@ -112,15 +124,15 @@ export function SearchPage() {
           />
           <div className="catalog-main">
             {filtered.length === 0 ? (
-              <div className="empty-state">
-                <p>{t('catalog.noProducts')}</p>
-                <p>{t('search.tryOther')}</p>
-              </div>
+              <CatalogEmptyState />
             ) : (
               <>
-                <p className="catalog-results-count">
-                  {t('catalog.productsFound', { count: filtered.length })}
-                </p>
+                <div className="catalog-toolbar">
+                  <span className="catalog-results-badge">
+                    {t('catalog.productsFound', { count: filtered.length })}
+                  </span>
+                  <span className="catalog-sort-hint">{t('catalog.sortHint')}</span>
+                </div>
                 <div className="product-grid">
                   {shown.map((p) => (
                     <ProductGridCard key={p.id} product={p} />

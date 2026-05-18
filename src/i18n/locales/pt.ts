@@ -43,6 +43,7 @@ export const pt = {
   hero: {
     tag: 'Bassula nos Preços',
     title: 'Quem faz Bassula derruba preços',
+    subtitle: 'Milhares de produtos, preços actualizados em tempo real em Luanda e além.',
     body: 'Compare Kero, Candando, Shoprite e mais. Arroz, óleo, feijão e tudo o que precisa — o mais barato em cada loja.',
     ctaOffers: 'Ver preços em queda',
     ctaTop: 'Mais vendidos',
@@ -202,6 +203,8 @@ export const pt = {
     applyFilters: 'Aplicar filtros',
     badgeOffer: 'Oferta',
     badgeTopSeller: 'Mais vendido',
+    seeAllOffers: 'Ver todas as ofertas',
+    sortHint: 'Ordenado pelo melhor preço',
   },
   detail: {
     notFound: 'Produto não encontrado.',
@@ -231,6 +234,8 @@ export const pt = {
     desc: 'Baixe a nossa aplicação e compare preços em tempo real, em Angola e no estrangeiro.',
     appStore: 'App Store',
     googlePlay: 'Google Play',
+    appStoreAria: 'Transferir na App Store — em breve',
+    googlePlayAria: 'Disponível no Google Play — em breve',
     phoneAlt: 'Aplicação Bassula no telemóvel',
   },
   newsletter: {
@@ -354,6 +359,7 @@ export const pt = {
     less: 'Menos',
     more: 'Mais',
     compareHint: 'comparar lojas',
+    compareStores: 'Comparar {{count}} lojas',
   },
   aria: {
     promos: 'Promoções',

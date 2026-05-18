@@ -43,12 +43,13 @@ export function CatalogSidebar({
   )
 
   const allSelected = activeCategories.length === 0
+  const hasActiveFilters = !allSelected || priceMax != null
 
   return (
     <aside className="catalog-sidebar" aria-label={t('catalog.filter')}>
       <div className="catalog-sidebar__head">
         <h2>{t('catalog.filter')}</h2>
-        {!allSelected && (
+        {hasActiveFilters && (
           <button type="button" className="link-reset catalog-sidebar__clear" onClick={onClearAll}>
             {t('catalog.clearAll')}
           </button>

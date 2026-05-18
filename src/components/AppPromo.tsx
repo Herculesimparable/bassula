@@ -2,6 +2,10 @@ import { useApp } from '../context/AppContext'
 import { HERO_IMAGE } from '../data/images'
 import { useTranslation } from '../context/LocaleContext'
 import { tr } from '../i18n/runtime'
+import { publicAsset } from '../utils/publicAsset'
+
+const APP_STORE_BADGE = publicAsset('images/badges/app-store.svg')
+const GOOGLE_PLAY_BADGE = publicAsset('images/badges/google-play.svg')
 
 export function AppPromo() {
   const { t } = useTranslation()
@@ -20,17 +24,35 @@ export function AppPromo() {
           <div className="app-badges">
             <button
               type="button"
-              className="app-badge"
+              className="app-badge app-badge--store"
               onClick={() => showToast(tr('toast.appStoreSoon'), 'info')}
+              aria-label={t('appPromo.appStoreAria')}
             >
-              {t('appPromo.appStore')}
+              <img
+                src={APP_STORE_BADGE}
+                alt=""
+                width={156}
+                height={52}
+                className="app-badge-img"
+                loading="lazy"
+                draggable={false}
+              />
             </button>
             <button
               type="button"
-              className="app-badge"
+              className="app-badge app-badge--play"
               onClick={() => showToast(tr('toast.googlePlaySoon'), 'info')}
+              aria-label={t('appPromo.googlePlayAria')}
             >
-              {t('appPromo.googlePlay')}
+              <img
+                src={GOOGLE_PLAY_BADGE}
+                alt=""
+                width={176}
+                height={52}
+                className="app-badge-img"
+                loading="lazy"
+                draggable={false}
+              />
             </button>
           </div>
         </div>
@@ -38,4 +60,3 @@ export function AppPromo() {
     </section>
   )
 }
-

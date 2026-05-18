@@ -6,7 +6,7 @@ import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
 import type { Product } from '../types'
 import { badgeI18nKey } from '../utils/badge'
-import { formatPrice, getBestPrice, getDisplayPrice } from '../utils/price'
+import { formatPrice, getBestPrice, getDisplayPrice, getPromoDiscountPercent } from '../utils/price'
 
 interface Props {
   product: Product
@@ -22,6 +22,7 @@ export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props)
   const best = getBestPrice(product.prices)
   const current = getDisplayPrice(best, currency)
   const original = best.promo ? getDisplayPrice({ ...best, promo: undefined }, currency) : null
+  const discountPct = getPromoDiscountPercent(best)
   const isWishlisted = wishlist.includes(product.id)
   const rawBadge = badgeLabel ?? product.badge
   const badgeKey = badgeI18nKey(rawBadge)
@@ -44,6 +45,11 @@ export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props)
             </span>
           )}
           {badge && <span className={badgeClass}>{badge}</span>}
+          {discountPct != null && (
+            <span className="grid-card-discount" aria-label={`-${discountPct}%`}>
+              -{discountPct}%
+            </span>
+          )}
         </div>
         <button
           type="button"
@@ -62,7 +68,7 @@ export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props)
         <div className="grid-card-img">
           <ProductImage
             src={product.image}
-            alt=""
+            alt={product.name}
             productId={product.id}
             category={product.category}
           />
@@ -75,7 +81,8 @@ export function ProductGridCard({ product, badgeLabel, rank, topSeller }: Props)
           <span className="price-current">{formatPrice(current, currency)}</span>
         </div>
         <p className="grid-store">
-          {t('product.best', { store: best.storeName })} · {t('productGrid.compareHint')}
+          {t('product.best', { store: best.storeName })} ·{' '}
+          {t('productGrid.compareStores', { count: product.prices.length })}
         </p>
       </Link>
       <div className="qty-row" onClick={(e) => e.stopPropagation()}>

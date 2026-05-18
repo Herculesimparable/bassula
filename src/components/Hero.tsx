@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Button } from './ui/Button'
 import { useTranslation } from '../context/LocaleContext'
 
 /** Hero só com texto — imagem Bassula fica no carrossel promocional */
@@ -19,15 +19,21 @@ export function Hero() {
         <span className="hero-tag hero-tag--bassula">{t('hero.tag')}</span>
         <h1>{t('hero.title')}</h1>
         <p className="hero-lead">{t('brand.tagline')}</p>
+        <p className="hero-subtitle">{t('hero.subtitle')}</p>
         <p>{t('hero.body')}</p>
-        <div className="hero-actions">
-          <Link to="/ofertas" className="btn btn-primary btn-bassula-cta">
+        <motion.div
+          className="hero-actions"
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Button to="/ofertas" variant="primary" animated className="btn-bassula-cta">
             {t('hero.ctaOffers')} <ArrowRight size={18} />
-          </Link>
-          <Link to="/mais-vendidos" className="btn btn-outline hero-btn-outline">
+          </Button>
+          <Button to="/mais-vendidos" variant="outline" className="hero-btn-outline">
             {t('hero.ctaTop')}
-          </Link>
-        </div>
+          </Button>
+        </motion.div>
       </motion.div>
     </section>
   )

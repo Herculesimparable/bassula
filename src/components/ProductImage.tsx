@@ -58,6 +58,9 @@ export function ProductImage({
       loading={loading}
       decoding="async"
       referrerPolicy="no-referrer"
+      draggable={false}
+      width={400}
+      height={400}
       onError={handleError}
     />
   )

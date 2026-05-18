@@ -1,148 +1,703 @@
-/* Botões compactos, adaptativos e consistentes */
+/**
+ * Bassula — sistema unificado de botões (tecnológico / premium)
+ * Carregado por último em App.tsx para prevalecer sobre estilos legados.
+ */
 
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --btn-radius: 12px;
+  --btn-radius-pill: 999px;
+  --btn-glow: 0 0 24px rgba(225, 29, 72, 0.35), 0 0 48px rgba(8, 145, 178, 0.12);
+  --btn-glow-soft: 0 4px 20px rgba(225, 29, 72, 0.28);
+  --btn-gradient: linear-gradient(
+    135deg,
+    var(--red-dark) 0%,
+    var(--red) 42%,
+    var(--teal) 100%
+  );
+  --btn-gradient-hover: linear-gradient(
+    135deg,
+    var(--red) 0%,
+    var(--red-light) 50%,
+    var(--teal-light) 100%
+  );
+}
+
+/* ─── Base ─── */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   font-family: inherit;
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
   white-space: nowrap;
+  text-decoration: none;
   border: none;
   cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.9rem;
+  border-radius: var(--btn-radius-pill);
   transition:
-    transform 0.18s var(--ease-out, ease),
-    box-shadow 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+    transform 0.22s var(--ease-out),
+    box-shadow 0.28s var(--ease-out),
+    background 0.28s var(--ease-out),
+    color 0.22s ease,
+    border-color 0.22s ease,
+    opacity 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.55s var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn:hover:not(:disabled)::after {
+  transform: translateX(120%);
+}
+
+.btn:hover:not(:disabled) {
+  transform: scale(1.02);
+}
+
 .btn:active:not(:disabled) {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
-.btn:disabled {
-  opacity: 0.55;
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
+.btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  box-shadow: var(--btn-glow-soft);
+}
+
+/* ─── Variantes ─── */
 .btn-primary {
-  padding: clamp(0.45rem, 1.8vw, 0.65rem) clamp(0.9rem, 3.5vw, 1.35rem);
-  font-size: clamp(0.78rem, 2.2vw, 0.9rem);
-  min-height: 2.25rem;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--red) 0%, var(--red-light, #e8334f) 100%);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(196, 30, 58, 0.28);
+  background: var(--btn-gradient);
+  box-shadow: var(--btn-glow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--btn-gradient-hover);
+  box-shadow: var(--btn-glow);
+}
+
+.btn-secondary {
+  color: var(--navy-dark);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(241, 245, 249, 0.9) 100%
+  );
+  border: 1px solid rgba(8, 145, 178, 0.25);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--teal);
+  box-shadow: 0 4px 20px rgba(8, 145, 178, 0.18);
+  color: var(--teal-dark);
 }
 
 .btn-outline {
-  padding: clamp(0.4rem, 1.6vw, 0.58rem) clamp(0.85rem, 3vw, 1.2rem);
-  font-size: clamp(0.78rem, 2.2vw, 0.88rem);
-  min-height: 2.15rem;
-  border-radius: 999px;
-  border: 1.5px solid var(--red);
   color: var(--red);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1.5px solid var(--red);
+  backdrop-filter: blur(6px);
 }
 
+.btn-outline:hover:not(:disabled) {
+  color: #fff;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+  border-color: transparent;
+  box-shadow: var(--btn-glow-soft);
+}
+
+.btn-ghost {
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--red);
+  background: rgba(225, 29, 72, 0.06);
+  border-color: rgba(225, 29, 72, 0.15);
+  box-shadow: none;
+}
+
+.btn-ghost::after {
+  display: none;
+}
+
+.btn-danger {
+  color: #fff;
+  background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.25);
+}
+
+.btn-danger:hover:not(:disabled) {
+  box-shadow: 0 6px 24px rgba(220, 38, 38, 0.35);
+}
+
+/* ─── Tamanhos ─── */
 .btn-sm {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
-  min-height: 1.85rem;
-  border-radius: 8px;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  border-radius: 10px;
 }
 
 .btn-xs {
-  padding: 0.25rem 0.55rem;
-  font-size: 0.68rem;
-  min-height: 1.6rem;
-  border-radius: 6px;
+  min-height: 1.85rem;
+  padding: 0.28rem 0.6rem;
+  font-size: 0.72rem;
+  border-radius: 8px;
+}
+
+.btn-lg {
+  min-height: 3rem;
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
 }
 
 .btn-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-height: 2.75rem;
   padding: 0;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.btn-add,
-.btn-add-grid {
-  width: 100%;
-  padding: clamp(0.4rem, 1.5vw, 0.55rem) 0.65rem;
-  font-size: clamp(0.72rem, 2vw, 0.8rem);
-  font-weight: 700;
-  min-height: 2rem;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-  color: #fff;
-}
-
-.btn-add:hover,
-.btn-add-grid:hover {
-  background: linear-gradient(135deg, var(--red) 0%, var(--red-light, #e8334f) 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(196, 30, 58, 0.3);
-}
-
-.btn-ver-mais {
-  min-width: min(100%, 11rem);
+.btn-icon::after {
+  display: none;
 }
 
 .btn-full {
   width: 100%;
 }
 
+.btn-ver-mais {
+  min-width: min(100%, 11rem);
+}
+
+/* ─── Adicionar ao carrinho ─── */
+.btn-add,
+.btn-add-grid {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: clamp(0.75rem, 2vw, 0.82rem);
+  font-weight: 700;
+  border-radius: var(--btn-radius);
+  color: #fff;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 55%, #0e7490 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.2);
+}
+
+.btn-add:hover:not(:disabled),
+.btn-add-grid:hover:not(:disabled) {
+  background: var(--btn-gradient-hover);
+  box-shadow: var(--btn-glow-soft);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Comparar lojas ─── */
 .compare-stores {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0.3rem 0.5rem;
-  font-size: 0.68rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: var(--red);
-  background: rgba(196, 30, 58, 0.06);
-  border: 1px solid rgba(196, 30, 58, 0.15);
-  border-radius: 6px;
+  color: var(--teal-dark);
+  background: rgba(8, 145, 178, 0.06);
+  border: 1px solid rgba(8, 145, 178, 0.2);
+  border-radius: 8px;
   margin-bottom: 0.5rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition:
+    background 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s ease;
 }
 
 .compare-stores:hover {
-  background: rgba(196, 30, 58, 0.12);
+  background: rgba(8, 145, 178, 0.12);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.15);
 }
 
-.qty-row {
-  border-radius: 8px;
+/* ─── Ícones do header / painéis ─── */
+.icon-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  transition:
+    background 0.22s var(--ease-out),
+    color 0.2s ease,
+    transform 0.2s var(--ease-out),
+    box-shadow 0.22s ease,
+    border-color 0.2s ease;
 }
 
-.qty-row button {
-  width: clamp(1.75rem, 8vw, 2rem);
-  height: clamp(1.75rem, 8vw, 2rem);
+.icon-btn:hover {
+  background: rgba(225, 29, 72, 0.08);
+  color: var(--red);
+  border-color: rgba(225, 29, 72, 0.12);
+  transform: scale(1.05);
+  box-shadow: 0 2px 12px rgba(225, 29, 72, 0.12);
 }
 
-.filter-mobile-btn {
-  padding: 0.45rem 0.9rem;
-  font-size: 0.8rem;
+.icon-btn:active {
+  transform: scale(0.96);
+}
+
+.icon-btn.active {
+  color: var(--red);
+  background: rgba(225, 29, 72, 0.1);
+  border-color: rgba(225, 29, 72, 0.2);
+}
+
+.icon-light {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.icon-light:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Voltar ─── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 1rem 0.5rem 0.65rem;
+  margin-bottom: 1.25rem;
   font-weight: 600;
-  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: rgba(241, 245, 249, 0.8);
+  border: 1px solid var(--border);
+  border-radius: var(--btn-radius-pill);
+  transition:
+    color 0.2s ease,
+    background 0.22s var(--ease-out),
+    border-color 0.2s ease,
+    transform 0.2s var(--ease-out),
+    box-shadow 0.22s ease;
+}
+
+.back-btn:hover {
+  color: var(--red);
+  background: #fff;
+  border-color: rgba(225, 29, 72, 0.25);
+  transform: translateX(-2px);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+/* ─── Filtros mobile ─── */
+.filter-mobile-btn {
+  display: none;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: linear-gradient(135deg, #fff 0%, var(--beige) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--btn-radius);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.22s ease,
+    border-color 0.2s ease;
+}
+
+.filter-mobile-btn:hover {
+  border-color: var(--teal);
+  box-shadow: 0 4px 16px rgba(8, 145, 178, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ─── Pesquisa ─── */
+.search-form button,
+.search-light button {
+  min-width: 48px;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--btn-gradient);
+  border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s var(--ease-out);
+}
+
+.search-form button:hover,
+.search-light button:hover {
+  background: var(--btn-gradient-hover);
+  box-shadow: var(--btn-glow-soft);
+}
+
+/* ─── Newsletter ─── */
+.newsletter-form button {
+  min-height: 44px;
+  padding: 0 1.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  background: var(--btn-gradient);
+  border-radius: var(--btn-radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--btn-glow-soft);
+  transition:
+    transform 0.22s var(--ease-out),
+    box-shadow 0.28s ease,
+    background 0.25s ease;
+}
+
+.newsletter-form button:hover {
+  background: var(--btn-gradient-hover);
+  transform: scale(1.02);
+  box-shadow: var(--btn-glow);
+}
+
+.newsletter-form button:active {
+  transform: scale(0.98);
+}
+
+/* ─── Quantidade ─── */
+.qty-row,
+.qty-controls {
+  border-radius: var(--btn-radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.qty-row button,
+.qty-controls button {
+  width: clamp(2.75rem, 10vw, 3rem);
+  height: clamp(2.75rem, 10vw, 3rem);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: var(--surface-muted);
+  color: var(--text);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s var(--ease-out);
+}
+
+.qty-row button:hover,
+.qty-controls button:hover {
+  background: rgba(8, 145, 178, 0.12);
+  color: var(--teal-dark);
+}
+
+.qty-row button:active,
+.qty-controls button:active {
+  transform: scale(0.94);
+  background: rgba(225, 29, 72, 0.1);
+  color: var(--red);
+}
+
+/* ─── Remover do carrinho ─── */
+.btn-remove {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s var(--ease-out);
+}
+
+.btn-remove:hover {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.2);
+  transform: scale(1.06);
+}
+
+/* ─── Conta / tabs ─── */
+.account-tabs button {
+  min-height: 44px;
+  padding: 0.65rem;
+  border-radius: var(--btn-radius);
+  font-weight: 600;
   border: 1px solid var(--border);
   background: #fff;
-  margin-bottom: 1rem;
+  transition:
+    background 0.22s var(--ease-out),
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.22s ease,
+    transform 0.2s var(--ease-out);
+}
+
+.account-tabs button:hover:not(.active) {
+  border-color: var(--teal);
+  color: var(--teal-dark);
+  background: rgba(8, 145, 178, 0.06);
+}
+
+.account-tabs button.active {
+  background: var(--btn-gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--btn-glow-soft);
+}
+
+/* ─── Utilitários header ─── */
+.utility-login,
+.utility-register {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #fff;
+  border-radius: var(--btn-radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  transition:
+    background 0.22s var(--ease-out),
+    border-color 0.2s ease,
+    transform 0.2s var(--ease-out),
+    box-shadow 0.22s ease;
+}
+
+.utility-login:hover,
+.utility-register:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+}
+
+.utility-register {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ─── Idioma ─── */
+.lang-btn {
+  transition:
+    background 0.22s var(--ease-out),
+    border-color 0.2s ease,
+    transform 0.2s var(--ease-out),
+    box-shadow 0.22s ease;
+}
+
+.lang-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+}
+
+.lang-btn-menu__item {
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.15s var(--ease-out);
+}
+
+.lang-btn-menu__item:hover {
+  transform: translateX(2px);
+}
+
+.lang-btn-menu__item.is-active {
+  background: linear-gradient(90deg, rgba(225, 29, 72, 0.1) 0%, rgba(8, 145, 178, 0.08) 100%);
+}
+
+/* ─── Filtros sidebar ─── */
+.filter-link {
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s var(--ease-out),
+    border-color 0.2s ease;
+}
+
+.filter-link.active {
+  font-weight: 700;
+  color: var(--red);
+  background: linear-gradient(90deg, rgba(225, 29, 72, 0.1) 0%, transparent 100%);
+  border-left: 3px solid var(--red);
+}
+
+.filter-chip {
+  transition:
+    background 0.2s ease,
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s ease;
+}
+
+.filter-chip:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.15);
+}
+
+/* ─── Wishlist ─── */
+.wishlist-btn,
+.grid-wishlist {
+  transition:
+    transform 0.22s var(--ease-out),
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.22s ease,
+    border-color 0.2s ease;
+}
+
+.wishlist-btn:hover,
+.grid-wishlist:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.15);
+}
+
+/* ─── Features bar cards ─── */
+.feature-item--btn {
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.28s var(--ease-out),
+    border-color 0.22s ease;
+}
+
+.feature-item--btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(8, 145, 178, 0.15);
+}
+
+/* ─── Hero CTA especial ─── */
+.btn-bassula-cta {
+  letter-spacing: 0.02em;
+}
+
+.hero-btn-outline {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ─── Loading spinner ─── */
+.btn--loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.btn__spinner {
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.65s linear infinite;
+}
+
+.btn-outline .btn__spinner,
+.btn-ghost .btn__spinner {
+  border-color: rgba(225, 29, 72, 0.25);
+  border-top-color: var(--red);
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Focus global (reforço) ─── */
+button:focus-visible,
+a.btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+/* ─── Mobile touch targets ─── */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-outline,
+  .btn-secondary,
+  .btn:not(.btn-xs):not(.btn-icon) {
+    min-height: 44px;
+  }
+
+  .product-card .btn-add,
+  .grid-card .btn-add-grid {
+    min-height: 44px;
+    font-size: 0.78rem;
+  }
 }
 
 @media (max-width: 480px) {
   .product-card .btn-add,
   .grid-card .btn-add-grid {
-    font-size: 0.7rem;
-    min-height: 1.85rem;
+    font-size: 0.75rem;
   }
 }

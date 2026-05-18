@@ -1,6 +1,6 @@
 import { ChevronDown, Heart, LogIn, MapPin, Menu, Search, ShoppingCart, UserPlus, X } from 'lucide-react'
 import type { FormEvent } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { utilityLinks, mainNav } from '../data/navigation'
 import { useApp } from '../context/AppContext'
@@ -32,7 +32,15 @@ export function Header() {
     setPriceMax,
   } = useApp()
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null)
+  const [scrolled, setScrolled] = useState(false)
   const navCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const clearNavCloseTimer = () => {
     if (navCloseTimer.current) {
@@ -97,7 +105,7 @@ export function Header() {
         </div>
       </div>
 
-      <header className="header-red">
+      <header className={`header-red ${scrolled ? 'header-red--scrolled' : ''}`}>
         <div className="container header-red-inner">
           <Logo variant="light" />
           <form className="search-form search-light" onSubmit={onSearch} role="search">
@@ -130,7 +138,7 @@ export function Header() {
       </header>
 
       <div
-        className="nav-block"
+        className={`nav-block ${scrolled ? 'nav-block--scrolled' : ''}`}
         onMouseEnter={handleNavBlockEnter}
         onMouseLeave={handleNavBlockLeave}
       >

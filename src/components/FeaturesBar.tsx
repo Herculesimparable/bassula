@@ -1,6 +1,6 @@
 import { Headphones, Scale, Shield, Truck, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Button } from './ui/Button'
 import { featureItems } from '../data/products'
 import { useTranslation } from '../context/LocaleContext'
 
@@ -109,12 +109,12 @@ export function FeaturesBar() {
                 ))}
             </ul>
             <div className="feature-modal__actions">
-              <Link to="/ajuda" className="btn btn-outline" onClick={() => setOpenKey(null)}>
+              <Button to="/ajuda" variant="outline" onClick={() => setOpenKey(null)}>
                 {t('features.helpLink')}
-              </Link>
-              <button type="button" className="btn btn-primary" onClick={() => setOpenKey(null)}>
+              </Button>
+              <Button type="button" variant="primary" animated onClick={() => setOpenKey(null)}>
                 {t('common.close')}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

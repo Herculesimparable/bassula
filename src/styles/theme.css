@@ -44,4 +44,5 @@
   --glow-red: 0 0 32px rgba(225, 29, 72, 0.28);
   --glass: #ffffff;
   --glass-border: var(--border);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }

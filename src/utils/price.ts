@@ -36,6 +36,11 @@ export function formatPrice(value: number, currency: Currency): string {
   }).format(converted)
 }
 
+export function getPromoDiscountPercent(best: StorePrice): number | null {
+  if (best.promo == null || best.promo >= best.price) return null
+  return Math.round((1 - best.promo / best.price) * 100)
+}
+
 export function getDisplayPrice(price: StorePrice, currency: Currency): number {
   const val = price.promo ?? price.price
   if (currency === 'AOA') return val

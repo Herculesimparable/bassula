@@ -41,7 +41,9 @@ export function Newsletter() {
               aria-label="Email"
               required
             />
-            <button type="submit">{t('newsletter.subscribe')}</button>
+            <button type="submit" className="btn btn-primary">
+              {t('newsletter.subscribe')}
+            </button>
           </form>
         )}
         {error && <p style={{ color: '#ffb4b4', marginTop: 8 }}>{error}</p>}

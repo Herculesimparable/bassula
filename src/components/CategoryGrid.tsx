@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ProductImage } from './ProductImage'
 import { categories } from '../data/products'
@@ -8,6 +9,7 @@ import { useTranslation } from '../context/LocaleContext'
 
 export function CategoryGrid() {
   const { t } = useTranslation()
+  const reduceMotion = useReducedMotion()
   const { setActiveCategory, setSearchQuery } = useApp()
 
   const handleCategoryClick = (slug: string) => {
@@ -15,7 +17,14 @@ export function CategoryGrid() {
   }
 
   return (
-    <section className="section section--categories" aria-labelledby="categories-title">
+    <motion.section
+      className="section section--categories"
+      aria-labelledby="categories-title"
+      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="container">
         <div className="section-header section-header--categories">
           <div>
@@ -45,6 +54,6 @@ export function CategoryGrid() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }

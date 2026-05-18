@@ -2,6 +2,7 @@ import { Check, MapPin, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { BackButton } from '../components/BackButton'
+import { Button } from '../components/ui/Button'
 import { ProductImage } from '../components/ProductImage'
 import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
@@ -73,14 +74,16 @@ export function ProductDetailPage() {
               <button type="button" onClick={() => setQty((q) => q + 1)}>+</button>
             </div>
 
-            <button
+            <Button
               type="button"
-              className="btn-primary btn-full"
+              variant="primary"
+              fullWidth
+              animated
               onClick={() => addToCart(product, qty, best.storeId)}
             >
               <ShoppingCart size={20} />
               {t('detail.addToCart')}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -111,13 +114,14 @@ export function ProductDetailPage() {
                     {oldPrice != null && <span className="price-old">{formatPrice(oldPrice, currency)}</span>}
                     <span className="price-current">{formatPrice(price, currency)}</span>
                   </div>
-                  <button
+                  <Button
                     type="button"
-                    className={isBest ? 'btn-primary btn-sm' : 'btn-outline btn-sm'}
+                    variant={isBest ? 'primary' : 'outline'}
+                    size="sm"
                     onClick={() => addToCart(product, qty, store.storeId)}
                   >
                     {t('product.add')}
-                  </button>
+                  </Button>
                 </li>
               )
             })}

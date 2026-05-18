@@ -2,6 +2,7 @@ import { Clock, Mail, MessageCircle, Phone } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useState } from 'react'
 import { BackButton } from '../components/BackButton'
+import { Button } from '../components/ui/Button'
 import { CALL_CENTER, CALL_CENTER_DISPLAY, SUPPORT_EMAIL } from '../data/navigation'
 import { useApp } from '../context/AppContext'
 import { useTranslation } from '../context/LocaleContext'
@@ -76,9 +77,9 @@ export function ContactPage() {
               {t('contact.message')}
               <textarea rows={5} value={message} onChange={(e) => setMessage(e.target.value)} required />
             </label>
-            <button type="submit" className="btn-primary btn-full">
+            <Button type="submit" variant="primary" fullWidth animated>
               {t('contact.send')}
-            </button>
+            </Button>
           </form>
         </div>
       </div>

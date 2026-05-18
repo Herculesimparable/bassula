@@ -1,7 +1,7 @@
 import { AlertTriangle, RefreshCw } from 'lucide-react'
 import { Component, type ErrorInfo, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
 import { tr } from '../i18n/runtime'
+import { Button } from './ui/Button'
 
 interface Props {
   children: ReactNode
@@ -39,13 +39,13 @@ export class ErrorBoundary extends Component<Props, State> {
               <pre className="error-boundary-detail">{this.state.message}</pre>
             )}
             <div className="error-boundary-actions">
-              <button type="button" className="btn-primary" onClick={this.handleRetry}>
+              <Button type="button" variant="primary" animated onClick={this.handleRetry}>
                 <RefreshCw size={18} />
                 {tr('error.retry')}
-              </button>
-              <Link to="/" className="btn-outline" onClick={this.handleRetry}>
+              </Button>
+              <Button to="/" variant="outline" onClick={this.handleRetry}>
                 {tr('error.home')}
-              </Link>
+              </Button>
             </div>
           </article>
         </section>

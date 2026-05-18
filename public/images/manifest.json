@@ -1,246 +1,289 @@
 {
-  "generated": "2026-05-18T12:14:58.337Z",
-  "source": "off+fresh-lf",
+  "generated": "2026-05-18T15:00:54.025Z",
+  "lockVersion": "v8",
+  "source": "openfoodfacts+loremflickr",
   "products": [
     {
       "id": "1",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/milk,carton,uht?lock=bassula-v5-1"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/milk,carton,uht,white?lock=bassula-v8-prod-1"
     },
     {
       "id": "2",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/rice,bag,white?lock=bassula-v5-2"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/rice,bag,white,grain?lock=bassula-v8-prod-2"
     },
     {
       "id": "3",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/olive,oil,bottle?lock=bassula-v5-3"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/560/102/413/4488/front_pt.8.400.jpg"
     },
     {
       "id": "4",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/bread,loaf,sliced?lock=bassula-v5-4"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/560/131/218/2931/front_pt.9.400.jpg"
     },
     {
       "id": "5",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/strawberry,fruit,fresh?lock=bassula-v5-5"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/strawberry,fruit,fresh,red?lock=bassula-v8-prod-5"
     },
     {
       "id": "6",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/avocado,fruit,fresh?lock=bassula-v5-6"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/avocado,fruit,fresh,green?lock=bassula-v8-prod-6"
     },
     {
       "id": "7",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/whole,chicken,raw?lock=bassula-v5-7"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/whole,chicken,raw,poultry?lock=bassula-v8-prod-7"
     },
     {
       "id": "8",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/yogurt,cup?lock=bassula-v5-8"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/yogurt,cup,white?lock=bassula-v8-prod-8"
     },
     {
       "id": "9",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/cheese,slices?lock=bassula-v5-9"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/cheese,slices,yellow?lock=bassula-v8-prod-9"
     },
     {
       "id": "10",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/spaghetti,pasta,dry?lock=bassula-v5-10"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/000/002/047/0142/front_pt.35.400.jpg"
     },
     {
       "id": "11",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/coffee,ground,package?lock=bassula-v5-11"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/coffee,ground,package?lock=bassula-v8-prod-11"
     },
     {
       "id": "12",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/beer,bottles,pack?lock=bassula-v5-12"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/beer,cans,pack?lock=bassula-v8-prod-12"
     },
     {
       "id": "13",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/red,wine,bottle?lock=bassula-v5-13"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/red,wine,bottle?lock=bassula-v8-prod-13"
     },
     {
       "id": "14",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/shampoo,bottle?lock=bassula-v5-14"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/shampoo,bottle?lock=bassula-v8-prod-14"
     },
     {
       "id": "15",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/toothpaste,tube?lock=bassula-v5-15"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/toothpaste,tube?lock=bassula-v8-prod-15"
     },
     {
       "id": "16",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/toilet,paper,rolls?lock=bassula-v5-16"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/356/007/014/6291/front_es.9.400.jpg"
     },
     {
       "id": "17",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/chocolate,cookies?lock=bassula-v5-17"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/841/037/602/4326/front_pt.108.400.jpg"
     },
     {
       "id": "18",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/orange,juice,bottle?lock=bassula-v5-18"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/orange,juice,bottle?lock=bassula-v8-prod-18"
     },
     {
       "id": "19",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/laundry,detergent?lock=bassula-v5-19"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/laundry,detergent,bottle?lock=bassula-v8-prod-19"
     },
     {
       "id": "20",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/dog,food,bag?lock=bassula-v5-20"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/dog,food,bag,kibble?lock=bassula-v8-prod-20"
     },
     {
       "id": "21",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/banana,fruit,bunch?lock=bassula-v5-21"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/banana,fruit,bunch,yellow?lock=bassula-v8-prod-21"
     },
     {
       "id": "22",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/cherry,tomato,fresh?lock=bassula-v5-22"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/cherry,tomato,fresh,red?lock=bassula-v8-prod-22"
     },
     {
       "id": "23",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/red,apple,fruit?lock=bassula-v5-23"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/red,apple,fruit,fresh?lock=bassula-v8-prod-23"
     },
     {
       "id": "24",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/water,bottles?lock=bassula-v5-24"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/water,bottles,pack?lock=bassula-v8-prod-24"
     },
     {
       "id": "25",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/beef,steak,raw?lock=bassula-v5-25"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/beef,steak,raw,meat?lock=bassula-v8-prod-25"
     },
     {
       "id": "26",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/salmon,fillet,fresh?lock=bassula-v5-26"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/salmon,fillet,fresh,fish?lock=bassula-v8-prod-26"
     },
     {
       "id": "27",
       "fresh": false,
-      "src": "https://images.openfoodfacts.org/images/products/560/102/900/4076/front_pt.31.400.jpg"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/tuna,can,canned?lock=bassula-v8-prod-27"
     },
     {
       "id": "28",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/cereal,box,breakfast?lock=bassula-v5-28"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/cereal,box,breakfast?lock=bassula-v8-prod-28"
     },
     {
       "id": "29",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/milk,powder?lock=bassula-v5-29"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/milk,powder,can?lock=bassula-v8-prod-29"
     },
     {
       "id": "30",
       "fresh": true,
-      "src": "https://loremflickr.com/800/800/croissant,butter,pastry?lock=bassula-v5-30"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/croissant,butter,pastry,bakery?lock=bassula-v8-prod-30"
     },
     {
       "id": "31",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/cola,soda,bottle?lock=bassula-v5-31"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/544/900/005/4227/front_pt.451.400.jpg"
     },
     {
       "id": "32",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/beer,bottle?lock=bassula-v5-32"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/000/007/893/5495/front_pt.3.400.jpg"
     },
     {
       "id": "33",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/butter,block?lock=bassula-v5-33"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/560/104/961/4330/front_pt.52.400.jpg"
     },
     {
       "id": "34",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/cleaner,spray?lock=bassula-v5-34"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/cleaner,spray,bottle?lock=bassula-v8-prod-34"
     },
     {
       "id": "35",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/cat,food,bag?lock=bassula-v5-35"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/cat,food,bag?lock=bassula-v8-prod-35"
     },
     {
       "id": "36",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/diapers,baby?lock=bassula-v5-36"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/diapers,baby,pack?lock=bassula-v8-prod-36"
     },
     {
       "id": "37",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/grater,kitchen,stainless?lock=bassula-v5-37"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/cheese,grater,kitchen,stainless?lock=bassula-v8-prod-37"
     },
     {
       "id": "38",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/face,cream,jar?lock=bassula-v5-38"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/face,cream,jar?lock=bassula-v8-prod-38"
     },
     {
       "id": "39",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/green,tea,box?lock=bassula-v5-39"
+      "source": "off",
+      "src": "https://images.openfoodfacts.org/images/products/560/078/704/9138/front_pt.16.400.jpg"
     },
     {
       "id": "40",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/dog,treats?lock=bassula-v5-40"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/dog,treats,biscuit?lock=bassula-v8-prod-40"
     },
     {
       "id": "41",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/microwave,oven,white?lock=bassula-v5-41"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/microwave,oven,kitchen,white?lock=bassula-v8-prod-41"
     },
     {
       "id": "42",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/refrigerator,fridge,silver?lock=bassula-v5-42"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/refrigerator,fridge,silver,kitchen?lock=bassula-v8-prod-42"
     },
     {
       "id": "43",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/washing,machine,white?lock=bassula-v5-43"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/washing,machine,white,appliance?lock=bassula-v8-prod-43"
     },
     {
       "id": "44",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/blender,kitchen?lock=bassula-v5-44"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/blender,kitchen,appliance?lock=bassula-v8-prod-44"
     },
     {
       "id": "45",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/steam,iron?lock=bassula-v5-45"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/steam,iron,appliance?lock=bassula-v8-prod-45"
     },
     {
       "id": "46",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/electric,kettle?lock=bassula-v5-46"
-    },
-    {
-      "id": "47",
-      "fresh": false,
-      "src": "https://loremflickr.com/800/800/desk,fan?lock=bassula-v5-47"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/electric,kettle,kitchen?lock=bassula-v8-prod-46"
     },
     {
       "id": "48",
       "fresh": false,
-      "src": "https://loremflickr.com/800/800/vacuum,cleaner?lock=bassula-v5-48"
+      "source": "lf",
+      "src": "https://loremflickr.com/800/800/vacuum,cleaner,home?lock=bassula-v8-prod-48-r1"
     }
   ]
 }
